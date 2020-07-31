@@ -4,6 +4,7 @@ echo "Cleaning things up."
 rm -rf workplace/ || true
 mkdir workplace
 rm -rf google/ || true
+rm -rf gen_package/ || true
 
 echo "Cloning the event specification repository from GitHub."
 git clone $EVENTS_SPEC_REPO workplace/
