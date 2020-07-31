@@ -1,0 +1,15 @@
+from google.protobuf.json_format import ParseDict
+
+{% for i in imports %}
+from {{ i[0] }} import {{ i[1] }}
+{% endfor %}
+
+@classmethod
+def from_dikt(cls, dikt):
+    message = cls()
+    dikt = { 'data': dikt }
+    return ParseDict(dikt, message)
+
+{% for i in imports %}
+{{ i[1] }}.from_dikt = from_dikt
+{% endfor %}

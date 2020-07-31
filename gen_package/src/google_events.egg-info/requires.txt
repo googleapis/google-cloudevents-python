@@ -1,0 +1,7 @@
+protobuf
+googleapis-common-protos
+
+[dev]
+pylint
+pytest
+black

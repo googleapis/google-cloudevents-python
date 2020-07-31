@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: google-events
+Version: 0.0.1
+Summary: A collection of first party Google Cloud Platform event objects.
+Home-page: https://github.com/googleapis/google-cloudevents
+Author: Google DevRel
+Author-email: 
+Maintainer: Google DevRel
+Maintainer-email: 
+License: Apache License 2.0
+Project-URL: Source, https://github.com/googleapis/google-cloudevents
+Project-URL: Documentation, 
+Project-URL: Issue Tracker, https://github.com/googleapis/google-cloudevents/issues
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Web Environment
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Internet
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >3.4
+Provides-Extra: dev
