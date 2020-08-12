@@ -1,7 +1,0 @@
-README.md
-setup.py
-src/google_events.egg-info/PKG-INFO
-src/google_events.egg-info/SOURCES.txt
-src/google_events.egg-info/dependency_links.txt
-src/google_events.egg-info/requires.txt
-src/google_events.egg-info/top_level.txt

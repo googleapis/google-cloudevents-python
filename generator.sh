@@ -5,6 +5,7 @@ rm -rf workplace/ || true
 mkdir workplace
 rm -rf google/ || true
 rm -rf gen_package/ || true
+pip uninstall google-events
 
 echo "Cloning the event specification repository from GitHub."
 git clone $EVENTS_SPEC_REPO workplace/
