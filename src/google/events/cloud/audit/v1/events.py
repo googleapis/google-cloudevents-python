@@ -336,6 +336,7 @@ class Status:
 
 @dataclass
 class AuditLogWrittenEvent:
+    """The event is triggered when a new Cloud Audit Log entry is written."""
     resource_location: Optional[ResourceLocation] = None
     authentication_info: Optional[AuthenticationInfo] = None
     metadata: Optional[Dict[str, Any]] = None
@@ -391,6 +392,7 @@ class AuditLogWrittenEvent:
 
 @dataclass
 class Events:
+    """The event is triggered when a new Cloud Audit Log entry is written."""
     audit_log_written_event: Optional[AuditLogWrittenEvent] = None
 
     @staticmethod

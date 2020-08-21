@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""This script helps generate the library.
+"""
+
 import json
 import os
 import shutil
@@ -25,6 +28,7 @@ SCHEMA_FILENAME = 'events.json'
 GEN_PY_FILENAME = 'events.py'
 TEMPLATE_PATH = 'templates'
 INIT_PY_TEMPLATE = 'init_py.template'
+README_TEMPLATE = 'README.template'
 PACKAGE_ROOT = 'google/events'
 
 jinja2_env = Environment(loader=FileSystemLoader(searchpath=TEMPLATE_PATH))
@@ -68,20 +72,25 @@ def run():
             spec = json.loads(spec_data)
             pkg = spec['title']
             pkg_path = pkg.replace('.', '/')
-            included_events = list(spec['properties'].keys())
+            included_events = [ ( k, spec['properties'][k]['description'] ) for k in spec['properties'] ]
             # Write the generated script
             os.makedirs('{}/{}'.format(SRC_PATH, pkg_path), exist_ok=True)
             with open('{}/{}/{}'.format(SRC_PATH, pkg_path, GEN_PY_FILENAME), 'w') as f:
                 f.write(gen_data)
             # Collect processed events
-            for e in included_events:
-                all_events.append((pkg, e))
+            for t in included_events:
+                all_events.append((pkg, t[0], t[1]))
     # Generate the __init__.py script
     imports = [ ( t[0] + '.' + GEN_PY_FILENAME.replace('.py', ''), t[1] ) for t in all_events ]
     init_py_template = jinja2_env.get_template(INIT_PY_TEMPLATE)
     init_py = init_py_template.render(imports=imports)
     with open('{}/{}/{}'.format(SRC_PATH, PACKAGE_ROOT, '__init__.py'), 'w') as f:
         f.write(init_py)
+    # Generate the README.md file
+    readme_template = jinja2_env.get_template(README_TEMPLATE)
+    readme = readme_template.render(events=all_events)
+    with open('README.md', 'w') as f:
+        f.write(readme)
                
 if __name__ == '__main__':
     clean_up()

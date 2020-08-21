@@ -13,4 +13,4 @@
 # limitations under the License.
 
 from google.events.cloud.audit.v1.events import AuditLogWrittenEvent
-from google.events.cloud.pubsub.v1.events import messagePublishedEvent
+from google.events.cloud.pubsub.v1.events import MessagePublishedEvent

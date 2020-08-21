@@ -66,6 +66,7 @@ class Message:
 
 @dataclass
 class MessagePublishedEvent:
+    """This event is triggered when a new Cloud Pub/Sub event is published to a topic."""
     message: Optional[Message] = None
     subscription: Optional[str] = None
 
@@ -85,17 +86,18 @@ class MessagePublishedEvent:
 
 @dataclass
 class Events:
+    """This event is triggered when a new Cloud Pub/Sub event is published to a topic."""
     message_published_event: Optional[MessagePublishedEvent] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Events':
         assert isinstance(obj, dict)
-        message_published_event = from_union([MessagePublishedEvent.from_dict, from_none], obj.get("messagePublishedEvent"))
+        message_published_event = from_union([MessagePublishedEvent.from_dict, from_none], obj.get("MessagePublishedEvent"))
         return Events(message_published_event)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["messagePublishedEvent"] = from_union([lambda x: to_class(MessagePublishedEvent, x), from_none], self.message_published_event)
+        result["MessagePublishedEvent"] = from_union([lambda x: to_class(MessagePublishedEvent, x), from_none], self.message_published_event)
         return result
 
 

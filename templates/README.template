@@ -5,9 +5,9 @@ At this moment the following types are available:
 
 | Package | Python Class | Description |
 | ------------- | ------------- | ------------- |
-| google.events.cloud.audit.v1 | AuditLogWrittenEvent | The event is triggered when a new Cloud Audit Log entry is written. |
-| google.events.cloud.pubsub.v1 | MessagePublishedEvent | This event is triggered when a new Cloud Pub/Sub event is published to a topic. |
-
+{% for t in events -%}
+| {{ t[0] }} | {{ t[1] }} | {{ t[2] }} |
+{% endfor %}
 
 ## Installation and Usage
 
