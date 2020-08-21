@@ -37,7 +37,7 @@ print(event.message)
 **Note**: Before generating the package, install and set up
 [quicktype](https://quicktype.io/) and Python 3.7+.
 
-To generate this package, clone the repository and run
+To generate this package, run
 
 ``` sh
 chmod +x gen.sh
