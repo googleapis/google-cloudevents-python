@@ -13,16 +13,15 @@ pip uninstall google-events
 echo "Cloning the event specification repository from GitHub..."
 git clone $EVENTS_SPEC_REPO workplace/
 
-echo "Checking if quicktype is installed..."
-command -v quicktype
-if [ $? -ne 0 ]; then
-    echo "quicktype is not installed on the system."
-    echo "To install the quicktype package, see https://quicktype.io/."
-    exit 1
-fi
+echo "Adding the qt package as a dependency..."
+mv workplace/tools/quicktype-wrapper gen/quicktype-wrapper
+cd gen/
+npm install
 
 echo "Generating the Google Events Library for Python..."
-python gen.py
+export IN="../workplace/proto"
+export OUT="../"
+npm run start
 
 echo "Cleaning things up..."
 rm -rf workplace/ || true

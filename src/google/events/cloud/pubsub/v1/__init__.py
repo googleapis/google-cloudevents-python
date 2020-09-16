@@ -12,6 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{% for i in imports -%}
-from {{ i[0] }} import {{ i[1] }}
-{% endfor %}
+from .events import MessagePublishedEvent

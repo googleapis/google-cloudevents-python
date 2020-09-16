@@ -5,9 +5,8 @@ At this moment the following types are available:
 
 | Package | Python Class | Description |
 | ------------- | ------------- | ------------- |
-| google.events.cloud.audit.v1 | AuditLogWrittenEvent | The event is triggered when a new Cloud Audit Log entry is written. |
-| google.events.cloud.pubsub.v1 | MessagePublishedEvent | This event is triggered when a new Cloud Pub/Sub event is published to a topic. |
-
+| google.events.cloud.pubsub.v1 | MessagePublishedEvent | This event is triggered when a Pub/Sub message is published. |
+| google.events.cloud.audit.v1 | AuditLogWrittenEvent | This event is triggered when a new audit log entry is written. |
 
 ## Installation and Usage
 
@@ -22,7 +21,7 @@ pip install --upgrade google-events
 To use an event class, see the snippet below:
 
 ``` python
-from google.events import MessagePublishedEvent
+from google.events.cloud.pubsub.v1 import MessagePublishedEvent
 
 # Parses a Dict into an event
 # The Dict may be an argument in a background Cloud Function,
@@ -34,8 +33,7 @@ print(event.message)
 
 ## Generation
 
-**Note**: Before generating the package, install and set up
-[quicktype](https://quicktype.io/) and Python 3.7+.
+**Note**: Before generating the package, install and set up Node.js 12+.
 
 To generate this package, run
 

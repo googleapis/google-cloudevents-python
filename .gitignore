@@ -3,3 +3,8 @@ env/
 .github/
 __pycache__
 *.egg-info
+node_modules/
+quicktype-wrapper/
+proto/
+gen/build/
+workplace/
