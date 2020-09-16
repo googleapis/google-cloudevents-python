@@ -50,29 +50,29 @@ async function main() {
     });
 
     // Write __init__.py scripts
-    const initPySqrlTemplate = fs.readFileSync(
+    const initPySqrlTmpl = fs.readFileSync(
       `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
     );
-    const initPy = sqrl.render(String(initPySqrlTemplate), {
+    const initPy = sqrl.render(String(initPySqrlTmpl), {
       pkgEvents: pkgEvents,
     });
     fs.writeFileSync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}/__init__.py`, initPy);
   });
 
   // Write the README.md file
-  const readMeSqrlTemplate = fs.readFileSync(
+  const readMeSqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${README_TEMPLATE}`
   );
-  const readMe = sqrl.render(String(readMeSqrlTemplate), {
+  const readMe = sqrl.render(String(readMeSqrlTmpl), {
     allEvents: allEvents,
   });
   fs.writeFileSync(`${OUT}/README.md`, readMe);
 
   // Write the setup.py script
-  const setupPySqrlTemplate = fs.readFileSync(
+  const setupPySqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${SETUP_PY_TEMPLATE}`
   );
-  const setupPy = sqrl.render(String(setupPySqrlTemplate), {
+  const setupPy = sqrl.render(String(setupPySqrlTmpl), {
     srcDirectory: SRC_DIRECTORY,
     version: VERSION,
   });

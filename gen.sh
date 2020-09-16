@@ -8,14 +8,16 @@ rm -rf workplace/ || true
 mkdir workplace
 rm -rf src/ || true
 mkdir src
-pip uninstall google-events
+rm -rf gen/quicktype-wrapper || true
 
 echo "Cloning the event specification repository from GitHub..."
 git clone $EVENTS_SPEC_REPO workplace/
 
 echo "Adding the qt package as a dependency..."
 mv workplace/tools/quicktype-wrapper gen/quicktype-wrapper
-cd gen/
+cd gen/quicktype-wrapper
+npm install
+cd ../
 npm install
 
 echo "Generating the Google Events Library for Python..."
