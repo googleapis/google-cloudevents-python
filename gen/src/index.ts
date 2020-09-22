@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+import { Interface } from "readline";
+
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
@@ -18,6 +21,12 @@ const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
 const VERSION = '0.0.1';
 
+interface Event {
+  package: string;
+  eventName: string;
+  eventDescription: string;
+};
+
 async function main() {
   if (!IN) console.error('Error in config: `IN` not set');
   if (!OUT) console.error('Error in config: `OUT` not set');
@@ -28,11 +37,8 @@ async function main() {
   const templateDirectoryPath = `${__dirname}/../../${TEMPLATE_DIRECTORY}`;
 
   const schemasAndGenFiles = await qt.getJSONSchemasAndGenFiles(IN, LANGUAGE);
-  const allEvents: Array<[string, string, string]> = [];
-  schemasAndGenFiles.map((sg: [any, string]) => {
-    const schema = sg[0];
-    const genFile = sg[1];
-
+  const allEvents: Event[] = [];
+  schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
     // Write generated Python scripts
     const pkg = schema['$id'];
     const pkgPath = pkg.replace(/\./g, '/');
@@ -42,11 +48,15 @@ async function main() {
       genFile
     );
 
-    const pkgEvents: Array<string> = [];
-    Object.keys(schema['properties']).map((eventName: string) => {
-      const eventDescription = schema['properties'][eventName]['description'];
+    const pkgEvents: string[] = [];
+    Object.keys(schema.properties).map((eventName: string) => {
+      const eventDescription = schema.properties[eventName].description;
       pkgEvents.push(eventName);
-      allEvents.push([pkg, eventName, eventDescription]);
+      allEvents.push({
+        package: pkg,
+        eventName: eventName,
+        eventDescription: eventDescription,
+      });
     });
 
     // Write __init__.py scripts

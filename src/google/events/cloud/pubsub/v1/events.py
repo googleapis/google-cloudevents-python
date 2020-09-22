@@ -67,8 +67,23 @@ def to_float(x: Any) -> float:
 
 
 class PubsubMessage:
+    """The message that was published.
+    
+    A message published to a topic.
+    """
+    """Attributes for this message. If this field is empty, the message must contain non-empty
+    data. This can be used to filter messages on the subscription.
+    """
     attributes: Optional[Dict[str, Any]]
+    """The message data field. If this field is empty, the message must contain at least one
+    attribute. A base64-encoded string.
+    """
     data: Optional[str]
+    """ID of this message, assigned by the server when the message is published. Guaranteed to
+    be unique within the topic. This value may be read by a subscriber that receives a
+    PubsubMessage via a subscriptions.pull call or a push delivery. It must not be populated
+    by the publisher in a topics.publish call.
+    """
     message_id: Optional[str]
 
     def __init__(self, attributes: Optional[Dict[str, Any]], data: Optional[str], message_id: Optional[str]) -> None:
@@ -94,7 +109,11 @@ class PubsubMessage:
 
 class MessagePublishedEvent:
     """This event is triggered when a Pub/Sub message is published."""
+    """The message that was published."""
     message: Optional[PubsubMessage]
+    """The resource name of the subscription for which this event was generated. The format of
+    the value is `projects/{project-id}/subscriptions/{subscription-id}`.
+    """
     subscription: Optional[str]
 
     def __init__(self, message: Optional[PubsubMessage], subscription: Optional[str]) -> None:

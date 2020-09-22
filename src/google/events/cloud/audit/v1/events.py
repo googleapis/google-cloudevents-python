@@ -97,6 +97,7 @@ class LogEntryOperation:
 
 
 class ServiceAccountDelegationInfo:
+    """Identity delegation history of an authenticated service account"""
     principal_email: Optional[str]
     service_metadata: Optional[Dict[str, Any]]
     third_party_claims: Optional[Dict[str, Any]]
@@ -123,11 +124,35 @@ class ServiceAccountDelegationInfo:
 
 
 class AuthenticationInfo:
+    """Authentication information for the operation."""
+    """The authority selector specified by the requestor, if any. It is not guaranteed that the
+    principal was allowed to use this authority.
+    """
     authority_selector: Optional[str]
+    """The email address of the authenticated user (or service account on behalf of third party
+    principal) making the request. For privacy reasons, the principal email address is
+    redacted for all read-only operations that fail with a "permission denied" error.
+    """
     principal_email: Optional[str]
+    """String representation of identity of requesting party. Populated for both first and third
+    party identities.
+    """
     principal_subject: Optional[str]
+    """Identity delegation history of an authenticated service account that makes the request.
+    It contains information on the real authorities that try to access GCP resources by
+    delegating on a service account. When multiple authorities present, they are guaranteed
+    to be sorted based on the original ordering of the identity delegation events.
+    """
     service_account_delegation_info: Optional[List[ServiceAccountDelegationInfo]]
+    """The name of the service account key used to create or exchange credentials for
+    authenticating the service account making the request. This is a scheme-less URI full
+    resource name.
+    """
     service_account_key_name: Optional[str]
+    """The third party identification (if any) of the authenticated user making the request.
+    When the JSON object represented here has a proto equivalent, the proto name will be
+    indicated in the @type property.
+    """
     third_party_principal: Optional[Dict[str, Any]]
 
     def __init__(self, authority_selector: Optional[str], principal_email: Optional[str], principal_subject: Optional[str], service_account_delegation_info: Optional[List[ServiceAccountDelegationInfo]], service_account_key_name: Optional[str], third_party_principal: Optional[Dict[str, Any]]) -> None:
@@ -161,6 +186,11 @@ class AuthenticationInfo:
 
 
 class Resource:
+    """Resource attributes used in IAM condition evaluation. This field contains resource
+    attributes like resource type and resource name. To get the whole view of the attributes
+    used in IAM condition evaluation, the user must also look into
+    AuditLog.request_metadata.request_attributes.
+    """
     labels: Optional[Dict[str, Any]]
     name: Optional[str]
     service: Optional[str]
@@ -191,9 +221,17 @@ class Resource:
 
 
 class AuthorizationInfo:
+    """Whether or not authorization for resource and permission was granted."""
     granted: Optional[bool]
+    """The required IAM permission."""
     permission: Optional[str]
+    """The resource being accessed, as a REST-style string."""
     resource: Optional[str]
+    """Resource attributes used in IAM condition evaluation. This field contains resource
+    attributes like resource type and resource name. To get the whole view of the attributes
+    used in IAM condition evaluation, the user must also look into
+    AuditLog.request_metadata.request_attributes.
+    """
     resource_attributes: Optional[Resource]
 
     def __init__(self, granted: Optional[bool], permission: Optional[str], resource: Optional[str], resource_attributes: Optional[Resource]) -> None:
@@ -385,7 +423,15 @@ class RequestMetadata:
 
 
 class ResourceLocation:
+    """The locations of a resource after the execution of the operation. Requests to create or
+    delete a location based resource must populate the 'current_locations' field and not the
+    'original_locations' field.
+    """
     current_locations: Optional[List[str]]
+    """The locations of a resource prior to the execution of the operation. Requests that mutate
+    the resource's location must populate both the 'original_locations' as well as the
+    'current_locations' fields. For example:
+    """
     original_locations: Optional[List[str]]
 
     def __init__(self, current_locations: Optional[List[str]], original_locations: Optional[List[str]]) -> None:
