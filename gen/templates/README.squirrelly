@@ -28,18 +28,7 @@ from google.events.cloud.pubsub.v1 import MessagePublishedEvent
 # The Dict may be an argument in a background Cloud Function,
 # or the payload of an HTTP request received by a Cloud Run service with event
 # triggers.
+event_data = "Some event data"
 event = MessagePublishedEvent.from_dict(event_data)
 print(event.message)
-```
-
-## Generation
-
-**Note**: Before generating the package, install and set up
-[quicktype](https://quicktype.io/) and Python 3.7+.
-
-To generate this package, run
-
-``` sh
-chmod +x gen.sh
-./gen.sh
 ```

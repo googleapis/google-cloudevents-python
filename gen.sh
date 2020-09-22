@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-EVENTS_SPEC_REPO='https://github.com/michaelawyu/google-cloudevents'
+EVENTS_SPEC_REPO='https://github.com/googleapis/google-cloudevents'
 
 echo "Cleaning things up..."
 rm -rf workplace/ || true
@@ -26,6 +26,7 @@ export OUT="../"
 npm run start
 
 echo "Cleaning things up..."
+cd ..
 rm -rf workplace/ || true
 
 echo "Completed!"
