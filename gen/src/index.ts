@@ -52,6 +52,7 @@ async function main() {
       eventDescription: eventDescription,
     };
 
+    // Collect each event and categorize by the package it belongs to
     if (allEventsByPkg.has(pkg)) {
       const pkgEvents = allEventsByPkg.get(pkg);
       pkgEvents?.push(event);
@@ -65,9 +66,9 @@ async function main() {
   const initPySqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
   );
-  for (const k of allEventsByPkg.keys()) {
-    const pkgEvents = allEventsByPkg.get(k);
-    const pkgPath = k.replace(/\./g, '/');
+  for (const pkg of allEventsByPkg.keys()) {
+    const pkgEvents = allEventsByPkg.get(pkg);
+    const pkgPath = pkg.replace(/\./g, '/');
     const initPy = sqrl.render(String(initPySqrlTmpl), {
       pkgEvents: pkgEvents,
     });
