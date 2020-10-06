@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-
-import { Interface } from "readline";
-
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
@@ -24,7 +21,7 @@ interface Event {
   package: string;
   eventName: string;
   eventDescription: string;
-};
+}
 
 async function main() {
   if (!IN) console.error('Error in config: `IN` not set');
