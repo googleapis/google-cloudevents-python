@@ -5,8 +5,8 @@ At this moment the following types are available:
 
 | Package | Python Class | Description |
 | ------------- | ------------- | ------------- |
-{{@each(it.allEvents) => t, index}}
-| {{ t.package }} | {{ t.eventName }} | {{ t.eventDescription }} |
+{{@each(it.allEvents) => eventList, index}}
+| {{ eventList[0].package }} | {{ eventList[0].eventName }} | {{ eventList[0].eventDescription }} |
 {{/each}}
 
 ## Installation and Usage

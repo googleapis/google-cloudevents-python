@@ -4,9 +4,9 @@
 #
 # and then, to convert JSON from a string, do
 #
-#     result = event_from_dict(json.loads(json_string))
+#     result = message_published_data_from_dict(json.loads(json_string))
 
-from typing import Optional, Dict, Any, List, Union, TypeVar, Callable, Type, cast
+from typing import Optional, Dict, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
@@ -39,31 +39,6 @@ def from_str(x: Any) -> str:
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
-
-
-def from_float(x: Any) -> float:
-    assert isinstance(x, (float, int)) and not isinstance(x, bool)
-    return float(x)
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
-def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
 
 
 class PubsubMessage:
@@ -107,8 +82,8 @@ class PubsubMessage:
         return result
 
 
-class MessagePublishedEvent:
-    """This event is triggered when a Pub/Sub message is published."""
+class MessagePublishedData:
+    """A message that is published by publishers and consumed by subscribers."""
     """The message that was published."""
     message: Optional[PubsubMessage]
     """The resource name of the subscription for which this event was generated. The format of
@@ -121,11 +96,11 @@ class MessagePublishedEvent:
         self.subscription = subscription
 
     @staticmethod
-    def from_dict(obj: Any) -> 'MessagePublishedEvent':
+    def from_dict(obj: Any) -> 'MessagePublishedData':
         assert isinstance(obj, dict)
         message = from_union([PubsubMessage.from_dict, from_none], obj.get("message"))
         subscription = from_union([from_str, from_none], obj.get("subscription"))
-        return MessagePublishedEvent(message, subscription)
+        return MessagePublishedData(message, subscription)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -134,28 +109,9 @@ class MessagePublishedEvent:
         return result
 
 
-class EventClass:
-    """This event is triggered when a Pub/Sub message is published."""
-    message_published_event: Optional[MessagePublishedEvent]
-
-    def __init__(self, message_published_event: Optional[MessagePublishedEvent]) -> None:
-        self.message_published_event = message_published_event
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'EventClass':
-        assert isinstance(obj, dict)
-        message_published_event = from_union([MessagePublishedEvent.from_dict, from_none], obj.get("MessagePublishedEvent"))
-        return EventClass(message_published_event)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["MessagePublishedEvent"] = from_union([lambda x: to_class(MessagePublishedEvent, x), from_none], self.message_published_event)
-        return result
+def message_published_data_from_dict(s: Any) -> MessagePublishedData:
+    return MessagePublishedData.from_dict(s)
 
 
-def event_from_dict(s: Any) -> Union[List[Any], bool, EventClass, float, int, None, str]:
-    return from_union([from_none, from_float, from_int, from_bool, from_str, lambda x: from_list(lambda x: x, x), EventClass.from_dict], s)
-
-
-def event_to_dict(x: Union[List[Any], bool, EventClass, float, int, None, str]) -> Any:
-    return from_union([from_none, to_float, from_int, from_bool, from_str, lambda x: from_list(lambda x: x, x), lambda x: to_class(EventClass, x)], x)
+def message_published_data_to_dict(x: MessagePublishedData) -> Any:
+    return to_class(MessagePublishedData, x)
