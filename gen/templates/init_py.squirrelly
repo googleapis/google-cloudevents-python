@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{@each(it.pkgEvents) => eventName, index}}
-from .events import {{ eventName }}
+{{@each(it.pkgEvents) => event, index}}
+from .{{ event.eventName }} import {{ event.eventName }}
 {{/each}}
