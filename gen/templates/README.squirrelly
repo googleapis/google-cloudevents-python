@@ -29,6 +29,6 @@ from google.events.cloud.pubsub.v1 import MessagePublishedEvent
 # or the payload of an HTTP request received by a Cloud Run service with event
 # triggers.
 event_data = "Some event data"
-event = MessagePublishedEvent.from_dict(event_data)
+event = MessagePublishedData.from_dict(event_data)
 print(event.message)
 ```
