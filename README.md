@@ -5,8 +5,8 @@ At this moment the following types are available:
 
 | Package | Python Class | Description |
 | ------------- | ------------- | ------------- |
-| google.events.cloud.pubsub.v1 | MessagePublishedEvent | This event is triggered when a Pub/Sub message is published. |
-| google.events.cloud.audit.v1 | AuditLogWrittenEvent | This event is triggered when a new audit log entry is written. |
+| google.events.cloud.pubsub.v1 | MessagePublishedData | A message that is published by publishers and consumed by subscribers. |
+| google.events.cloud.audit.v1 | LogEntryData | This event is triggered when a new audit log entry is written. |
 
 ## Installation and Usage
 
@@ -28,6 +28,6 @@ from google.events.cloud.pubsub.v1 import MessagePublishedEvent
 # or the payload of an HTTP request received by a Cloud Run service with event
 # triggers.
 event_data = "Some event data"
-event = MessagePublishedEvent.from_dict(event_data)
+event = MessagePublishedData.from_dict(event_data)
 print(event.message)
 ```

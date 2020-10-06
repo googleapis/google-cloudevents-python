@@ -5,8 +5,8 @@ At this moment the following types are available:
 
 | Package | Python Class | Description |
 | ------------- | ------------- | ------------- |
-{{@each(it.allEvents) => t, index}}
-| {{ t.package }} | {{ t.eventName }} | {{ t.eventDescription }} |
+{{@each(it.allEvents) => eventList, index}}
+| {{ eventList[0].package }} | {{ eventList[0].eventName }} | {{ eventList[0].eventDescription }} |
 {{/each}}
 
 ## Installation and Usage
@@ -29,6 +29,6 @@ from google.events.cloud.pubsub.v1 import MessagePublishedEvent
 # or the payload of an HTTP request received by a Cloud Run service with event
 # triggers.
 event_data = "Some event data"
-event = MessagePublishedEvent.from_dict(event_data)
+event = MessagePublishedData.from_dict(event_data)
 print(event.message)
 ```

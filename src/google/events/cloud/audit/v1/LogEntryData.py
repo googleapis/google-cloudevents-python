@@ -4,9 +4,9 @@
 #
 # and then, to convert JSON from a string, do
 #
-#     result = event_from_dict(json.loads(json_string))
+#     result = log_entry_data_from_dict(json.loads(json_string))
 
-from typing import Optional, Any, Dict, List, Union, TypeVar, Callable, Type, cast
+from typing import Optional, Any, Dict, List, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
@@ -56,20 +56,24 @@ def from_int(x: Any) -> int:
     return x
 
 
-def from_float(x: Any) -> float:
-    assert isinstance(x, (float, int)) and not isinstance(x, bool)
-    return float(x)
-
-
-def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
-
-
 class LogEntryOperation:
+    """Information about an operation associated with the log entry, if applicable.
+    
+    Additional information about a potentially long-running operation with which a log entry
+    is associated.
+    """
+    """True if this is the first log entry in the operation."""
     first: Optional[bool]
+    """An arbitrary operation identifier. Log entries with the same identifier are assumed to be
+    part of the same operation.
+    """
     id: Optional[str]
+    """True if this is the last log entry in the operation."""
     last: Optional[bool]
+    """An arbitrary producer identifier. The combination of `id` and `producer` must be globally
+    unique. Examples for `producer`: `"MyDivision.MyBigCompany.com"`,
+    `"github.com/MyProject/MyApplication"`.
+    """
     producer: Optional[str]
 
     def __init__(self, first: Optional[bool], id: Optional[str], last: Optional[bool], producer: Optional[str]) -> None:
@@ -98,8 +102,11 @@ class LogEntryOperation:
 
 class ServiceAccountDelegationInfo:
     """Identity delegation history of an authenticated service account"""
+    """The email address of a Google account."""
     principal_email: Optional[str]
+    """Metadata about the service that uses the service account."""
     service_metadata: Optional[Dict[str, Any]]
+    """Metadata about third party identity."""
     third_party_claims: Optional[Dict[str, Any]]
 
     def __init__(self, principal_email: Optional[str], service_metadata: Optional[Dict[str, Any]], third_party_claims: Optional[Dict[str, Any]]) -> None:
@@ -110,21 +117,24 @@ class ServiceAccountDelegationInfo:
     @staticmethod
     def from_dict(obj: Any) -> 'ServiceAccountDelegationInfo':
         assert isinstance(obj, dict)
-        principal_email = from_union([from_str, from_none], obj.get("principal_email"))
-        service_metadata = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("service_metadata"))
-        third_party_claims = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("third_party_claims"))
+        principal_email = from_union([from_str, from_none], obj.get("principalEmail"))
+        service_metadata = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("serviceMetadata"))
+        third_party_claims = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("thirdPartyClaims"))
         return ServiceAccountDelegationInfo(principal_email, service_metadata, third_party_claims)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["principal_email"] = from_union([from_str, from_none], self.principal_email)
-        result["service_metadata"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.service_metadata)
-        result["third_party_claims"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.third_party_claims)
+        result["principalEmail"] = from_union([from_str, from_none], self.principal_email)
+        result["serviceMetadata"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.service_metadata)
+        result["thirdPartyClaims"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.third_party_claims)
         return result
 
 
 class AuthenticationInfo:
-    """Authentication information for the operation."""
+    """Authentication information.
+    
+    Authentication information for the operation.
+    """
     """The authority selector specified by the requestor, if any. It is not guaranteed that the
     principal was allowed to use this authority.
     """
@@ -166,22 +176,22 @@ class AuthenticationInfo:
     @staticmethod
     def from_dict(obj: Any) -> 'AuthenticationInfo':
         assert isinstance(obj, dict)
-        authority_selector = from_union([from_str, from_none], obj.get("authority_selector"))
-        principal_email = from_union([from_str, from_none], obj.get("principal_email"))
-        principal_subject = from_union([from_str, from_none], obj.get("principal_subject"))
-        service_account_delegation_info = from_union([lambda x: from_list(ServiceAccountDelegationInfo.from_dict, x), from_none], obj.get("service_account_delegation_info"))
-        service_account_key_name = from_union([from_str, from_none], obj.get("service_account_key_name"))
-        third_party_principal = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("third_party_principal"))
+        authority_selector = from_union([from_str, from_none], obj.get("authoritySelector"))
+        principal_email = from_union([from_str, from_none], obj.get("principalEmail"))
+        principal_subject = from_union([from_str, from_none], obj.get("principalSubject"))
+        service_account_delegation_info = from_union([lambda x: from_list(ServiceAccountDelegationInfo.from_dict, x), from_none], obj.get("serviceAccountDelegationInfo"))
+        service_account_key_name = from_union([from_str, from_none], obj.get("serviceAccountKeyName"))
+        third_party_principal = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("thirdPartyPrincipal"))
         return AuthenticationInfo(authority_selector, principal_email, principal_subject, service_account_delegation_info, service_account_key_name, third_party_principal)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["authority_selector"] = from_union([from_str, from_none], self.authority_selector)
-        result["principal_email"] = from_union([from_str, from_none], self.principal_email)
-        result["principal_subject"] = from_union([from_str, from_none], self.principal_subject)
-        result["service_account_delegation_info"] = from_union([lambda x: from_list(lambda x: to_class(ServiceAccountDelegationInfo, x), x), from_none], self.service_account_delegation_info)
-        result["service_account_key_name"] = from_union([from_str, from_none], self.service_account_key_name)
-        result["third_party_principal"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.third_party_principal)
+        result["authoritySelector"] = from_union([from_str, from_none], self.authority_selector)
+        result["principalEmail"] = from_union([from_str, from_none], self.principal_email)
+        result["principalSubject"] = from_union([from_str, from_none], self.principal_subject)
+        result["serviceAccountDelegationInfo"] = from_union([lambda x: from_list(lambda x: to_class(ServiceAccountDelegationInfo, x), x), from_none], self.service_account_delegation_info)
+        result["serviceAccountKeyName"] = from_union([from_str, from_none], self.service_account_key_name)
+        result["thirdPartyPrincipal"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.third_party_principal)
         return result
 
 
@@ -189,7 +199,7 @@ class Resource:
     """Resource attributes used in IAM condition evaluation. This field contains resource
     attributes like resource type and resource name. To get the whole view of the attributes
     used in IAM condition evaluation, the user must also look into
-    AuditLog.request_metadata.request_attributes.
+    AuditLog.requestMetadata.requestAttributes.
     """
     labels: Optional[Dict[str, Any]]
     name: Optional[str]
@@ -221,6 +231,9 @@ class Resource:
 
 
 class AuthorizationInfo:
+    """Authorization information. If there are multiple resources or permissions involved, then
+    there is one AuthorizationInfo element for each {resource, permission} tuple.
+    """
     """Whether or not authorization for resource and permission was granted."""
     granted: Optional[bool]
     """The required IAM permission."""
@@ -230,7 +243,7 @@ class AuthorizationInfo:
     """Resource attributes used in IAM condition evaluation. This field contains resource
     attributes like resource type and resource name. To get the whole view of the attributes
     used in IAM condition evaluation, the user must also look into
-    AuditLog.request_metadata.request_attributes.
+    AuditLog.requestMetadata.requestAttributes.
     """
     resource_attributes: Optional[Resource]
 
@@ -246,7 +259,7 @@ class AuthorizationInfo:
         granted = from_union([from_bool, from_none], obj.get("granted"))
         permission = from_union([from_str, from_none], obj.get("permission"))
         resource = from_union([from_str, from_none], obj.get("resource"))
-        resource_attributes = from_union([Resource.from_dict, from_none], obj.get("resource_attributes"))
+        resource_attributes = from_union([Resource.from_dict, from_none], obj.get("resourceAttributes"))
         return AuthorizationInfo(granted, permission, resource, resource_attributes)
 
     def to_dict(self) -> dict:
@@ -254,11 +267,12 @@ class AuthorizationInfo:
         result["granted"] = from_union([from_bool, from_none], self.granted)
         result["permission"] = from_union([from_str, from_none], self.permission)
         result["resource"] = from_union([from_str, from_none], self.resource)
-        result["resource_attributes"] = from_union([lambda x: to_class(Resource, x), from_none], self.resource_attributes)
+        result["resourceAttributes"] = from_union([lambda x: to_class(Resource, x), from_none], self.resource_attributes)
         return result
 
 
 class Peer:
+    """The destination of a network activity, such as accepting a TCP connection."""
     ip: Optional[str]
     labels: Optional[Dict[str, Any]]
     port: Optional[int]
@@ -279,7 +293,7 @@ class Peer:
         labels = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("labels"))
         port = from_union([from_int, from_none], obj.get("port"))
         principal = from_union([from_str, from_none], obj.get("principal"))
-        region_code = from_union([from_str, from_none], obj.get("region_code"))
+        region_code = from_union([from_str, from_none], obj.get("regionCode"))
         return Peer(ip, labels, port, principal, region_code)
 
     def to_dict(self) -> dict:
@@ -288,7 +302,7 @@ class Peer:
         result["labels"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.labels)
         result["port"] = from_union([from_int, from_none], self.port)
         result["principal"] = from_union([from_str, from_none], self.principal)
-        result["region_code"] = from_union([from_str, from_none], self.region_code)
+        result["regionCode"] = from_union([from_str, from_none], self.region_code)
         return result
 
 
@@ -309,7 +323,7 @@ class Auth:
     @staticmethod
     def from_dict(obj: Any) -> 'Auth':
         assert isinstance(obj, dict)
-        access_levels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("access_levels"))
+        access_levels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("accessLevels"))
         audiences = from_union([lambda x: from_list(from_str, x), from_none], obj.get("audiences"))
         claims = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("claims"))
         presenter = from_union([from_str, from_none], obj.get("presenter"))
@@ -318,7 +332,7 @@ class Auth:
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["access_levels"] = from_union([lambda x: from_list(from_str, x), from_none], self.access_levels)
+        result["accessLevels"] = from_union([lambda x: from_list(from_str, x), from_none], self.access_levels)
         result["audiences"] = from_union([lambda x: from_list(from_str, x), from_none], self.audiences)
         result["claims"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.claims)
         result["presenter"] = from_union([from_str, from_none], self.presenter)
@@ -327,6 +341,9 @@ class Auth:
 
 
 class Request:
+    """Request attributes used in IAM condition evaluation. This field contains request
+    attributes like request time and access levels associated with the request.
+    """
     auth: Optional[Auth]
     headers: Optional[Dict[str, Any]]
     host: Optional[str]
@@ -389,10 +406,27 @@ class Request:
 
 
 class RequestMetadata:
+    """Metadata about the operation."""
+    """The IP address of the caller. For caller from internet, this will be public IPv4 or IPv6
+    address. For caller from a Compute Engine VM with external IP address, this will be the
+    VM's external IP address. For caller from a Compute Engine VM without external IP
+    address, if the VM is in the same organization (or project) as the accessed resource,
+    `callerIp` will be the VM's internal IPv4 address, otherwise the `callerIp` will be
+    redacted to "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+    information."
+    """
     caller_ip: Optional[str]
+    """The network of the caller."""
     caller_network: Optional[str]
+    """The user agent of the caller. This information is not authenticated and should be treated
+    accordingly.
+    """
     caller_supplied_user_agent: Optional[str]
+    """The destination of a network activity, such as accepting a TCP connection."""
     destination_attributes: Optional[Peer]
+    """Request attributes used in IAM condition evaluation. This field contains request
+    attributes like request time and access levels associated with the request.
+    """
     request_attributes: Optional[Request]
 
     def __init__(self, caller_ip: Optional[str], caller_network: Optional[str], caller_supplied_user_agent: Optional[str], destination_attributes: Optional[Peer], request_attributes: Optional[Request]) -> None:
@@ -405,32 +439,36 @@ class RequestMetadata:
     @staticmethod
     def from_dict(obj: Any) -> 'RequestMetadata':
         assert isinstance(obj, dict)
-        caller_ip = from_union([from_str, from_none], obj.get("caller_ip"))
-        caller_network = from_union([from_str, from_none], obj.get("caller_network"))
-        caller_supplied_user_agent = from_union([from_str, from_none], obj.get("caller_supplied_user_agent"))
-        destination_attributes = from_union([Peer.from_dict, from_none], obj.get("destination_attributes"))
-        request_attributes = from_union([Request.from_dict, from_none], obj.get("request_attributes"))
+        caller_ip = from_union([from_str, from_none], obj.get("callerIp"))
+        caller_network = from_union([from_str, from_none], obj.get("callerNetwork"))
+        caller_supplied_user_agent = from_union([from_str, from_none], obj.get("callerSuppliedUserAgent"))
+        destination_attributes = from_union([Peer.from_dict, from_none], obj.get("destinationAttributes"))
+        request_attributes = from_union([Request.from_dict, from_none], obj.get("requestAttributes"))
         return RequestMetadata(caller_ip, caller_network, caller_supplied_user_agent, destination_attributes, request_attributes)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["caller_ip"] = from_union([from_str, from_none], self.caller_ip)
-        result["caller_network"] = from_union([from_str, from_none], self.caller_network)
-        result["caller_supplied_user_agent"] = from_union([from_str, from_none], self.caller_supplied_user_agent)
-        result["destination_attributes"] = from_union([lambda x: to_class(Peer, x), from_none], self.destination_attributes)
-        result["request_attributes"] = from_union([lambda x: to_class(Request, x), from_none], self.request_attributes)
+        result["callerIp"] = from_union([from_str, from_none], self.caller_ip)
+        result["callerNetwork"] = from_union([from_str, from_none], self.caller_network)
+        result["callerSuppliedUserAgent"] = from_union([from_str, from_none], self.caller_supplied_user_agent)
+        result["destinationAttributes"] = from_union([lambda x: to_class(Peer, x), from_none], self.destination_attributes)
+        result["requestAttributes"] = from_union([lambda x: to_class(Request, x), from_none], self.request_attributes)
         return result
 
 
 class ResourceLocation:
+    """The resource location information.
+    
+    Location information about a resource.
+    """
     """The locations of a resource after the execution of the operation. Requests to create or
-    delete a location based resource must populate the 'current_locations' field and not the
-    'original_locations' field.
+    delete a location based resource must populate the 'currentLocations' field and not the
+    'originalLocations' field.
     """
     current_locations: Optional[List[str]]
     """The locations of a resource prior to the execution of the operation. Requests that mutate
-    the resource's location must populate both the 'original_locations' as well as the
-    'current_locations' fields. For example:
+    the resource's location must populate both the 'originalLocations' as well as the
+    'currentLocations' fields. For example:
     """
     original_locations: Optional[List[str]]
 
@@ -441,20 +479,29 @@ class ResourceLocation:
     @staticmethod
     def from_dict(obj: Any) -> 'ResourceLocation':
         assert isinstance(obj, dict)
-        current_locations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("current_locations"))
-        original_locations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("original_locations"))
+        current_locations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("currentLocations"))
+        original_locations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("originalLocations"))
         return ResourceLocation(current_locations, original_locations)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["current_locations"] = from_union([lambda x: from_list(from_str, x), from_none], self.current_locations)
-        result["original_locations"] = from_union([lambda x: from_list(from_str, x), from_none], self.original_locations)
+        result["currentLocations"] = from_union([lambda x: from_list(from_str, x), from_none], self.current_locations)
+        result["originalLocations"] = from_union([lambda x: from_list(from_str, x), from_none], self.original_locations)
         return result
 
 
 class Status:
+    """The status of the overall operation."""
+    """The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."""
     code: Optional[int]
+    """A list of messages that carry the error details.  There is a common set of message types
+    for APIs to use.
+    """
     details: Any
+    """A developer-facing error message, which should be in English. Any user-facing error
+    message should be localized and sent in the
+    [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+    """
     message: Optional[str]
 
     def __init__(self, code: Optional[int], details: Any, message: Optional[str]) -> None:
@@ -479,19 +526,57 @@ class Status:
 
 
 class AuditLog:
+    """The log entry payload, which is always an AuditLog for Cloud Audit Log events."""
+    """Authentication information."""
     authentication_info: Optional[AuthenticationInfo]
+    """Authorization information. If there are multiple resources or permissions involved, then
+    there is one AuthorizationInfo element for each {resource, permission} tuple.
+    """
     authorization_info: Optional[List[AuthorizationInfo]]
+    """Other service-specific data about the request, response, and other information associated
+    with the current audited event.
+    """
     metadata: Optional[Dict[str, Any]]
+    """The name of the service method or operation. For example
+    "google.datastore.v1.Datastore.RunQuery"
+    """
     method_name: Optional[str]
+    """The number of items returned from a List or Query API method, if applicable."""
     num_response_items: Optional[int]
+    """The operation request. This may not include all request parameters, such as those that
+    are too large, privacy-sensitive, or duplicated elsewhere in the log record. It should
+    never include user-generated data, such as file contents. When the JSON object
+    represented here has a proto equivalent, the proto name will be indicated in the `@type`
+    property.
+    """
     request: Optional[Dict[str, Any]]
+    """Metadata about the operation."""
     request_metadata: Optional[RequestMetadata]
+    """The resource location information."""
     resource_location: Optional[ResourceLocation]
+    """The resource or collection that is the target of the operation. For example
+    "shelves/SHELF_ID/books"
+    """
     resource_name: Optional[str]
+    """The resource's original state before mutation."""
     resource_original_state: Optional[Dict[str, Any]]
+    """The operation response. This may not include all response elements, such as those that
+    are too large, privacy-sensitive, or duplicated elsewhere in the log record. It should
+    never include user-generated data, such as file contents. When the JSON object
+    represented here has a proto equivalent, the proto name will be indicated in the `@type`
+    property.
+    """
     response: Optional[Dict[str, Any]]
+    """Deprecated, use `metadata` field instead. Other service-specific data about the request,
+    response, and other activities. When the JSON object represented here has a proto
+    equivalent, the proto name will be indicated in the `@type` property.
+    """
     service_data: Optional[Dict[str, Any]]
+    """The name of the API service performing the operation. For example,
+    `"datastore.googleapis.com"`.
+    """
     service_name: Optional[str]
+    """The status of the overall operation."""
     status: Optional[Status]
 
     def __init__(self, authentication_info: Optional[AuthenticationInfo], authorization_info: Optional[List[AuthorizationInfo]], metadata: Optional[Dict[str, Any]], method_name: Optional[str], num_response_items: Optional[int], request: Optional[Dict[str, Any]], request_metadata: Optional[RequestMetadata], resource_location: Optional[ResourceLocation], resource_name: Optional[str], resource_original_state: Optional[Dict[str, Any]], response: Optional[Dict[str, Any]], service_data: Optional[Dict[str, Any]], service_name: Optional[str], status: Optional[Status]) -> None:
@@ -513,43 +598,56 @@ class AuditLog:
     @staticmethod
     def from_dict(obj: Any) -> 'AuditLog':
         assert isinstance(obj, dict)
-        authentication_info = from_union([AuthenticationInfo.from_dict, from_none], obj.get("authentication_info"))
-        authorization_info = from_union([lambda x: from_list(AuthorizationInfo.from_dict, x), from_none], obj.get("authorization_info"))
+        authentication_info = from_union([AuthenticationInfo.from_dict, from_none], obj.get("authenticationInfo"))
+        authorization_info = from_union([lambda x: from_list(AuthorizationInfo.from_dict, x), from_none], obj.get("authorizationInfo"))
         metadata = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("metadata"))
-        method_name = from_union([from_str, from_none], obj.get("method_name"))
-        num_response_items = from_union([from_int, from_none], obj.get("num_response_items"))
+        method_name = from_union([from_str, from_none], obj.get("methodName"))
+        num_response_items = from_union([from_int, from_none], obj.get("numResponseItems"))
         request = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("request"))
-        request_metadata = from_union([RequestMetadata.from_dict, from_none], obj.get("request_metadata"))
-        resource_location = from_union([ResourceLocation.from_dict, from_none], obj.get("resource_location"))
-        resource_name = from_union([from_str, from_none], obj.get("resource_name"))
-        resource_original_state = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("resource_original_state"))
+        request_metadata = from_union([RequestMetadata.from_dict, from_none], obj.get("requestMetadata"))
+        resource_location = from_union([ResourceLocation.from_dict, from_none], obj.get("resourceLocation"))
+        resource_name = from_union([from_str, from_none], obj.get("resourceName"))
+        resource_original_state = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("resourceOriginalState"))
         response = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("response"))
-        service_data = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("service_data"))
-        service_name = from_union([from_str, from_none], obj.get("service_name"))
+        service_data = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("serviceData"))
+        service_name = from_union([from_str, from_none], obj.get("serviceName"))
         status = from_union([Status.from_dict, from_none], obj.get("status"))
         return AuditLog(authentication_info, authorization_info, metadata, method_name, num_response_items, request, request_metadata, resource_location, resource_name, resource_original_state, response, service_data, service_name, status)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["authentication_info"] = from_union([lambda x: to_class(AuthenticationInfo, x), from_none], self.authentication_info)
-        result["authorization_info"] = from_union([lambda x: from_list(lambda x: to_class(AuthorizationInfo, x), x), from_none], self.authorization_info)
+        result["authenticationInfo"] = from_union([lambda x: to_class(AuthenticationInfo, x), from_none], self.authentication_info)
+        result["authorizationInfo"] = from_union([lambda x: from_list(lambda x: to_class(AuthorizationInfo, x), x), from_none], self.authorization_info)
         result["metadata"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.metadata)
-        result["method_name"] = from_union([from_str, from_none], self.method_name)
-        result["num_response_items"] = from_union([from_int, from_none], self.num_response_items)
+        result["methodName"] = from_union([from_str, from_none], self.method_name)
+        result["numResponseItems"] = from_union([from_int, from_none], self.num_response_items)
         result["request"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.request)
-        result["request_metadata"] = from_union([lambda x: to_class(RequestMetadata, x), from_none], self.request_metadata)
-        result["resource_location"] = from_union([lambda x: to_class(ResourceLocation, x), from_none], self.resource_location)
-        result["resource_name"] = from_union([from_str, from_none], self.resource_name)
-        result["resource_original_state"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.resource_original_state)
+        result["requestMetadata"] = from_union([lambda x: to_class(RequestMetadata, x), from_none], self.request_metadata)
+        result["resourceLocation"] = from_union([lambda x: to_class(ResourceLocation, x), from_none], self.resource_location)
+        result["resourceName"] = from_union([from_str, from_none], self.resource_name)
+        result["resourceOriginalState"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.resource_original_state)
         result["response"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.response)
-        result["service_data"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.service_data)
-        result["service_name"] = from_union([from_str, from_none], self.service_name)
+        result["serviceData"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.service_data)
+        result["serviceName"] = from_union([from_str, from_none], self.service_name)
         result["status"] = from_union([lambda x: to_class(Status, x), from_none], self.status)
         return result
 
 
 class MonitoredResource:
+    """The monitored resource that produced this log entry. Example: a log entry that reports a
+    database error would be associated with the monitored resource designating the particular
+    database that reported the error.
+    
+    The monitored resource that produced this log entry.
+    """
+    """Values for all of the labels listed in the associated monitored resource descriptor. For
+    example, Compute Engine VM instances use the labels `"projectId"`, `"instanceId"`, and
+    `"zone"`.
+    """
     labels: Optional[Dict[str, Any]]
+    """Required. The monitored resource type. For example, the type of a Compute Engine VM
+    instance is `gceInstance`.
+    """
     type: Optional[str]
 
     def __init__(self, labels: Optional[Dict[str, Any]], type: Optional[str]) -> None:
@@ -570,21 +668,43 @@ class MonitoredResource:
         return result
 
 
-class AuditLogWrittenEvent:
+class LogEntryData:
     """This event is triggered when a new audit log entry is written."""
+    """A unique identifier for the log entry."""
     insert_id: Optional[str]
+    """A set of user-defined (key, value) data that provides additional information about the
+    log entry.
+    """
     labels: Optional[Dict[str, Any]]
+    """The resource name of the log to which this log entry belongs."""
     log_name: Optional[str]
+    """Information about an operation associated with the log entry, if applicable."""
     operation: Optional[LogEntryOperation]
+    """The log entry payload, which is always an AuditLog for Cloud Audit Log events."""
     proto_payload: Optional[AuditLog]
+    """The time the log entry was received by Logging."""
     receive_timestamp: Optional[str]
+    """The monitored resource that produced this log entry. Example: a log entry that reports a
+    database error would be associated with the monitored resource designating the particular
+    database that reported the error.
+    """
     resource: Optional[MonitoredResource]
-    severity: Optional[int]
+    """The severity of the log entry."""
+    severity: Optional[str]
+    """The span ID within the trace associated with the log entry, if any. For Trace spans, this
+    is the same format that the Trace API v2 uses: a 16-character hexadecimal encoding of an
+    8-byte array, such as `000000000000004a`.
+    """
     span_id: Optional[str]
+    """The time the event described by the log entry occurred."""
     timestamp: Optional[str]
+    """Resource name of the trace associated with the log entry, if any. If it contains a
+    relative resource name, the name is assumed to be relative to `//tracing.googleapis.com`.
+    Example: `projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`
+    """
     trace: Optional[str]
 
-    def __init__(self, insert_id: Optional[str], labels: Optional[Dict[str, Any]], log_name: Optional[str], operation: Optional[LogEntryOperation], proto_payload: Optional[AuditLog], receive_timestamp: Optional[str], resource: Optional[MonitoredResource], severity: Optional[int], span_id: Optional[str], timestamp: Optional[str], trace: Optional[str]) -> None:
+    def __init__(self, insert_id: Optional[str], labels: Optional[Dict[str, Any]], log_name: Optional[str], operation: Optional[LogEntryOperation], proto_payload: Optional[AuditLog], receive_timestamp: Optional[str], resource: Optional[MonitoredResource], severity: Optional[str], span_id: Optional[str], timestamp: Optional[str], trace: Optional[str]) -> None:
         self.insert_id = insert_id
         self.labels = labels
         self.log_name = log_name
@@ -598,59 +718,40 @@ class AuditLogWrittenEvent:
         self.trace = trace
 
     @staticmethod
-    def from_dict(obj: Any) -> 'AuditLogWrittenEvent':
+    def from_dict(obj: Any) -> 'LogEntryData':
         assert isinstance(obj, dict)
-        insert_id = from_union([from_str, from_none], obj.get("insert_id"))
+        insert_id = from_union([from_str, from_none], obj.get("insertId"))
         labels = from_union([lambda x: from_dict(lambda x: x, x), from_none], obj.get("labels"))
-        log_name = from_union([from_str, from_none], obj.get("log_name"))
+        log_name = from_union([from_str, from_none], obj.get("logName"))
         operation = from_union([LogEntryOperation.from_dict, from_none], obj.get("operation"))
-        proto_payload = from_union([AuditLog.from_dict, from_none], obj.get("proto_payload"))
-        receive_timestamp = from_union([from_str, from_none], obj.get("receive_timestamp"))
+        proto_payload = from_union([AuditLog.from_dict, from_none], obj.get("protoPayload"))
+        receive_timestamp = from_union([from_str, from_none], obj.get("receiveTimestamp"))
         resource = from_union([MonitoredResource.from_dict, from_none], obj.get("resource"))
-        severity = from_union([from_int, from_none], obj.get("severity"))
-        span_id = from_union([from_str, from_none], obj.get("span_id"))
+        severity = from_union([from_str, from_none], obj.get("severity"))
+        span_id = from_union([from_str, from_none], obj.get("spanId"))
         timestamp = from_union([from_str, from_none], obj.get("timestamp"))
         trace = from_union([from_str, from_none], obj.get("trace"))
-        return AuditLogWrittenEvent(insert_id, labels, log_name, operation, proto_payload, receive_timestamp, resource, severity, span_id, timestamp, trace)
+        return LogEntryData(insert_id, labels, log_name, operation, proto_payload, receive_timestamp, resource, severity, span_id, timestamp, trace)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["insert_id"] = from_union([from_str, from_none], self.insert_id)
+        result["insertId"] = from_union([from_str, from_none], self.insert_id)
         result["labels"] = from_union([lambda x: from_dict(lambda x: x, x), from_none], self.labels)
-        result["log_name"] = from_union([from_str, from_none], self.log_name)
+        result["logName"] = from_union([from_str, from_none], self.log_name)
         result["operation"] = from_union([lambda x: to_class(LogEntryOperation, x), from_none], self.operation)
-        result["proto_payload"] = from_union([lambda x: to_class(AuditLog, x), from_none], self.proto_payload)
-        result["receive_timestamp"] = from_union([from_str, from_none], self.receive_timestamp)
+        result["protoPayload"] = from_union([lambda x: to_class(AuditLog, x), from_none], self.proto_payload)
+        result["receiveTimestamp"] = from_union([from_str, from_none], self.receive_timestamp)
         result["resource"] = from_union([lambda x: to_class(MonitoredResource, x), from_none], self.resource)
-        result["severity"] = from_union([from_int, from_none], self.severity)
-        result["span_id"] = from_union([from_str, from_none], self.span_id)
+        result["severity"] = from_union([from_str, from_none], self.severity)
+        result["spanId"] = from_union([from_str, from_none], self.span_id)
         result["timestamp"] = from_union([from_str, from_none], self.timestamp)
         result["trace"] = from_union([from_str, from_none], self.trace)
         return result
 
 
-class EventClass:
-    """This event is triggered when a new audit log entry is written."""
-    audit_log_written_event: Optional[AuditLogWrittenEvent]
-
-    def __init__(self, audit_log_written_event: Optional[AuditLogWrittenEvent]) -> None:
-        self.audit_log_written_event = audit_log_written_event
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'EventClass':
-        assert isinstance(obj, dict)
-        audit_log_written_event = from_union([AuditLogWrittenEvent.from_dict, from_none], obj.get("AuditLogWrittenEvent"))
-        return EventClass(audit_log_written_event)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["AuditLogWrittenEvent"] = from_union([lambda x: to_class(AuditLogWrittenEvent, x), from_none], self.audit_log_written_event)
-        return result
+def log_entry_data_from_dict(s: Any) -> LogEntryData:
+    return LogEntryData.from_dict(s)
 
 
-def event_from_dict(s: Any) -> Union[List[Any], bool, EventClass, float, int, None, str]:
-    return from_union([from_none, from_float, from_int, from_bool, from_str, lambda x: from_list(lambda x: x, x), EventClass.from_dict], s)
-
-
-def event_to_dict(x: Union[List[Any], bool, EventClass, float, int, None, str]) -> Any:
-    return from_union([from_none, to_float, from_int, from_bool, from_str, lambda x: from_list(lambda x: x, x), lambda x: to_class(EventClass, x)], x)
+def log_entry_data_to_dict(x: LogEntryData) -> Any:
+    return to_class(LogEntryData, x)

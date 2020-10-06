@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-
-import { Interface } from "readline";
-
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
@@ -15,7 +12,6 @@ let OUT = yargs.argv.out || process.env.OUT;
 const LANGUAGE = 'python';
 const SRC_DIRECTORY = 'src';
 const TEMPLATE_DIRECTORY = 'templates';
-const PY_FILENAME = 'events.py';
 const INIT_PY_TEMPLATE = 'init_py.squirrelly';
 const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
@@ -25,7 +21,7 @@ interface Event {
   package: string;
   eventName: string;
   eventDescription: string;
-};
+}
 
 async function main() {
   if (!IN) console.error('Error in config: `IN` not set');
@@ -37,42 +33,53 @@ async function main() {
   const templateDirectoryPath = `${__dirname}/../../${TEMPLATE_DIRECTORY}`;
 
   const schemasAndGenFiles = await qt.getJSONSchemasAndGenFiles(IN, LANGUAGE);
-  const allEvents: Event[] = [];
+  const allEventsByPkg: Map<string, Event[]> = new Map<string, Event[]>();
   schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
     // Write generated Python scripts
     const pkg = schema['$id'];
     const pkgPath = pkg.replace(/\./g, '/');
     mkdirp.sync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}`);
+    const eventName = schema.name;
     fs.writeFileSync(
-      `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${PY_FILENAME}`,
+      `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${eventName}.py`,
       genFile
     );
 
-    const pkgEvents: string[] = [];
-    Object.keys(schema.properties).map((eventName: string) => {
-      const eventDescription = schema.properties[eventName].description;
-      pkgEvents.push(eventName);
-      allEvents.push({
-        package: pkg,
-        eventName: eventName,
-        eventDescription: eventDescription,
-      });
-    });
+    const eventDescription = schema.description;
+    const event = {
+      package: pkg,
+      eventName: eventName,
+      eventDescription: eventDescription,
+    };
 
-    // Write __init__.py scripts
-    const initPySqrlTmpl = fs.readFileSync(
-      `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
-    );
+    // Collect each event and categorize by the package it belongs to
+    if (allEventsByPkg.has(pkg)) {
+      const pkgEvents = allEventsByPkg.get(pkg);
+      pkgEvents?.push(event);
+    } else {
+      const pkgEvents: Event[] = [event];
+      allEventsByPkg.set(pkg, pkgEvents);
+    }
+  });
+
+  // Write __init__.py scripts
+  const initPySqrlTmpl = fs.readFileSync(
+    `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
+  );
+  for (const pkg of allEventsByPkg.keys()) {
+    const pkgEvents = allEventsByPkg.get(pkg);
+    const pkgPath = pkg.replace(/\./g, '/');
     const initPy = sqrl.render(String(initPySqrlTmpl), {
       pkgEvents: pkgEvents,
     });
     fs.writeFileSync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}/__init__.py`, initPy);
-  });
+  }
 
   // Write the README.md file
   const readMeSqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${README_TEMPLATE}`
   );
+  const allEvents = Array.from(allEventsByPkg.values());
   const readMe = sqrl.render(String(readMeSqrlTmpl), {
     allEvents: allEvents,
   });
