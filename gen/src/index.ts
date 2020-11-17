@@ -45,7 +45,7 @@ async function main() {
       genFile
     );
 
-    const eventDescription = schema.description.replace('\n', '');
+    const eventDescription = schema.description.replace('/\n/g', '');
     const event = {
       package: pkg,
       eventName: eventName,
