@@ -36,7 +36,7 @@ async function main() {
   const allEventsByPkg: Map<string, Event[]> = new Map<string, Event[]>();
   schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
     // Write generated Python scripts
-    const pkg = schema['$id'];
+    const pkg = schema['cloudevent'];
     const pkgPath = pkg.replace(/\./g, '/');
     mkdirp.sync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}`);
     const eventName = schema.name;
