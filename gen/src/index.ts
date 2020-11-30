@@ -15,6 +15,7 @@ const TEMPLATE_DIRECTORY = 'templates';
 const INIT_PY_TEMPLATE = 'init_py.squirrelly';
 const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
+const DISCLAIMER_TEMPLATE = 'disclaimer';
 const VERSION = '0.0.1';
 
 interface Event {
@@ -34,15 +35,18 @@ async function main() {
 
   const schemasAndGenFiles = await qt.getJSONSchemasAndGenFiles(IN, LANGUAGE);
   const allEventsByPkg: Map<string, Event[]> = new Map<string, Event[]>();
+  const disclaimer: string = fs.readFileSync(
+    `${templateDirectoryPath}/${DISCLAIMER_TEMPLATE}`
+  );
   schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
     // Write generated Python scripts
-    const pkg = schema['cloudevent'];
+    const pkg = schema['package'];
     const pkgPath = pkg.replace(/\./g, '/');
     mkdirp.sync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}`);
     const eventName = schema.name;
     fs.writeFileSync(
       `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${eventName}.py`,
-      genFile
+      disclaimer + genFile
     );
 
     const eventDescription = schema.description.replace(/\n/g, '');
