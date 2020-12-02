@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "git": {
+        "name": ".",
+        "remote": "git@github.com:googleapis/google-cloudevents-python.git",
+        "sha": "c4acb56d725516d09051f75aa5bcf77887913218"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "f94318521f63085b9ccb43d42af89f153fb39f15"
+      }
+    }
+  ]
+}
