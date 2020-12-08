@@ -145,19 +145,16 @@ async function main() {
   fs.writeFileSync(`${OUT}/${TEST_DIRECTORY}/helper.py`, pyTestHelper);
   for (const pkg of allEventsByPkg.keys()) {
     const pkgEvents = allEventsByPkg.get(pkg);
-    console.log(pkgEvents);
-    if (pkgEvents != undefined && pkgEvents.length > 0) {
-      const pkgWithoutPrefix = pkg.replace(PACKAGE_PREFIX, '').replace(/\./g, '_').toLowerCase();
-      const pytest = sqrl.render(String(pyTestTmpl), {
-        pkgEvents: pkgEvents,
-        testDirectory: TEST_DIRECTORY,
-        testDataDirectory: TEST_DATA_DIRECTORY,
-      });
-      fs.writeFileSync(
-        `${OUT}/${TEST_DIRECTORY}/test_${pkgWithoutPrefix}.py`,
-        pytest
-      );
-    }
+    const pkgWithoutPrefix = pkg.replace(PACKAGE_PREFIX, '').replace(/\./g, '_').toLowerCase();
+    const pytest = sqrl.render(String(pyTestTmpl), {
+      pkgEvents: pkgEvents,
+      testDirectory: TEST_DIRECTORY,
+      testDataDirectory: TEST_DATA_DIRECTORY,
+    });
+    fs.writeFileSync(
+      `${OUT}/${TEST_DIRECTORY}/test_${pkgWithoutPrefix}.py`,
+      pytest
+    );
   }
 }
 
