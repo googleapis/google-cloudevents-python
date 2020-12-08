@@ -8,6 +8,7 @@ const qt = require('qt');
 
 let IN = yargs.argv.in || process.env.IN;
 let OUT = yargs.argv.out || process.env.OUT;
+let EXAMPLES = yargs.argv.examples || process.env.EXAMPLES
 
 const LANGUAGE = 'python';
 const SRC_DIRECTORY = 'src';
@@ -17,6 +18,12 @@ const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
 const DISCLAIMER_TEMPLATE = 'disclaimer';
 const VERSION = '0.0.1';
+const EXAMPLE_PATH_PREFIX = 'https://googleapis.github.io/google-cloudevents/testdata/';
+const PY_TEST_TEMPLATE = 'pytest.squirrelly';
+const PY_TEST_HELPER_TEMPLATE = 'pytest_helper.squirrelly';
+const PACKAGE_PREFIX = 'google.events.'
+const TEST_DIRECTORY = 'tests';
+const TEST_DATA_DIRECTORY = 'data';
 
 interface Event {
   package: string;
@@ -28,8 +35,10 @@ async function main() {
   if (!IN) console.error('Error in config: `IN` not set');
   if (!OUT) console.error('Error in config: `OUT` not set');
   if (!IN || !OUT) return;
+  if (!EXAMPLES) console.warn('Warn in config: `EXAMPLES` not set');
   if (IN.endsWith('/')) IN = IN.substring(0, IN.length - 1);
   if (OUT.endsWith('/')) OUT = OUT.substring(0, OUT.length - 1);
+  if (EXAMPLES && EXAMPLES.endsWith('/')) EXAMPLES = EXAMPLES.substring(0, EXAMPLES.length - 1);
 
   const templateDirectoryPath = `${__dirname}/../../${TEMPLATE_DIRECTORY}`;
 
@@ -39,21 +48,47 @@ async function main() {
     `${templateDirectoryPath}/${DISCLAIMER_TEMPLATE}`
   );
   schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
-    // Write generated Python scripts
+    // Collect package information and its path
     const pkg = schema['package'];
     const pkgPath = pkg.replace(/\./g, '/');
+
+    // Create directories as needed
     mkdirp.sync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}`);
+    mkdirp.sync(`${OUT}/${TEST_DIRECTORY}/${TEST_DATA_DIRECTORY}`);
+
+    // Write generated Python scripts
     const eventName = schema.name;
     fs.writeFileSync(
       `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${eventName}.py`,
       disclaimer + genFile
     );
+    
+    // Copy event data examples
+    const examplePaths: string[] = [];
+    for (const examplePath of schema.examples) {
+      const examplePathWithoutPrefix = examplePath.replace(EXAMPLE_PATH_PREFIX, '');
+      examplePaths.push(examplePathWithoutPrefix);
+    }
+    const exampleNames: string[] = [];
+    for (const examplePath of examplePaths) {
+      const exampleName = examplePath
+        .replace('.json', '')
+        .replace(/\//g, '.')
+        .replace(PACKAGE_PREFIX, '')
+        .replace(/\./g, '_')
+        .replace(/\-/g, '_')
+        .toLowerCase();
+      exampleNames.push(exampleName);
+      fs.copyFileSync(`${EXAMPLES}/${examplePath}`, `${OUT}/${TEST_DIRECTORY}/${TEST_DATA_DIRECTORY}/${exampleName}.json`);
+    }
 
+    // Collect event related information
     const eventDescription = schema.description.replace(/\n/g, '');
     const event = {
       package: pkg,
       eventName: eventName,
       eventDescription: eventDescription,
+      examples: exampleNames,
     };
 
     // Collect each event and categorize by the package it belongs to
@@ -98,6 +133,32 @@ async function main() {
     version: VERSION,
   });
   fs.writeFileSync(`${OUT}/setup.py`, setupPy);
+
+  // Generate the tests
+  const pyTestTmpl = fs.readFileSync(
+    `${templateDirectoryPath}/${PY_TEST_TEMPLATE}`
+  );
+  const pyTestHelperTmpl = fs.readFileSync(
+    `${templateDirectoryPath}/${PY_TEST_HELPER_TEMPLATE}`
+  );
+  const pyTestHelper = sqrl.render(String(pyTestHelperTmpl));
+  fs.writeFileSync(`${OUT}/${TEST_DIRECTORY}/helper.py`, pyTestHelper);
+  for (const pkg of allEventsByPkg.keys()) {
+    const pkgEvents = allEventsByPkg.get(pkg);
+    console.log(pkgEvents);
+    if (pkgEvents != undefined && pkgEvents.length > 0) {
+      const pkgWithoutPrefix = pkg.replace(PACKAGE_PREFIX, '').replace(/\./g, '_').toLowerCase();
+      const pytest = sqrl.render(String(pyTestTmpl), {
+        pkgEvents: pkgEvents,
+        testDirectory: TEST_DIRECTORY,
+        testDataDirectory: TEST_DATA_DIRECTORY,
+      });
+      fs.writeFileSync(
+        `${OUT}/${TEST_DIRECTORY}/test_${pkgWithoutPrefix}.py`,
+        pytest
+      );
+    }
+  }
 }
 
 if (!module.parent) {
