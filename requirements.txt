@@ -1,0 +1,2 @@
+# Required from types that reads/parses date and times (e.g. google.events.cloud.audit.v1.LogEntryData).
+python-dateutil
