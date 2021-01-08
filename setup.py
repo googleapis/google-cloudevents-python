@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 
 name = "google-events"
 description = "A collection of first party Google Cloud Platform event objects."
-version = "0.0.1"
+version = "0.1.0"
 release_status = "Development Status :: 3 - Alpha"
 dependencies = []
 extras = {
