@@ -30,9 +30,9 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/googleapis/google-cloudevents",
     project_urls={
-        "Source": "https://github.com/googleapis/google-cloudevents",
-        "Documentation": "",
-        "Issue Tracker": "https://github.com/googleapis/google-cloudevents/issues",
+        "Source": "https://github.com/googleapis/google-cloudevents-python",
+        "Documentation": "https://github.com/googleapis/google-cloudevents-python",
+        "Issue Tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
     },
     license="Apache License 2.0",
     author="Google LLC",
