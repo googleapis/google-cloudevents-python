@@ -2,6 +2,7 @@
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
+const pathlib = require('path');
 const sqrl = require('squirrelly');
 
 const qt = require('qt');
@@ -29,6 +30,22 @@ interface Event {
   package: string;
   eventName: string;
   eventDescription: string;
+}
+
+// Walks a directory recursively; if the directory does not include an
+// __init__.py file, add its path to a list
+function walkDir(path: string, res: string[]) {
+  if (!fs.existsSync(pathlib.resolve(path, '__init__.py'))) {
+    res.push(path);
+  }
+
+  const dirents = fs.readdirSync(path, { withFileTypes: true })
+  dirents.map((dirent: any) => {
+    if (!dirent.name.startsWith('.') && !dirent.name.startsWith('_') && dirent.isDirectory()) {
+      const subPath = pathlib.resolve(path, dirent.name);
+      walkDir(subPath, res);
+    }
+  })
 }
 
 async function main() {
@@ -112,6 +129,16 @@ async function main() {
       pkgEvents: pkgEvents,
     });
     fs.writeFileSync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}/__init__.py`, initPy);
+  }
+
+  // Write empty __init__.py scripts
+  const direntsWithoutInitPy : string[] = [];
+  walkDir(`${OUT}/${SRC_DIRECTORY}`, direntsWithoutInitPy);
+  // Remove the first directory from the list, which is always SRC_DIRECTORY
+  // as we do not need to add __init__.py there
+  direntsWithoutInitPy.shift()
+  for (const dirPath of direntsWithoutInitPy) {
+    fs.writeFileSync(`${dirPath}/__init__.py`, "")
   }
 
   // Write the README.md file
