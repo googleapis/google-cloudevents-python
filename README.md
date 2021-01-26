@@ -29,7 +29,7 @@ pip install --upgrade google-events
 To use an event class, see the snippet below:
 
 ``` python
-from google.events.cloud.pubsub.v1 import MessagePublishedEvent
+from google.events.cloud.pubsub.v1 import MessagePublishedData
 
 # Parses a Dict into an event
 # The Dict may be an argument in a background Cloud Function,
