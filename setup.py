@@ -9,7 +9,7 @@ name = "google-events"
 description = "A collection of first party Google Cloud Platform event objects."
 version = "0.1.1"
 release_status = "Development Status :: 3 - Alpha"
-dependencies = []
+dependencies = ["python-dateutil==2.8.1"]
 extras = {
     "dev": ["pylint", "pytest", "black"],
 }
@@ -36,7 +36,7 @@ setup(
     },
     license="Apache License 2.0",
     author="Google LLC",
-    author_email="googleapis-packages@oogle.com",
+    author_email="googleapis-packages@google.com",
     classifiers=[
         release_status,
         "Environment :: Web Environment",
@@ -50,5 +50,6 @@ setup(
     packages=packages,
     package_dir={"": "src"},
     python_requires=">=3.7",
+    install_requires=dependencies,
     extras_require=extras,
 )
