@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.2](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.1...v0.1.2) (2021-02-22)
+
+
+### Bug Fixes
+
+* **packaging:** python module structure and dependencies ([#29](https://www.github.com/googleapis/google-cloudevents-python/issues/29)) ([0d3b38b](https://www.github.com/googleapis/google-cloudevents-python/commit/0d3b38b7c6df9aad8ba5f426d4f703c8a7bf663e))
+
 ### [0.1.1](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.0...v0.1.1) (2021-01-22)
 
 
