@@ -2,6 +2,7 @@
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
+const path = require('path')
 const sqrl = require('squirrelly');
 
 const qt = require('qt');
@@ -17,7 +18,7 @@ const INIT_PY_TEMPLATE = 'init_py.squirrelly';
 const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
 const DISCLAIMER_TEMPLATE = 'disclaimer';
-const VERSION = '0.0.1';
+const VERSION = '0.1.1';
 const EXAMPLE_PATH_PREFIX = 'https://googleapis.github.io/google-cloudevents/testdata/';
 const PY_TEST_TEMPLATE = 'pytest.squirrelly';
 const PY_TEST_HELPER_TEMPLATE = 'pytest_helper.squirrelly';
@@ -62,7 +63,7 @@ async function main() {
       `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${eventName}.py`,
       disclaimer + genFile
     );
-    
+
     // Copy event data examples
     const examplePaths: string[] = [];
     for (const examplePath of schema.examples) {
@@ -102,6 +103,26 @@ async function main() {
   });
 
   // Write __init__.py scripts
+  // 1. Add empty __init__.py in each sub directory under src/
+  let allDirs: string[] = [];
+  const findAllSubdirs = (dir: string) => {
+    const files = fs.readdirSync(dir);
+    files.forEach((file: string) => {
+      var filepath = path.join(dir, file);
+      const stats = fs.statSync(filepath);
+      if (stats.isDirectory()) {
+        allDirs.push(filepath);
+        findAllSubdirs(filepath);
+      }
+    });
+  };
+  findAllSubdirs(path.join(OUT, SRC_DIRECTORY));
+  for (const dir of allDirs) {
+    const filename = path.join(dir, '__init__.py')
+    fs.closeSync(fs.openSync(filename, 'w'));
+  }
+
+  // 2. Write __init__.py in the innermost directories.
   const initPySqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
   );
