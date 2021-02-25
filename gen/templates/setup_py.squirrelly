@@ -1,28 +1,30 @@
-import re
-
+import os
 from setuptools import find_packages, setup
 
-with open("README.md", "rt") as f:
-    readme = f.read()
+release_status = "Development Status :: 3 - Alpha"
+
+package_root = os.path.abspath(os.path.dirname(__file__))
+readme_filename = os.path.join(package_root, "README.md")
+with open(readme_filename, encoding="utf-8") as readme_file:
+    readme = readme_file.read()
 
 setup(
     name="google-events",
     version="{{ it.version }}",
-    url="https://github.com/googleapis/google-cloudevents",
-    project_urls={
-        "Source": "https://github.com/googleapis/google-cloudevents",
-        "Documentation": "",
-        "Issue Tracker": "https://github.com/googleapis/google-cloudevents/issues",
-    },
-    license="Apache License 2.0",
-    author="Google DevRel",
-    author_email="",
-    maintainer="Google DevRel",
-    maintainer_email="",
     description="A collection of first party Google Cloud Platform event objects.",
     long_description=readme,
+    long_description_content_type="text/markdown",
+    url="https://github.com/googleapis/google-cloudevents",
+    project_urls={
+        "Source": "https://github.com/googleapis/google-cloudevents-python",
+        "Documentation": "https://github.com/googleapis/google-cloudevents-python",
+        "Issue Tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
+    },
+    license="Apache License 2.0",
+    author="Google LLC",
+    author_email="googleapis-packages@google.com",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        release_status,
         "Environment :: Web Environment",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
@@ -34,7 +36,6 @@ setup(
     packages=find_packages("{{ it.srcDirectory }}"),
     package_dir={"": "{{ it.srcDirectory }}"},
     python_requires=">=3.7",
-    extras_require={
-        "dev": ["pylint", "pytest", "black"],
-    },
+    install_requires=['python-dateutil==2.8.1'],
+    extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]}
 )
