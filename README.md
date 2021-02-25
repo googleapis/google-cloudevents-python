@@ -1,5 +1,7 @@
 # Google CloudEvents - Python
 
+[![PyPI version](https://badge.fury.io/py/google-events.svg)](https://badge.fury.io/py/google-events)
+
 This library provides classes of common event types used with Google services.
 At this moment the following types are available:
 
