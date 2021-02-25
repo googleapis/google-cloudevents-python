@@ -2,12 +2,14 @@
 const yargs = require('yargs');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
+const path = require('path')
 const sqrl = require('squirrelly');
 
 const qt = require('qt');
 
 let IN = yargs.argv.in || process.env.IN;
 let OUT = yargs.argv.out || process.env.OUT;
+let EXAMPLES = yargs.argv.examples || process.env.EXAMPLES
 
 const LANGUAGE = 'python';
 const SRC_DIRECTORY = 'src';
@@ -16,7 +18,13 @@ const INIT_PY_TEMPLATE = 'init_py.squirrelly';
 const README_TEMPLATE = 'README.squirrelly';
 const SETUP_PY_TEMPLATE = 'setup_py.squirrelly';
 const DISCLAIMER_TEMPLATE = 'disclaimer';
-const VERSION = '0.0.1';
+const VERSION = '0.1.1';
+const EXAMPLE_PATH_PREFIX = 'https://googleapis.github.io/google-cloudevents/testdata/';
+const PY_TEST_TEMPLATE = 'pytest.squirrelly';
+const PY_TEST_HELPER_TEMPLATE = 'pytest_helper.squirrelly';
+const PACKAGE_PREFIX = 'google.events.'
+const TEST_DIRECTORY = 'tests';
+const TEST_DATA_DIRECTORY = 'data';
 
 interface Event {
   package: string;
@@ -28,8 +36,10 @@ async function main() {
   if (!IN) console.error('Error in config: `IN` not set');
   if (!OUT) console.error('Error in config: `OUT` not set');
   if (!IN || !OUT) return;
+  if (!EXAMPLES) console.warn('Warn in config: `EXAMPLES` not set');
   if (IN.endsWith('/')) IN = IN.substring(0, IN.length - 1);
   if (OUT.endsWith('/')) OUT = OUT.substring(0, OUT.length - 1);
+  if (EXAMPLES && EXAMPLES.endsWith('/')) EXAMPLES = EXAMPLES.substring(0, EXAMPLES.length - 1);
 
   const templateDirectoryPath = `${__dirname}/../../${TEMPLATE_DIRECTORY}`;
 
@@ -39,21 +49,47 @@ async function main() {
     `${templateDirectoryPath}/${DISCLAIMER_TEMPLATE}`
   );
   schemasAndGenFiles.map(([schema, genFile]: [any, string]) => {
-    // Write generated Python scripts
+    // Collect package information and its path
     const pkg = schema['package'];
     const pkgPath = pkg.replace(/\./g, '/');
+
+    // Create directories as needed
     mkdirp.sync(`${OUT}/${SRC_DIRECTORY}/${pkgPath}`);
+    mkdirp.sync(`${OUT}/${TEST_DIRECTORY}/${TEST_DATA_DIRECTORY}`);
+
+    // Write generated Python scripts
     const eventName = schema.name;
     fs.writeFileSync(
       `${OUT}/${SRC_DIRECTORY}/${pkgPath}/${eventName}.py`,
       disclaimer + genFile
     );
 
+    // Copy event data examples
+    const examplePaths: string[] = [];
+    for (const examplePath of schema.examples) {
+      const examplePathWithoutPrefix = examplePath.replace(EXAMPLE_PATH_PREFIX, '');
+      examplePaths.push(examplePathWithoutPrefix);
+    }
+    const exampleNames: string[] = [];
+    for (const examplePath of examplePaths) {
+      const exampleName = examplePath
+        .replace('.json', '')
+        .replace(/\//g, '.')
+        .replace(PACKAGE_PREFIX, '')
+        .replace(/\./g, '_')
+        .replace(/\-/g, '_')
+        .toLowerCase();
+      exampleNames.push(exampleName);
+      fs.copyFileSync(`${EXAMPLES}/${examplePath}`, `${OUT}/${TEST_DIRECTORY}/${TEST_DATA_DIRECTORY}/${exampleName}.json`);
+    }
+
+    // Collect event related information
     const eventDescription = schema.description.replace(/\n/g, '');
     const event = {
       package: pkg,
       eventName: eventName,
       eventDescription: eventDescription,
+      examples: exampleNames,
     };
 
     // Collect each event and categorize by the package it belongs to
@@ -67,6 +103,26 @@ async function main() {
   });
 
   // Write __init__.py scripts
+  // 1. Add empty __init__.py in each sub directory under src/
+  let allDirs: string[] = [];
+  const findAllSubdirs = (dir: string) => {
+    const files = fs.readdirSync(dir);
+    files.forEach((file: string) => {
+      var filepath = path.join(dir, file);
+      const stats = fs.statSync(filepath);
+      if (stats.isDirectory()) {
+        allDirs.push(filepath);
+        findAllSubdirs(filepath);
+      }
+    });
+  };
+  findAllSubdirs(path.join(OUT, SRC_DIRECTORY));
+  for (const dir of allDirs) {
+    const filename = path.join(dir, '__init__.py')
+    fs.closeSync(fs.openSync(filename, 'w'));
+  }
+
+  // 2. Write __init__.py in the innermost directories.
   const initPySqrlTmpl = fs.readFileSync(
     `${templateDirectoryPath}/${INIT_PY_TEMPLATE}`
   );
@@ -98,6 +154,29 @@ async function main() {
     version: VERSION,
   });
   fs.writeFileSync(`${OUT}/setup.py`, setupPy);
+
+  // Generate the tests
+  const pyTestTmpl = fs.readFileSync(
+    `${templateDirectoryPath}/${PY_TEST_TEMPLATE}`
+  );
+  const pyTestHelperTmpl = fs.readFileSync(
+    `${templateDirectoryPath}/${PY_TEST_HELPER_TEMPLATE}`
+  );
+  const pyTestHelper = sqrl.render(String(pyTestHelperTmpl));
+  fs.writeFileSync(`${OUT}/${TEST_DIRECTORY}/helper.py`, pyTestHelper);
+  for (const pkg of allEventsByPkg.keys()) {
+    const pkgEvents = allEventsByPkg.get(pkg);
+    const pkgWithoutPrefix = pkg.replace(PACKAGE_PREFIX, '').replace(/\./g, '_').toLowerCase();
+    const pytest = sqrl.render(String(pyTestTmpl), {
+      pkgEvents: pkgEvents,
+      testDirectory: TEST_DIRECTORY,
+      testDataDirectory: TEST_DATA_DIRECTORY,
+    });
+    fs.writeFileSync(
+      `${OUT}/${TEST_DIRECTORY}/test_${pkgWithoutPrefix}.py`,
+      pytest
+    );
+  }
 }
 
 if (!module.parent) {

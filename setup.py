@@ -1,42 +1,28 @@
-import io
 import os
-import re
-
 from setuptools import find_packages, setup
 
-
-name = "google-events"
-description = "A collection of first party Google Cloud Platform event objects."
-version = "0.0.1"
 release_status = "Development Status :: 3 - Alpha"
-dependencies = []
-extras = {
-    "dev": ["pylint", "pytest", "black"],
-}
 
 package_root = os.path.abspath(os.path.dirname(__file__))
-
 readme_filename = os.path.join(package_root, "README.md")
-with io.open(readme_filename, encoding="utf-8") as readme_file:
+with open(readme_filename, encoding="utf-8") as readme_file:
     readme = readme_file.read()
 
-packages = find_packages("src")
-
 setup(
-    name=name,
-    version=version,
-    description=description,
+    name="google-events",
+    version = "0.1.2",
+    description="A collection of first party Google Cloud Platform event objects.",
     long_description=readme,
     long_description_content_type="text/markdown",
     url="https://github.com/googleapis/google-cloudevents",
     project_urls={
-        "Source": "https://github.com/googleapis/google-cloudevents",
-        "Documentation": "",
-        "Issue Tracker": "https://github.com/googleapis/google-cloudevents/issues",
+        "Source": "https://github.com/googleapis/google-cloudevents-python",
+        "Documentation": "https://github.com/googleapis/google-cloudevents-python",
+        "Issue Tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
     },
     license="Apache License 2.0",
     author="Google LLC",
-    author_email="googleapis-packages@oogle.com",
+    author_email="googleapis-packages@google.com",
     classifiers=[
         release_status,
         "Environment :: Web Environment",
@@ -47,8 +33,9 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    packages=packages,
+    packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    extras_require=extras,
+    install_requires=['python-dateutil==2.8.1'],
+    extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]}
 )
