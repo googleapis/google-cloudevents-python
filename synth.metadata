@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/google-cloudevents-python.git",
-        "sha": "7c723fe5a53d6d57c4f30f4261c5f0f820d0d6e1"
+        "sha": "a520adff1666b5e6a6c1aa2435969d46797bbe27"
       }
     },
     {
