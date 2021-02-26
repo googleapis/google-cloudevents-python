@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.3](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.2...v0.1.3) (2021-02-26)
+
+
+### Documentation
+
+* add pypi badge ([#38](https://www.github.com/googleapis/google-cloudevents-python/issues/38)) ([1832d9f](https://www.github.com/googleapis/google-cloudevents-python/commit/1832d9fcb64c2900df2f081d3a95e2b3cf833d0c))
+
 ### [0.1.2](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.1...v0.1.2) (2021-02-22)
 
 
