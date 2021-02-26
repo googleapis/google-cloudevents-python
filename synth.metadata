@@ -4,14 +4,14 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/google-cloudevents-python.git",
-        "sha": "a520adff1666b5e6a6c1aa2435969d46797bbe27"
+        "sha": "1832d9fcb64c2900df2f081d3a95e2b3cf833d0c"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "f15b57ccfd71106c2299e9b89835fe6e55015662"
+        "sha": "fb53b6fb373b7c3edf4e55f3e8036bc6d73fa483"
       }
     }
   ],
