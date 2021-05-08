@@ -6,6 +6,7 @@
   "issue_tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
   "release_level": "alpha",
   "language": "python",
+  "library_type": "OTHER",
   "repo": "googleapis/google-cloudevents-python",
   "distribution_name": "google-events"
 }
