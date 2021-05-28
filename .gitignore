@@ -1,6 +1,6 @@
 env/
 .vscode/
-.github/
+.github/*
 __pycache__
 *.egg-info
 node_modules/
@@ -70,3 +70,7 @@ system_tests/local_test_setup
 # Make sure a generated file isn't accidentally committed.
 pylintrc
 pylintrc.test
+
+# Allow owl bot files
+!.github/.OwlBot.yaml
+!.github/.OwlBot.lock.yaml

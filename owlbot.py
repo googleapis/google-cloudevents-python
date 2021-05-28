@@ -30,7 +30,7 @@ s.move(templated_files / ".kokoro")  # not everything in this directory is used
 s.move(templated_files / ".github" / "release-please.yml")
 
 # Add a docs directory
-s.move(templated_files / "docs", excludes=["docs/multiprocessing.rst"])
+s.move(templated_files / "docs", excludes=["multiprocessing.rst"])
 
 # Config files
 s.move(templated_files / ".trampolinerc")
