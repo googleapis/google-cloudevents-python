@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.4](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.3...v0.1.4) (2021-05-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v17 ([#50](https://www.github.com/googleapis/google-cloudevents-python/issues/50)) ([203704e](https://www.github.com/googleapis/google-cloudevents-python/commit/203704e57c40d9191f9925a52e4a74afc10a7de9))
+
 ### [0.1.3](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.2...v0.1.3) (2021-02-26)
 
 
