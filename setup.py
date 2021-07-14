@@ -36,6 +36,6 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    install_requires=['python-dateutil==2.8.1'],
+    install_requires=['python-dateutil==2.8.2'],
     extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]}
 )
