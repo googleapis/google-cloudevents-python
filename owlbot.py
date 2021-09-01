@@ -40,20 +40,3 @@ s.move(templated_files / "renovate.json")
 # Files for releasing
 s.move(templated_files / "MANIFEST.in")
 s.move(templated_files / "setup.cfg")
-
-# Remove the replacements below once https://github.com/googleapis/synthtool/pull/1188 is merged
-
-# Update googleapis/repo-automation-bots repo to main in .kokoro/*.sh files
-s.replace(".kokoro/*.sh", "repo-automation-bots/tree/master", "repo-automation-bots/tree/main")
-
-s.replace(
-    "docs/conf.py",
-    "master_doc",
-    "root_doc",
-)
-
-s.replace(
-    "docs/conf.py",
-    "# The master toctree document.",
-    "# The root toctree document.",
-)
