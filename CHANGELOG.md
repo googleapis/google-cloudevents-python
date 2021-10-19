@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.4...v0.2.0) (2021-10-14)
+
+
+### Features
+
+* add support for python 3.10 ([#81](https://www.github.com/googleapis/google-cloudevents-python/issues/81)) ([b3396f5](https://www.github.com/googleapis/google-cloudevents-python/commit/b3396f5ce24cf582ad13325ef12081c93ecad6c9))
+
 ### [0.1.4](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.3...v0.1.4) (2021-05-28)
 
 
