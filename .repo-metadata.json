@@ -1,12 +1,12 @@
 {
-  "name": "google-events",
-  "name_pretty": "Google CloudEvents - Python",
-  "product_documentation": "https://googleapis.dev/python/google-events/latest",
-  "client_documentation": "https://googleapis.dev/python/google-events/latest",
-  "issue_tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
-  "release_level": "alpha",
-  "language": "python",
-  "library_type": "OTHER",
-  "repo": "googleapis/google-cloudevents-python",
-  "distribution_name": "google-events"
+    "name": "google-events",
+    "name_pretty": "Google CloudEvents - Python",
+    "product_documentation": "https://googleapis.dev/python/google-events/latest",
+    "client_documentation": "https://googleapis.dev/python/google-events/latest",
+    "issue_tracker": "https://github.com/googleapis/google-cloudevents-python/issues",
+    "release_level": "preview",
+    "language": "python",
+    "library_type": "OTHER",
+    "repo": "googleapis/google-cloudevents-python",
+    "distribution_name": "google-events"
 }
