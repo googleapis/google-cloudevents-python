@@ -18,23 +18,3 @@ import stringcase
 
 from helper import compare_values
 
-def test_cloud_cloudbuild_v1_buildeventdata_complex():
-    from google.events.cloud.cloudbuild.v1 import BuildEventData
-    with open('tests/data/cloud_cloudbuild_v1_buildeventdata_complex.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = BuildEventData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-
-def test_cloud_cloudbuild_v1_buildeventdata_simple():
-    from google.events.cloud.cloudbuild.v1 import BuildEventData
-    with open('tests/data/cloud_cloudbuild_v1_buildeventdata_simple.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = BuildEventData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-

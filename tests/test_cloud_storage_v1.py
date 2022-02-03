@@ -18,16 +18,6 @@ import stringcase
 
 from helper import compare_values
 
-def test_cloud_storage_v1_storageobjectdata_complex():
-    from google.events.cloud.storage.v1 import StorageObjectData
-    with open('tests/data/cloud_storage_v1_storageobjectdata_complex.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = StorageObjectData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-
 def test_cloud_storage_v1_storageobjectdata_simple():
     from google.events.cloud.storage.v1 import StorageObjectData
     with open('tests/data/cloud_storage_v1_storageobjectdata_simple.json') as f:

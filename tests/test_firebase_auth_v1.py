@@ -18,13 +18,3 @@ import stringcase
 
 from helper import compare_values
 
-def test_firebase_auth_v1_autheventdata_complex():
-    from google.events.firebase.auth.v1 import AuthEventData
-    with open('tests/data/firebase_auth_v1_autheventdata_complex.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = AuthEventData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-

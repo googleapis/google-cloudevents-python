@@ -18,13 +18,3 @@ import stringcase
 
 from helper import compare_values
 
-def test_cloud_scheduler_v1_schedulerjobdata_simple():
-    from google.events.cloud.scheduler.v1 import SchedulerJobData
-    with open('tests/data/cloud_scheduler_v1_schedulerjobdata_simple.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = SchedulerJobData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-

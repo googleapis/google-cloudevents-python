@@ -18,13 +18,3 @@ import stringcase
 
 from helper import compare_values
 
-def test_firebase_remoteconfig_v1_remoteconfigeventdata_simple():
-    from google.events.firebase.remoteconfig.v1 import RemoteConfigEventData
-    with open('tests/data/firebase_remoteconfig_v1_remoteconfigeventdata_simple.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = RemoteConfigEventData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-

@@ -84,8 +84,7 @@ async function main() {
     }
 
     // Collect event related information
-    const definitions = schema.definitions
-    const eventDescription = definitions[eventName]["description"].replace(/\n/g, '');
+    const eventDescription = schema.description.replace(/\n/g, '');
     const event = {
       package: pkg,
       eventName: eventName,
