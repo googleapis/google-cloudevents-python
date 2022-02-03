@@ -1,7 +1,7 @@
 {
   "bucket": "some-bucket",
   "contentType": "text/plain",
-  "crc32C": "rTVTeQ==",
+  "crc32c": "rTVTeQ==",
   "etag": "CNHZkbuF/ugCEAE=",
   "generation": "1587627537231057",
   "id": "some-bucket/folder/Test.cs/1587627537231057",
@@ -13,7 +13,7 @@
   "selfLink": "https://www.googleapis.com/storage/v1/b/some-bucket/o/folder/Test.cs",
   "size": "352",
   "storageClass": "MULTI_REGIONAL",
-  "timeCreated": "2020-04-23T07:38:57.23Z",
-  "timeStorageClassUpdated": "2020-04-23T07:38:57.23Z",
-  "updated": "2020-04-23T07:38:57.23Z"
+  "timeCreated": "2020-04-23T07:38:57.230Z",
+  "timeStorageClassUpdated": "2020-04-23T07:38:57.230Z",
+  "updated": "2020-04-23T07:38:57.230Z"
 }

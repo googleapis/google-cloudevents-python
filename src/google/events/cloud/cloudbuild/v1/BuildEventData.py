@@ -11,79 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# This code parses date/times, so please
-#
-#     pip install python-dateutil
-#
-# To use this code, make sure you
-#
-#     import json
-#
-# and then, to convert JSON from a string, do
-#
-#     result = build_event_data_from_dict(json.loads(json_string))
-
-from typing import Optional, Any, List, Union, Dict, TypeVar, Callable, Type, cast
+from typing import Optional, List, Union, Dict
 from datetime import datetime
 from enum import Enum
-import dateutil.parser
-
-
-T = TypeVar("T")
-EnumT = TypeVar("EnumT", bound=Enum)
-
-
-def from_datetime(x: Any) -> datetime:
-    return dateutil.parser.parse(x)
-
-
-def from_none(x: Any) -> Any:
-    assert x is None
-    return x
-
-
-def from_union(fs, x):
-    for f in fs:
-        try:
-            return f(x)
-        except:
-            pass
-    assert False
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def to_enum(c: Type[EnumT], x: Any) -> EnumT:
-    assert isinstance(x, c)
-    return x.value
-
-
-def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
-    assert isinstance(x, dict)
-    return { k: f(v) for (k, v) in x.items() }
-
-
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
 
 
 class ObjectsTiming:
@@ -100,19 +30,6 @@ class ObjectsTiming:
         self.end_time = end_time
         self.start_time = start_time
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'ObjectsTiming':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return ObjectsTiming(end_time, start_time)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
-
 
 class Objects:
     """A list of objects to be uploaded to Cloud Storage upon successful
@@ -126,6 +43,9 @@ class Objects:
     Build resource's results field.
     
     If any objects fail to be pushed, the build is marked FAILURE.
+    
+    Files in the workspace to upload to Cloud Storage upon successful
+    completion of all build steps.
     """
     """Cloud Storage bucket and optional object path, in the form
     "gs://bucket/path/to/somewhere/". (see [Bucket Name
@@ -145,24 +65,12 @@ class Objects:
         self.paths = paths
         self.timing = timing
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Objects':
-        assert isinstance(obj, dict)
-        location = from_union([from_str, from_none], obj.get("location"))
-        paths = from_union([lambda x: from_list(from_str, x), from_none], obj.get("paths"))
-        timing = from_union([ObjectsTiming.from_dict, from_none], obj.get("timing"))
-        return Objects(location, paths, timing)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["location"] = from_union([from_str, from_none], self.location)
-        result["paths"] = from_union([lambda x: from_list(from_str, x), from_none], self.paths)
-        result["timing"] = from_union([lambda x: to_class(ObjectsTiming, x), from_none], self.timing)
-        return result
-
 
 class Artifacts:
     """Artifacts produced by the build that should be uploaded upon
+    successful completion of all build steps.
+    
+    Artifacts produced by a build that should be uploaded upon
     successful completion of all build steps.
     """
     """A list of images to be pushed upon the successful completion of all build
@@ -194,19 +102,6 @@ class Artifacts:
         self.images = images
         self.objects = objects
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Artifacts':
-        assert isinstance(obj, dict)
-        images = from_union([lambda x: from_list(from_str, x), from_none], obj.get("images"))
-        objects = from_union([Objects.from_dict, from_none], obj.get("objects"))
-        return Artifacts(images, objects)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["images"] = from_union([lambda x: from_list(from_str, x), from_none], self.images)
-        result["objects"] = from_union([lambda x: to_class(Objects, x), from_none], self.objects)
-        return result
-
 
 class LogStreamingOptionEnum(Enum):
     STREAM_DEFAULT = "STREAM_DEFAULT"
@@ -229,6 +124,12 @@ class MachineTypeEnum(Enum):
 class RequestedVerifyOptionEnum(Enum):
     NOT_VERIFIED = "NOT_VERIFIED"
     VERIFIED = "VERIFIED"
+
+
+class SourceProvenanceHashEnum(Enum):
+    MD5 = "MD5"
+    NONE = "NONE"
+    SHA256 = "SHA256"
 
 
 class SubstitutionOptionEnum(Enum):
@@ -257,22 +158,12 @@ class Volume:
         self.name = name
         self.path = path
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Volume':
-        assert isinstance(obj, dict)
-        name = from_union([from_str, from_none], obj.get("name"))
-        path = from_union([from_str, from_none], obj.get("path"))
-        return Volume(name, path)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["path"] = from_union([from_str, from_none], self.path)
-        return result
-
 
 class Options:
-    """Special options for this build."""
+    """Special options for this build.
+    
+    Optional arguments to enable specific features of builds.
+    """
     """Requested disk size for the VM that runs the build. Note that this is *NOT*
     "disk free"; some of the space will be used by the operating system and
     build utilities. Also note that this is the minimum disk size that will be
@@ -280,7 +171,7 @@ class Options:
     requested. At present, the maximum disk size is 1000GB; builds that request
     more than the maximum are rejected with an error.
     """
-    disk_size_gb: Optional[str]
+    disk_size_gb: Optional[int]
     """A list of global environment variable definitions that will exist for all
     build steps in this build. If a variable is defined in both globally and in
     a build step, the variable will use the build step value.
@@ -308,7 +199,7 @@ class Options:
     """
     secret_env: Optional[List[str]]
     """Requested hash for SourceProvenance."""
-    source_provenance_hash: Optional[List[Union[int, str]]]
+    source_provenance_hash: Optional[List[Union[float, SourceProvenanceHashEnum, int]]]
     """Option to specify behavior when there is an error in the substitution
     checks.
     """
@@ -329,7 +220,7 @@ class Options:
     """
     worker_pool: Optional[str]
 
-    def __init__(self, disk_size_gb: Optional[str], env: Optional[List[str]], logging: Union[LoggingEnum, int, None], log_streaming_option: Union[LogStreamingOptionEnum, int, None], machine_type: Union[MachineTypeEnum, int, None], requested_verify_option: Union[RequestedVerifyOptionEnum, int, None], secret_env: Optional[List[str]], source_provenance_hash: Optional[List[Union[int, str]]], substitution_option: Union[SubstitutionOptionEnum, int, None], volumes: Optional[List[Volume]], worker_pool: Optional[str]) -> None:
+    def __init__(self, disk_size_gb: Optional[int], env: Optional[List[str]], logging: Union[LoggingEnum, int, None], log_streaming_option: Union[LogStreamingOptionEnum, int, None], machine_type: Union[MachineTypeEnum, int, None], requested_verify_option: Union[RequestedVerifyOptionEnum, int, None], secret_env: Optional[List[str]], source_provenance_hash: Optional[List[Union[float, SourceProvenanceHashEnum, int]]], substitution_option: Union[SubstitutionOptionEnum, int, None], volumes: Optional[List[Volume]], worker_pool: Optional[str]) -> None:
         self.disk_size_gb = disk_size_gb
         self.env = env
         self.logging = logging
@@ -341,76 +232,6 @@ class Options:
         self.substitution_option = substitution_option
         self.volumes = volumes
         self.worker_pool = worker_pool
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Options':
-        assert isinstance(obj, dict)
-        disk_size_gb = from_union([from_str, from_none], obj.get("diskSizeGb"))
-        env = from_union([lambda x: from_list(from_str, x), from_none], obj.get("env"))
-        logging = from_union([from_int, LoggingEnum, from_none], obj.get("logging"))
-        log_streaming_option = from_union([from_int, LogStreamingOptionEnum, from_none], obj.get("logStreamingOption"))
-        machine_type = from_union([from_int, MachineTypeEnum, from_none], obj.get("machineType"))
-        requested_verify_option = from_union([from_int, RequestedVerifyOptionEnum, from_none], obj.get("requestedVerifyOption"))
-        secret_env = from_union([lambda x: from_list(from_str, x), from_none], obj.get("secretEnv"))
-        source_provenance_hash = from_union([lambda x: from_list(lambda x: from_union([from_int, from_str], x), x), from_none], obj.get("sourceProvenanceHash"))
-        substitution_option = from_union([from_int, SubstitutionOptionEnum, from_none], obj.get("substitutionOption"))
-        volumes = from_union([lambda x: from_list(Volume.from_dict, x), from_none], obj.get("volumes"))
-        worker_pool = from_union([from_str, from_none], obj.get("workerPool"))
-        return Options(disk_size_gb, env, logging, log_streaming_option, machine_type, requested_verify_option, secret_env, source_provenance_hash, substitution_option, volumes, worker_pool)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["diskSizeGb"] = from_union([from_str, from_none], self.disk_size_gb)
-        result["env"] = from_union([lambda x: from_list(from_str, x), from_none], self.env)
-        result["logging"] = from_union([from_int, lambda x: to_enum(LoggingEnum, x), from_none], self.logging)
-        result["logStreamingOption"] = from_union([from_int, lambda x: to_enum(LogStreamingOptionEnum, x), from_none], self.log_streaming_option)
-        result["machineType"] = from_union([from_int, lambda x: to_enum(MachineTypeEnum, x), from_none], self.machine_type)
-        result["requestedVerifyOption"] = from_union([from_int, lambda x: to_enum(RequestedVerifyOptionEnum, x), from_none], self.requested_verify_option)
-        result["secretEnv"] = from_union([lambda x: from_list(from_str, x), from_none], self.secret_env)
-        result["sourceProvenanceHash"] = from_union([lambda x: from_list(lambda x: from_union([from_int, from_str], x), x), from_none], self.source_provenance_hash)
-        result["substitutionOption"] = from_union([from_int, lambda x: to_enum(SubstitutionOptionEnum, x), from_none], self.substitution_option)
-        result["volumes"] = from_union([lambda x: from_list(lambda x: to_class(Volume, x), x), from_none], self.volumes)
-        result["workerPool"] = from_union([from_str, from_none], self.worker_pool)
-        return result
-
-
-class QueueTTL:
-    """TTL in queue for this build. If provided and the build is enqueued longer
-    than this value, the build will expire and the build status will be
-    `EXPIRED`.
-    
-    The TTL starts ticking from create_time.
-    """
-    """Signed fractions of a second at nanosecond resolution of the span
-    of time. Durations less than one second are represented with a 0
-    `seconds` field and a positive or negative `nanos` field. For durations
-    of one second or more, a non-zero value for the `nanos` field must be
-    of the same sign as the `seconds` field. Must be from -999,999,999
-    to +999,999,999 inclusive.
-    """
-    nanos: Optional[int]
-    """Signed seconds of the span of time. Must be from -315,576,000,000
-    to +315,576,000,000 inclusive. Note: these bounds are computed from:
-    60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
-    """
-    seconds: Optional[str]
-
-    def __init__(self, nanos: Optional[int], seconds: Optional[str]) -> None:
-        self.nanos = nanos
-        self.seconds = seconds
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'QueueTTL':
-        assert isinstance(obj, dict)
-        nanos = from_union([from_int, from_none], obj.get("nanos"))
-        seconds = from_union([from_str, from_none], obj.get("seconds"))
-        return QueueTTL(nanos, seconds)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["nanos"] = from_union([from_int, from_none], self.nanos)
-        result["seconds"] = from_union([from_str, from_none], self.seconds)
-        return result
 
 
 class ArtifactTiming:
@@ -429,19 +250,6 @@ class ArtifactTiming:
         self.end_time = end_time
         self.start_time = start_time
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'ArtifactTiming':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return ArtifactTiming(end_time, start_time)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
-
 
 class PushTiming:
     """Stores timing information for pushing the specified image.
@@ -459,21 +267,8 @@ class PushTiming:
         self.end_time = end_time
         self.start_time = start_time
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'PushTiming':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return PushTiming(end_time, start_time)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
-
-
-class Image:
+class BuiltImage:
     """An image built by the pipeline."""
     """Docker Registry 2.0 digest."""
     digest: Optional[str]
@@ -489,24 +284,12 @@ class Image:
         self.name = name
         self.push_timing = push_timing
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Image':
-        assert isinstance(obj, dict)
-        digest = from_union([from_str, from_none], obj.get("digest"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        push_timing = from_union([PushTiming.from_dict, from_none], obj.get("pushTiming"))
-        return Image(digest, name, push_timing)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["digest"] = from_union([from_str, from_none], self.digest)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["pushTiming"] = from_union([lambda x: to_class(PushTiming, x), from_none], self.push_timing)
-        return result
-
 
 class Results:
-    """Results of the build."""
+    """Results of the build.
+    
+    Artifacts created by the build pipeline.
+    """
     """Path to the artifact manifest. Only populated when artifacts are uploaded."""
     artifact_manifest: Optional[str]
     """Time to push all non-container artifacts."""
@@ -524,38 +307,17 @@ class Results:
     """
     build_step_outputs: Optional[List[str]]
     """Container images that were built as a part of the build."""
-    images: Optional[List[Image]]
+    images: Optional[List[BuiltImage]]
     """Number of artifacts uploaded. Only populated when artifacts are uploaded."""
-    num_artifacts: Optional[str]
+    num_artifacts: Optional[int]
 
-    def __init__(self, artifact_manifest: Optional[str], artifact_timing: Optional[ArtifactTiming], build_step_images: Optional[List[str]], build_step_outputs: Optional[List[str]], images: Optional[List[Image]], num_artifacts: Optional[str]) -> None:
+    def __init__(self, artifact_manifest: Optional[str], artifact_timing: Optional[ArtifactTiming], build_step_images: Optional[List[str]], build_step_outputs: Optional[List[str]], images: Optional[List[BuiltImage]], num_artifacts: Optional[int]) -> None:
         self.artifact_manifest = artifact_manifest
         self.artifact_timing = artifact_timing
         self.build_step_images = build_step_images
         self.build_step_outputs = build_step_outputs
         self.images = images
         self.num_artifacts = num_artifacts
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Results':
-        assert isinstance(obj, dict)
-        artifact_manifest = from_union([from_str, from_none], obj.get("artifactManifest"))
-        artifact_timing = from_union([ArtifactTiming.from_dict, from_none], obj.get("artifactTiming"))
-        build_step_images = from_union([lambda x: from_list(from_str, x), from_none], obj.get("buildStepImages"))
-        build_step_outputs = from_union([lambda x: from_list(from_str, x), from_none], obj.get("buildStepOutputs"))
-        images = from_union([lambda x: from_list(Image.from_dict, x), from_none], obj.get("images"))
-        num_artifacts = from_union([from_str, from_none], obj.get("numArtifacts"))
-        return Results(artifact_manifest, artifact_timing, build_step_images, build_step_outputs, images, num_artifacts)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["artifactManifest"] = from_union([from_str, from_none], self.artifact_manifest)
-        result["artifactTiming"] = from_union([lambda x: to_class(ArtifactTiming, x), from_none], self.artifact_timing)
-        result["buildStepImages"] = from_union([lambda x: from_list(from_str, x), from_none], self.build_step_images)
-        result["buildStepOutputs"] = from_union([lambda x: from_list(from_str, x), from_none], self.build_step_outputs)
-        result["images"] = from_union([lambda x: from_list(lambda x: to_class(Image, x), x), from_none], self.images)
-        result["numArtifacts"] = from_union([from_str, from_none], self.num_artifacts)
-        return result
 
 
 class Secret:
@@ -576,19 +338,6 @@ class Secret:
     def __init__(self, kms_key_name: Optional[str], secret_env: Optional[Dict[str, str]]) -> None:
         self.kms_key_name = kms_key_name
         self.secret_env = secret_env
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Secret':
-        assert isinstance(obj, dict)
-        kms_key_name = from_union([from_str, from_none], obj.get("kmsKeyName"))
-        secret_env = from_union([lambda x: from_dict(from_str, x), from_none], obj.get("secretEnv"))
-        return Secret(kms_key_name, secret_env)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["kmsKeyName"] = from_union([from_str, from_none], self.kms_key_name)
-        result["secretEnv"] = from_union([lambda x: from_dict(from_str, x), from_none], self.secret_env)
-        return result
 
 
 class RepoSourceClass:
@@ -640,31 +389,6 @@ class RepoSourceClass:
         self.substitutions = substitutions
         self.tag_name = tag_name
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'RepoSourceClass':
-        assert isinstance(obj, dict)
-        branch_name = from_union([from_str, from_none], obj.get("branchName"))
-        commit_sha = from_union([from_str, from_none], obj.get("commitSha"))
-        dir = from_union([from_str, from_none], obj.get("dir"))
-        invert_regex = from_union([from_bool, from_none], obj.get("invertRegex"))
-        project_id = from_union([from_str, from_none], obj.get("projectId"))
-        repo_name = from_union([from_str, from_none], obj.get("repoName"))
-        substitutions = from_union([lambda x: from_dict(from_str, x), from_none], obj.get("substitutions"))
-        tag_name = from_union([from_str, from_none], obj.get("tagName"))
-        return RepoSourceClass(branch_name, commit_sha, dir, invert_regex, project_id, repo_name, substitutions, tag_name)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["branchName"] = from_union([from_str, from_none], self.branch_name)
-        result["commitSha"] = from_union([from_str, from_none], self.commit_sha)
-        result["dir"] = from_union([from_str, from_none], self.dir)
-        result["invertRegex"] = from_union([from_bool, from_none], self.invert_regex)
-        result["projectId"] = from_union([from_str, from_none], self.project_id)
-        result["repoName"] = from_union([from_str, from_none], self.repo_name)
-        result["substitutions"] = from_union([lambda x: from_dict(from_str, x), from_none], self.substitutions)
-        result["tagName"] = from_union([from_str, from_none], self.tag_name)
-        return result
-
 
 class StorageSourceClass:
     """If provided, get the source from this location in Google Cloud Storage.
@@ -679,29 +403,14 @@ class StorageSourceClass:
     """Google Cloud Storage generation for the object. If the generation is
     omitted, the latest generation will be used.
     """
-    generation: Optional[str]
+    generation: Optional[int]
     """Google Cloud Storage object containing the source."""
     object: Optional[str]
 
-    def __init__(self, bucket: Optional[str], generation: Optional[str], object: Optional[str]) -> None:
+    def __init__(self, bucket: Optional[str], generation: Optional[int], object: Optional[str]) -> None:
         self.bucket = bucket
         self.generation = generation
         self.object = object
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'StorageSourceClass':
-        assert isinstance(obj, dict)
-        bucket = from_union([from_str, from_none], obj.get("bucket"))
-        generation = from_union([from_str, from_none], obj.get("generation"))
-        object = from_union([from_str, from_none], obj.get("object"))
-        return StorageSourceClass(bucket, generation, object)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["bucket"] = from_union([from_str, from_none], self.bucket)
-        result["generation"] = from_union([from_str, from_none], self.generation)
-        result["object"] = from_union([from_str, from_none], self.object)
-        return result
 
 
 class Source:
@@ -717,68 +426,28 @@ class Source:
         self.repo_source = repo_source
         self.storage_source = storage_source
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Source':
-        assert isinstance(obj, dict)
-        repo_source = from_union([RepoSourceClass.from_dict, from_none], obj.get("repoSource"))
-        storage_source = from_union([StorageSourceClass.from_dict, from_none], obj.get("storageSource"))
-        return Source(repo_source, storage_source)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["repoSource"] = from_union([lambda x: to_class(RepoSourceClass, x), from_none], self.repo_source)
-        result["storageSource"] = from_union([lambda x: to_class(StorageSourceClass, x), from_none], self.storage_source)
-        return result
-
-
-class TypeEnum(Enum):
-    MD5 = "MD5"
-    NONE = "NONE"
-    SHA256 = "SHA256"
-
-
-class FileHashElement:
+class Hash:
     """Container message for hash values."""
     """The type of hash that was performed."""
-    type: Union[TypeEnum, int, None]
+    type: Union[SourceProvenanceHashEnum, int, None]
     """The hash value."""
     value: Optional[str]
 
-    def __init__(self, type: Union[TypeEnum, int, None], value: Optional[str]) -> None:
+    def __init__(self, type: Union[SourceProvenanceHashEnum, int, None], value: Optional[str]) -> None:
         self.type = type
         self.value = value
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'FileHashElement':
-        assert isinstance(obj, dict)
-        type = from_union([from_int, TypeEnum, from_none], obj.get("type"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        return FileHashElement(type, value)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_int, lambda x: to_enum(TypeEnum, x), from_none], self.type)
-        result["value"] = from_union([from_str, from_none], self.value)
-        return result
-
-
-class FileHashValue:
+class FileHashes:
+    """Container message for hashes of byte content of files, used in
+    SourceProvenance messages to verify integrity of source input to the build.
+    """
     """Collection of file hashes."""
-    file_hash: Optional[List[FileHashElement]]
+    file_hash: Optional[List[Hash]]
 
-    def __init__(self, file_hash: Optional[List[FileHashElement]]) -> None:
+    def __init__(self, file_hash: Optional[List[Hash]]) -> None:
         self.file_hash = file_hash
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'FileHashValue':
-        assert isinstance(obj, dict)
-        file_hash = from_union([lambda x: from_list(FileHashElement.from_dict, x), from_none], obj.get("fileHash"))
-        return FileHashValue(file_hash)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["fileHash"] = from_union([lambda x: from_list(lambda x: to_class(FileHashElement, x), x), from_none], self.file_hash)
-        return result
 
 
 class ResolvedRepoSourceClass:
@@ -833,31 +502,6 @@ class ResolvedRepoSourceClass:
         self.substitutions = substitutions
         self.tag_name = tag_name
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'ResolvedRepoSourceClass':
-        assert isinstance(obj, dict)
-        branch_name = from_union([from_str, from_none], obj.get("branchName"))
-        commit_sha = from_union([from_str, from_none], obj.get("commitSha"))
-        dir = from_union([from_str, from_none], obj.get("dir"))
-        invert_regex = from_union([from_bool, from_none], obj.get("invertRegex"))
-        project_id = from_union([from_str, from_none], obj.get("projectId"))
-        repo_name = from_union([from_str, from_none], obj.get("repoName"))
-        substitutions = from_union([lambda x: from_dict(from_str, x), from_none], obj.get("substitutions"))
-        tag_name = from_union([from_str, from_none], obj.get("tagName"))
-        return ResolvedRepoSourceClass(branch_name, commit_sha, dir, invert_regex, project_id, repo_name, substitutions, tag_name)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["branchName"] = from_union([from_str, from_none], self.branch_name)
-        result["commitSha"] = from_union([from_str, from_none], self.commit_sha)
-        result["dir"] = from_union([from_str, from_none], self.dir)
-        result["invertRegex"] = from_union([from_bool, from_none], self.invert_regex)
-        result["projectId"] = from_union([from_str, from_none], self.project_id)
-        result["repoName"] = from_union([from_str, from_none], self.repo_name)
-        result["substitutions"] = from_union([lambda x: from_dict(from_str, x), from_none], self.substitutions)
-        result["tagName"] = from_union([from_str, from_none], self.tag_name)
-        return result
-
 
 class ResolvedStorageSourceClass:
     """A copy of the build's `source.storage_source`, if exists, with any
@@ -875,33 +519,22 @@ class ResolvedStorageSourceClass:
     """Google Cloud Storage generation for the object. If the generation is
     omitted, the latest generation will be used.
     """
-    generation: Optional[str]
+    generation: Optional[int]
     """Google Cloud Storage object containing the source."""
     object: Optional[str]
 
-    def __init__(self, bucket: Optional[str], generation: Optional[str], object: Optional[str]) -> None:
+    def __init__(self, bucket: Optional[str], generation: Optional[int], object: Optional[str]) -> None:
         self.bucket = bucket
         self.generation = generation
         self.object = object
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'ResolvedStorageSourceClass':
-        assert isinstance(obj, dict)
-        bucket = from_union([from_str, from_none], obj.get("bucket"))
-        generation = from_union([from_str, from_none], obj.get("generation"))
-        object = from_union([from_str, from_none], obj.get("object"))
-        return ResolvedStorageSourceClass(bucket, generation, object)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["bucket"] = from_union([from_str, from_none], self.bucket)
-        result["generation"] = from_union([from_str, from_none], self.generation)
-        result["object"] = from_union([from_str, from_none], self.object)
-        return result
-
 
 class SourceProvenance:
-    """A permanent fixed identifier for source."""
+    """A permanent fixed identifier for source.
+    
+    Provenance of the source. Ways to find the original source, or verify that
+    some source was used for this build.
+    """
     """Hash(es) of the build source, which can be used to verify that
     the original source integrity was maintained in the build. Note that
     `FileHashes` will only be populated if `BuildOptions` has requested a
@@ -913,7 +546,7 @@ class SourceProvenance:
     If the build source came in a single package such as a gzipped tarfile
     (`.tar.gz`), the `FileHash` will be for the single path to that file.
     """
-    file_hashes: Optional[Dict[str, FileHashValue]]
+    file_hashes: Optional[Dict[str, FileHashes]]
     """A copy of the build's `source.repo_source`, if exists, with any
     revisions resolved.
     """
@@ -923,25 +556,10 @@ class SourceProvenance:
     """
     resolved_storage_source: Optional[ResolvedStorageSourceClass]
 
-    def __init__(self, file_hashes: Optional[Dict[str, FileHashValue]], resolved_repo_source: Optional[ResolvedRepoSourceClass], resolved_storage_source: Optional[ResolvedStorageSourceClass]) -> None:
+    def __init__(self, file_hashes: Optional[Dict[str, FileHashes]], resolved_repo_source: Optional[ResolvedRepoSourceClass], resolved_storage_source: Optional[ResolvedStorageSourceClass]) -> None:
         self.file_hashes = file_hashes
         self.resolved_repo_source = resolved_repo_source
         self.resolved_storage_source = resolved_storage_source
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'SourceProvenance':
-        assert isinstance(obj, dict)
-        file_hashes = from_union([lambda x: from_dict(FileHashValue.from_dict, x), from_none], obj.get("fileHashes"))
-        resolved_repo_source = from_union([ResolvedRepoSourceClass.from_dict, from_none], obj.get("resolvedRepoSource"))
-        resolved_storage_source = from_union([ResolvedStorageSourceClass.from_dict, from_none], obj.get("resolvedStorageSource"))
-        return SourceProvenance(file_hashes, resolved_repo_source, resolved_storage_source)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["fileHashes"] = from_union([lambda x: from_dict(lambda x: to_class(FileHashValue, x), x), from_none], self.file_hashes)
-        result["resolvedRepoSource"] = from_union([lambda x: to_class(ResolvedRepoSourceClass, x), from_none], self.resolved_repo_source)
-        result["resolvedStorageSource"] = from_union([lambda x: to_class(ResolvedStorageSourceClass, x), from_none], self.resolved_storage_source)
-        return result
 
 
 class StatusEnum(Enum):
@@ -973,56 +591,6 @@ class PullTiming:
         self.end_time = end_time
         self.start_time = start_time
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'PullTiming':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return PullTiming(end_time, start_time)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
-
-
-class StepTimeout:
-    """Time limit for executing this build step. If not defined, the step has no
-    time limit and will be allowed to continue to run until either it completes
-    or the build itself times out.
-    """
-    """Signed fractions of a second at nanosecond resolution of the span
-    of time. Durations less than one second are represented with a 0
-    `seconds` field and a positive or negative `nanos` field. For durations
-    of one second or more, a non-zero value for the `nanos` field must be
-    of the same sign as the `seconds` field. Must be from -999,999,999
-    to +999,999,999 inclusive.
-    """
-    nanos: Optional[int]
-    """Signed seconds of the span of time. Must be from -315,576,000,000
-    to +315,576,000,000 inclusive. Note: these bounds are computed from:
-    60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
-    """
-    seconds: Optional[str]
-
-    def __init__(self, nanos: Optional[int], seconds: Optional[str]) -> None:
-        self.nanos = nanos
-        self.seconds = seconds
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'StepTimeout':
-        assert isinstance(obj, dict)
-        nanos = from_union([from_int, from_none], obj.get("nanos"))
-        seconds = from_union([from_str, from_none], obj.get("seconds"))
-        return StepTimeout(nanos, seconds)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["nanos"] = from_union([from_int, from_none], self.nanos)
-        result["seconds"] = from_union([from_str, from_none], self.seconds)
-        return result
-
 
 class StepTiming:
     """Stores timing information for executing this build step.
@@ -1040,21 +608,8 @@ class StepTiming:
         self.end_time = end_time
         self.start_time = start_time
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'StepTiming':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return StepTiming(end_time, start_time)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
-
-
-class Step:
+class BuildStep:
     """A step in the build pipeline."""
     """A list of arguments that will be presented to the step when it is started.
     
@@ -1123,12 +678,12 @@ class Step:
     only updated on build completion; step status is not updated in real-time
     as the build progresses.
     """
-    status: Union[int, None, str]
+    status: Union[StatusEnum, int, None]
     """Time limit for executing this build step. If not defined, the step has no
     time limit and will be allowed to continue to run until either it completes
     or the build itself times out.
     """
-    timeout: Optional[StepTimeout]
+    timeout: Optional[str]
     """Stores timing information for executing this build step."""
     timing: Optional[StepTiming]
     """List of volumes to mount into the build step.
@@ -1149,7 +704,7 @@ class Step:
     """
     wait_for: Optional[List[str]]
 
-    def __init__(self, args: Optional[List[str]], dir: Optional[str], entrypoint: Optional[str], env: Optional[List[str]], id: Optional[str], name: Optional[str], pull_timing: Optional[PullTiming], secret_env: Optional[List[str]], status: Union[int, None, str], timeout: Optional[StepTimeout], timing: Optional[StepTiming], volumes: Optional[List[Volume]], wait_for: Optional[List[str]]) -> None:
+    def __init__(self, args: Optional[List[str]], dir: Optional[str], entrypoint: Optional[str], env: Optional[List[str]], id: Optional[str], name: Optional[str], pull_timing: Optional[PullTiming], secret_env: Optional[List[str]], status: Union[StatusEnum, int, None], timeout: Optional[str], timing: Optional[StepTiming], volumes: Optional[List[Volume]], wait_for: Optional[List[str]]) -> None:
         self.args = args
         self.dir = dir
         self.entrypoint = entrypoint
@@ -1163,78 +718,6 @@ class Step:
         self.timing = timing
         self.volumes = volumes
         self.wait_for = wait_for
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Step':
-        assert isinstance(obj, dict)
-        args = from_union([lambda x: from_list(from_str, x), from_none], obj.get("args"))
-        dir = from_union([from_str, from_none], obj.get("dir"))
-        entrypoint = from_union([from_str, from_none], obj.get("entrypoint"))
-        env = from_union([lambda x: from_list(from_str, x), from_none], obj.get("env"))
-        id = from_union([from_str, from_none], obj.get("id"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        pull_timing = from_union([PullTiming.from_dict, from_none], obj.get("pullTiming"))
-        secret_env = from_union([lambda x: from_list(from_str, x), from_none], obj.get("secretEnv"))
-        status = from_union([from_int, from_str, from_none], obj.get("status"))
-        timeout = from_union([StepTimeout.from_dict, from_none], obj.get("timeout"))
-        timing = from_union([StepTiming.from_dict, from_none], obj.get("timing"))
-        volumes = from_union([lambda x: from_list(Volume.from_dict, x), from_none], obj.get("volumes"))
-        wait_for = from_union([lambda x: from_list(from_str, x), from_none], obj.get("waitFor"))
-        return Step(args, dir, entrypoint, env, id, name, pull_timing, secret_env, status, timeout, timing, volumes, wait_for)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["args"] = from_union([lambda x: from_list(from_str, x), from_none], self.args)
-        result["dir"] = from_union([from_str, from_none], self.dir)
-        result["entrypoint"] = from_union([from_str, from_none], self.entrypoint)
-        result["env"] = from_union([lambda x: from_list(from_str, x), from_none], self.env)
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["pullTiming"] = from_union([lambda x: to_class(PullTiming, x), from_none], self.pull_timing)
-        result["secretEnv"] = from_union([lambda x: from_list(from_str, x), from_none], self.secret_env)
-        result["status"] = from_union([from_int, from_str, from_none], self.status)
-        result["timeout"] = from_union([lambda x: to_class(StepTimeout, x), from_none], self.timeout)
-        result["timing"] = from_union([lambda x: to_class(StepTiming, x), from_none], self.timing)
-        result["volumes"] = from_union([lambda x: from_list(lambda x: to_class(Volume, x), x), from_none], self.volumes)
-        result["waitFor"] = from_union([lambda x: from_list(from_str, x), from_none], self.wait_for)
-        return result
-
-
-class BuildEventDataTimeout:
-    """Amount of time that this build should be allowed to run, to second
-    granularity. If this amount of time elapses, work on the build will cease
-    and the build status will be `TIMEOUT`.
-    """
-    """Signed fractions of a second at nanosecond resolution of the span
-    of time. Durations less than one second are represented with a 0
-    `seconds` field and a positive or negative `nanos` field. For durations
-    of one second or more, a non-zero value for the `nanos` field must be
-    of the same sign as the `seconds` field. Must be from -999,999,999
-    to +999,999,999 inclusive.
-    """
-    nanos: Optional[int]
-    """Signed seconds of the span of time. Must be from -315,576,000,000
-    to +315,576,000,000 inclusive. Note: these bounds are computed from:
-    60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years
-    """
-    seconds: Optional[str]
-
-    def __init__(self, nanos: Optional[int], seconds: Optional[str]) -> None:
-        self.nanos = nanos
-        self.seconds = seconds
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'BuildEventDataTimeout':
-        assert isinstance(obj, dict)
-        nanos = from_union([from_int, from_none], obj.get("nanos"))
-        seconds = from_union([from_str, from_none], obj.get("seconds"))
-        return BuildEventDataTimeout(nanos, seconds)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["nanos"] = from_union([from_int, from_none], self.nanos)
-        result["seconds"] = from_union([from_str, from_none], self.seconds)
-        return result
 
 
 class TimeSpan:
@@ -1250,19 +733,6 @@ class TimeSpan:
     def __init__(self, end_time: Optional[datetime], start_time: Optional[datetime]) -> None:
         self.end_time = end_time
         self.start_time = start_time
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'TimeSpan':
-        assert isinstance(obj, dict)
-        end_time = from_union([from_datetime, from_none], obj.get("endTime"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        return TimeSpan(end_time, start_time)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["endTime"] = from_union([lambda x: x.isoformat(), from_none], self.end_time)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        return result
 
 
 class BuildEventData:
@@ -1315,7 +785,7 @@ class BuildEventData:
     
     The TTL starts ticking from create_time.
     """
-    queue_ttl: Optional[QueueTTL]
+    queue_ttl: Optional[str]
     """Results of the build."""
     results: Optional[Results]
     """Secrets to decrypt using Cloud Key Management Service."""
@@ -1331,7 +801,7 @@ class BuildEventData:
     """Customer-readable message about the current status."""
     status_detail: Optional[str]
     """The operations to be performed on the workspace."""
-    steps: Optional[List[Step]]
+    steps: Optional[List[BuildStep]]
     """Substitutions data for `Build` resource."""
     substitutions: Optional[Dict[str, str]]
     """Tags for annotation of a `Build`. These are not docker tags."""
@@ -1340,7 +810,7 @@ class BuildEventData:
     granularity. If this amount of time elapses, work on the build will cease
     and the build status will be `TIMEOUT`.
     """
-    timeout: Optional[BuildEventDataTimeout]
+    timeout: Optional[str]
     """Stores timing information for phases of the build. Valid keys
     are:
     
@@ -1353,7 +823,7 @@ class BuildEventData:
     """
     timing: Optional[Dict[str, TimeSpan]]
 
-    def __init__(self, artifacts: Optional[Artifacts], build_trigger_id: Optional[str], create_time: Optional[datetime], finish_time: Optional[datetime], id: Optional[str], images: Optional[List[str]], logs_bucket: Optional[str], log_url: Optional[str], options: Optional[Options], project_id: Optional[str], queue_ttl: Optional[QueueTTL], results: Optional[Results], secrets: Optional[List[Secret]], source: Optional[Source], source_provenance: Optional[SourceProvenance], start_time: Optional[datetime], status: Union[StatusEnum, int, None], status_detail: Optional[str], steps: Optional[List[Step]], substitutions: Optional[Dict[str, str]], tags: Optional[List[str]], timeout: Optional[BuildEventDataTimeout], timing: Optional[Dict[str, TimeSpan]]) -> None:
+    def __init__(self, artifacts: Optional[Artifacts], build_trigger_id: Optional[str], create_time: Optional[datetime], finish_time: Optional[datetime], id: Optional[str], images: Optional[List[str]], logs_bucket: Optional[str], log_url: Optional[str], options: Optional[Options], project_id: Optional[str], queue_ttl: Optional[str], results: Optional[Results], secrets: Optional[List[Secret]], source: Optional[Source], source_provenance: Optional[SourceProvenance], start_time: Optional[datetime], status: Union[StatusEnum, int, None], status_detail: Optional[str], steps: Optional[List[BuildStep]], substitutions: Optional[Dict[str, str]], tags: Optional[List[str]], timeout: Optional[str], timing: Optional[Dict[str, TimeSpan]]) -> None:
         self.artifacts = artifacts
         self.build_trigger_id = build_trigger_id
         self.create_time = create_time
@@ -1377,66 +847,3 @@ class BuildEventData:
         self.tags = tags
         self.timeout = timeout
         self.timing = timing
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'BuildEventData':
-        assert isinstance(obj, dict)
-        artifacts = from_union([Artifacts.from_dict, from_none], obj.get("artifacts"))
-        build_trigger_id = from_union([from_str, from_none], obj.get("buildTriggerId"))
-        create_time = from_union([from_datetime, from_none], obj.get("createTime"))
-        finish_time = from_union([from_datetime, from_none], obj.get("finishTime"))
-        id = from_union([from_str, from_none], obj.get("id"))
-        images = from_union([lambda x: from_list(from_str, x), from_none], obj.get("images"))
-        logs_bucket = from_union([from_str, from_none], obj.get("logsBucket"))
-        log_url = from_union([from_str, from_none], obj.get("logUrl"))
-        options = from_union([Options.from_dict, from_none], obj.get("options"))
-        project_id = from_union([from_str, from_none], obj.get("projectId"))
-        queue_ttl = from_union([QueueTTL.from_dict, from_none], obj.get("queueTtl"))
-        results = from_union([Results.from_dict, from_none], obj.get("results"))
-        secrets = from_union([lambda x: from_list(Secret.from_dict, x), from_none], obj.get("secrets"))
-        source = from_union([Source.from_dict, from_none], obj.get("source"))
-        source_provenance = from_union([SourceProvenance.from_dict, from_none], obj.get("sourceProvenance"))
-        start_time = from_union([from_datetime, from_none], obj.get("startTime"))
-        status = from_union([from_int, StatusEnum, from_none], obj.get("status"))
-        status_detail = from_union([from_str, from_none], obj.get("statusDetail"))
-        steps = from_union([lambda x: from_list(Step.from_dict, x), from_none], obj.get("steps"))
-        substitutions = from_union([lambda x: from_dict(from_str, x), from_none], obj.get("substitutions"))
-        tags = from_union([lambda x: from_list(from_str, x), from_none], obj.get("tags"))
-        timeout = from_union([BuildEventDataTimeout.from_dict, from_none], obj.get("timeout"))
-        timing = from_union([lambda x: from_dict(TimeSpan.from_dict, x), from_none], obj.get("timing"))
-        return BuildEventData(artifacts, build_trigger_id, create_time, finish_time, id, images, logs_bucket, log_url, options, project_id, queue_ttl, results, secrets, source, source_provenance, start_time, status, status_detail, steps, substitutions, tags, timeout, timing)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["artifacts"] = from_union([lambda x: to_class(Artifacts, x), from_none], self.artifacts)
-        result["buildTriggerId"] = from_union([from_str, from_none], self.build_trigger_id)
-        result["createTime"] = from_union([lambda x: x.isoformat(), from_none], self.create_time)
-        result["finishTime"] = from_union([lambda x: x.isoformat(), from_none], self.finish_time)
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["images"] = from_union([lambda x: from_list(from_str, x), from_none], self.images)
-        result["logsBucket"] = from_union([from_str, from_none], self.logs_bucket)
-        result["logUrl"] = from_union([from_str, from_none], self.log_url)
-        result["options"] = from_union([lambda x: to_class(Options, x), from_none], self.options)
-        result["projectId"] = from_union([from_str, from_none], self.project_id)
-        result["queueTtl"] = from_union([lambda x: to_class(QueueTTL, x), from_none], self.queue_ttl)
-        result["results"] = from_union([lambda x: to_class(Results, x), from_none], self.results)
-        result["secrets"] = from_union([lambda x: from_list(lambda x: to_class(Secret, x), x), from_none], self.secrets)
-        result["source"] = from_union([lambda x: to_class(Source, x), from_none], self.source)
-        result["sourceProvenance"] = from_union([lambda x: to_class(SourceProvenance, x), from_none], self.source_provenance)
-        result["startTime"] = from_union([lambda x: x.isoformat(), from_none], self.start_time)
-        result["status"] = from_union([from_int, lambda x: to_enum(StatusEnum, x), from_none], self.status)
-        result["statusDetail"] = from_union([from_str, from_none], self.status_detail)
-        result["steps"] = from_union([lambda x: from_list(lambda x: to_class(Step, x), x), from_none], self.steps)
-        result["substitutions"] = from_union([lambda x: from_dict(from_str, x), from_none], self.substitutions)
-        result["tags"] = from_union([lambda x: from_list(from_str, x), from_none], self.tags)
-        result["timeout"] = from_union([lambda x: to_class(BuildEventDataTimeout, x), from_none], self.timeout)
-        result["timing"] = from_union([lambda x: from_dict(lambda x: to_class(TimeSpan, x), x), from_none], self.timing)
-        return result
-
-
-def build_event_data_from_dict(s: Any) -> BuildEventData:
-    return BuildEventData.from_dict(s)
-
-
-def build_event_data_to_dict(x: BuildEventData) -> Any:
-    return to_class(BuildEventData, x)

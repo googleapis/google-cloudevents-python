@@ -11,72 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# To use this code, make sure you
-#
-#     import json
-#
-# and then, to convert JSON from a string, do
-#
-#     result = analytics_log_data_from_dict(json.loads(json_string))
-
-from typing import Optional, Any, Dict, List, TypeVar, Callable, Type, cast
-
-
-T = TypeVar("T")
-
-
-def from_float(x: Any) -> float:
-    assert isinstance(x, (float, int)) and not isinstance(x, bool)
-    return float(x)
-
-
-def from_none(x: Any) -> Any:
-    assert x is None
-    return x
-
-
-def from_union(fs, x):
-    for f in fs:
-        try:
-            return f(x)
-        except:
-            pass
-    assert False
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
-
-
-def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
-    assert isinstance(x, dict)
-    return { k: f(v) for (k, v) in x.items() }
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
+from typing import Optional, Dict, List
 
 
 class AnalyticsValue:
@@ -85,34 +20,17 @@ class AnalyticsValue:
     """
     double_value: Optional[float]
     float_value: Optional[float]
-    int_value: Optional[str]
+    int_value: Optional[int]
     string_value: Optional[str]
 
-    def __init__(self, double_value: Optional[float], float_value: Optional[float], int_value: Optional[str], string_value: Optional[str]) -> None:
+    def __init__(self, double_value: Optional[float], float_value: Optional[float], int_value: Optional[int], string_value: Optional[str]) -> None:
         self.double_value = double_value
         self.float_value = float_value
         self.int_value = int_value
         self.string_value = string_value
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'AnalyticsValue':
-        assert isinstance(obj, dict)
-        double_value = from_union([from_float, from_none], obj.get("doubleValue"))
-        float_value = from_union([from_float, from_none], obj.get("floatValue"))
-        int_value = from_union([from_str, from_none], obj.get("intValue"))
-        string_value = from_union([from_str, from_none], obj.get("stringValue"))
-        return AnalyticsValue(double_value, float_value, int_value, string_value)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["doubleValue"] = from_union([to_float, from_none], self.double_value)
-        result["floatValue"] = from_union([to_float, from_none], self.float_value)
-        result["intValue"] = from_union([from_str, from_none], self.int_value)
-        result["stringValue"] = from_union([from_str, from_none], self.string_value)
-        return result
-
-
-class EventDim:
+class EventDimensions:
     """Message containing information pertaining to the event."""
     """The date on which this event was logged.
     (YYYYMMDD format in the registered timezone of your app.)
@@ -123,13 +41,13 @@ class EventDim:
     """A repeated record of the parameters associated with this event."""
     params: Optional[Dict[str, AnalyticsValue]]
     """UTC client time when the previous event happened."""
-    previous_timestamp_micros: Optional[str]
+    previous_timestamp_micros: Optional[int]
     """UTC client time when the event happened."""
-    timestamp_micros: Optional[str]
+    timestamp_micros: Optional[int]
     """Value param in USD."""
     value_in_usd: Optional[float]
 
-    def __init__(self, date: Optional[str], name: Optional[str], params: Optional[Dict[str, AnalyticsValue]], previous_timestamp_micros: Optional[str], timestamp_micros: Optional[str], value_in_usd: Optional[float]) -> None:
+    def __init__(self, date: Optional[str], name: Optional[str], params: Optional[Dict[str, AnalyticsValue]], previous_timestamp_micros: Optional[int], timestamp_micros: Optional[int], value_in_usd: Optional[float]) -> None:
         self.date = date
         self.name = name
         self.params = params
@@ -137,30 +55,12 @@ class EventDim:
         self.timestamp_micros = timestamp_micros
         self.value_in_usd = value_in_usd
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'EventDim':
-        assert isinstance(obj, dict)
-        date = from_union([from_str, from_none], obj.get("date"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        params = from_union([lambda x: from_dict(AnalyticsValue.from_dict, x), from_none], obj.get("params"))
-        previous_timestamp_micros = from_union([from_str, from_none], obj.get("previousTimestampMicros"))
-        timestamp_micros = from_union([from_str, from_none], obj.get("timestampMicros"))
-        value_in_usd = from_union([from_float, from_none], obj.get("valueInUsd"))
-        return EventDim(date, name, params, previous_timestamp_micros, timestamp_micros, value_in_usd)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["date"] = from_union([from_str, from_none], self.date)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["params"] = from_union([lambda x: from_dict(lambda x: to_class(AnalyticsValue, x), x), from_none], self.params)
-        result["previousTimestampMicros"] = from_union([from_str, from_none], self.previous_timestamp_micros)
-        result["timestampMicros"] = from_union([from_str, from_none], self.timestamp_micros)
-        result["valueInUsd"] = from_union([to_float, from_none], self.value_in_usd)
-        return result
-
 
 class AppInfo:
-    """App information."""
+    """App information.
+    
+    Message which contains App Information.
+    """
     """Unique application identifier within an app store."""
     app_id: Optional[str]
     """Unique id for this instance of the app.
@@ -188,53 +88,28 @@ class AppInfo:
         self.app_store = app_store
         self.app_version = app_version
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'AppInfo':
-        assert isinstance(obj, dict)
-        app_id = from_union([from_str, from_none], obj.get("appId"))
-        app_instance_id = from_union([from_str, from_none], obj.get("appInstanceId"))
-        app_platform = from_union([from_str, from_none], obj.get("appPlatform"))
-        app_store = from_union([from_str, from_none], obj.get("appStore"))
-        app_version = from_union([from_str, from_none], obj.get("appVersion"))
-        return AppInfo(app_id, app_instance_id, app_platform, app_store, app_version)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["appId"] = from_union([from_str, from_none], self.app_id)
-        result["appInstanceId"] = from_union([from_str, from_none], self.app_instance_id)
-        result["appPlatform"] = from_union([from_str, from_none], self.app_platform)
-        result["appStore"] = from_union([from_str, from_none], self.app_store)
-        result["appVersion"] = from_union([from_str, from_none], self.app_version)
-        return result
-
 
 class BundleInfo:
-    """Information regarding the bundle in which these events were uploaded."""
+    """Information regarding the bundle in which these events were uploaded.
+    
+    Message containing information regarding the bundle in which these
+    events were uploaded.
+    """
     """Monotonically increasing index for each bundle set by SDK."""
     bundle_sequence_id: Optional[int]
     """Timestamp offset between collection time and upload time."""
-    server_timestamp_offset_micros: Optional[str]
+    server_timestamp_offset_micros: Optional[int]
 
-    def __init__(self, bundle_sequence_id: Optional[int], server_timestamp_offset_micros: Optional[str]) -> None:
+    def __init__(self, bundle_sequence_id: Optional[int], server_timestamp_offset_micros: Optional[int]) -> None:
         self.bundle_sequence_id = bundle_sequence_id
         self.server_timestamp_offset_micros = server_timestamp_offset_micros
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'BundleInfo':
-        assert isinstance(obj, dict)
-        bundle_sequence_id = from_union([from_int, from_none], obj.get("bundleSequenceId"))
-        server_timestamp_offset_micros = from_union([from_str, from_none], obj.get("serverTimestampOffsetMicros"))
-        return BundleInfo(bundle_sequence_id, server_timestamp_offset_micros)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["bundleSequenceId"] = from_union([from_int, from_none], self.bundle_sequence_id)
-        result["serverTimestampOffsetMicros"] = from_union([from_str, from_none], self.server_timestamp_offset_micros)
-        return result
-
 
 class DeviceInfo:
-    """Device information."""
+    """Device information.
+    
+    Message containing device informations.
+    """
     """Device category.
     Eg. tablet or mobile.
     """
@@ -295,40 +170,12 @@ class DeviceInfo:
         self.resettable_device_id = resettable_device_id
         self.user_default_language = user_default_language
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'DeviceInfo':
-        assert isinstance(obj, dict)
-        device_category = from_union([from_str, from_none], obj.get("deviceCategory"))
-        device_id = from_union([from_str, from_none], obj.get("deviceId"))
-        device_model = from_union([from_str, from_none], obj.get("deviceModel"))
-        device_time_zone_offset_seconds = from_union([from_int, from_none], obj.get("deviceTimeZoneOffsetSeconds"))
-        limited_ad_tracking = from_union([from_bool, from_none], obj.get("limitedAdTracking"))
-        mobile_brand_name = from_union([from_str, from_none], obj.get("mobileBrandName"))
-        mobile_marketing_name = from_union([from_str, from_none], obj.get("mobileMarketingName"))
-        mobile_model_name = from_union([from_str, from_none], obj.get("mobileModelName"))
-        platform_version = from_union([from_str, from_none], obj.get("platformVersion"))
-        resettable_device_id = from_union([from_str, from_none], obj.get("resettableDeviceId"))
-        user_default_language = from_union([from_str, from_none], obj.get("userDefaultLanguage"))
-        return DeviceInfo(device_category, device_id, device_model, device_time_zone_offset_seconds, limited_ad_tracking, mobile_brand_name, mobile_marketing_name, mobile_model_name, platform_version, resettable_device_id, user_default_language)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["deviceCategory"] = from_union([from_str, from_none], self.device_category)
-        result["deviceId"] = from_union([from_str, from_none], self.device_id)
-        result["deviceModel"] = from_union([from_str, from_none], self.device_model)
-        result["deviceTimeZoneOffsetSeconds"] = from_union([from_int, from_none], self.device_time_zone_offset_seconds)
-        result["limitedAdTracking"] = from_union([from_bool, from_none], self.limited_ad_tracking)
-        result["mobileBrandName"] = from_union([from_str, from_none], self.mobile_brand_name)
-        result["mobileMarketingName"] = from_union([from_str, from_none], self.mobile_marketing_name)
-        result["mobileModelName"] = from_union([from_str, from_none], self.mobile_model_name)
-        result["platformVersion"] = from_union([from_str, from_none], self.platform_version)
-        result["resettableDeviceId"] = from_union([from_str, from_none], self.resettable_device_id)
-        result["userDefaultLanguage"] = from_union([from_str, from_none], self.user_default_language)
-        return result
-
 
 class GeoInfo:
-    """User's geographic information."""
+    """User's geographic information.
+    
+    User's geographic informaiton.
+    """
     """The geographic city.
     Eg. Sao Paulo
     """
@@ -352,23 +199,6 @@ class GeoInfo:
         self.country = country
         self.region = region
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'GeoInfo':
-        assert isinstance(obj, dict)
-        city = from_union([from_str, from_none], obj.get("city"))
-        continent = from_union([from_str, from_none], obj.get("continent"))
-        country = from_union([from_str, from_none], obj.get("country"))
-        region = from_union([from_str, from_none], obj.get("region"))
-        return GeoInfo(city, continent, country, region)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["city"] = from_union([from_str, from_none], self.city)
-        result["continent"] = from_union([from_str, from_none], self.continent)
-        result["country"] = from_union([from_str, from_none], self.country)
-        result["region"] = from_union([from_str, from_none], self.region)
-        return result
-
 
 class LtvInfo:
     """Lifetime Value information about this user."""
@@ -381,22 +211,12 @@ class LtvInfo:
         self.currency = currency
         self.revenue = revenue
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'LtvInfo':
-        assert isinstance(obj, dict)
-        currency = from_union([from_str, from_none], obj.get("currency"))
-        revenue = from_union([from_float, from_none], obj.get("revenue"))
-        return LtvInfo(currency, revenue)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["currency"] = from_union([from_str, from_none], self.currency)
-        result["revenue"] = from_union([to_float, from_none], self.revenue)
-        return result
-
 
 class TrafficSource:
-    """Information about marketing campaign which acquired the user."""
+    """Information about marketing campaign which acquired the user.
+    
+    Mesage containing marketing campaign information which acquired the user.
+    """
     """The name of the campaign which acquired the user."""
     user_acquired_campaign: Optional[str]
     """The name of the medium which acquired the user."""
@@ -409,21 +229,6 @@ class TrafficSource:
         self.user_acquired_medium = user_acquired_medium
         self.user_acquired_source = user_acquired_source
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'TrafficSource':
-        assert isinstance(obj, dict)
-        user_acquired_campaign = from_union([from_str, from_none], obj.get("userAcquiredCampaign"))
-        user_acquired_medium = from_union([from_str, from_none], obj.get("userAcquiredMedium"))
-        user_acquired_source = from_union([from_str, from_none], obj.get("userAcquiredSource"))
-        return TrafficSource(user_acquired_campaign, user_acquired_medium, user_acquired_source)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["userAcquiredCampaign"] = from_union([from_str, from_none], self.user_acquired_campaign)
-        result["userAcquiredMedium"] = from_union([from_str, from_none], self.user_acquired_medium)
-        result["userAcquiredSource"] = from_union([from_str, from_none], self.user_acquired_source)
-        return result
-
 
 class Value:
     """Last set value of user property.
@@ -433,64 +238,38 @@ class Value:
     """
     double_value: Optional[float]
     float_value: Optional[float]
-    int_value: Optional[str]
+    int_value: Optional[int]
     string_value: Optional[str]
 
-    def __init__(self, double_value: Optional[float], float_value: Optional[float], int_value: Optional[str], string_value: Optional[str]) -> None:
+    def __init__(self, double_value: Optional[float], float_value: Optional[float], int_value: Optional[int], string_value: Optional[str]) -> None:
         self.double_value = double_value
         self.float_value = float_value
         self.int_value = int_value
         self.string_value = string_value
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'Value':
-        assert isinstance(obj, dict)
-        double_value = from_union([from_float, from_none], obj.get("doubleValue"))
-        float_value = from_union([from_float, from_none], obj.get("floatValue"))
-        int_value = from_union([from_str, from_none], obj.get("intValue"))
-        string_value = from_union([from_str, from_none], obj.get("stringValue"))
-        return Value(double_value, float_value, int_value, string_value)
 
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["doubleValue"] = from_union([to_float, from_none], self.double_value)
-        result["floatValue"] = from_union([to_float, from_none], self.float_value)
-        result["intValue"] = from_union([from_str, from_none], self.int_value)
-        result["stringValue"] = from_union([from_str, from_none], self.string_value)
-        return result
-
-
-class UserProperty:
+class UserPropertyValue:
+    """Predefined (eg: LTV) or custom properties (eg: birthday) stored on client
+    side and associated with subsequent HitBundles.
+    """
     """Index for user property (one-based)."""
     index: Optional[int]
     """UTC client time when user property was last set."""
-    set_timestamp_usec: Optional[str]
+    set_timestamp_usec: Optional[int]
     """Last set value of user property."""
     value: Optional[Value]
 
-    def __init__(self, index: Optional[int], set_timestamp_usec: Optional[str], value: Optional[Value]) -> None:
+    def __init__(self, index: Optional[int], set_timestamp_usec: Optional[int], value: Optional[Value]) -> None:
         self.index = index
         self.set_timestamp_usec = set_timestamp_usec
         self.value = value
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'UserProperty':
-        assert isinstance(obj, dict)
-        index = from_union([from_int, from_none], obj.get("index"))
-        set_timestamp_usec = from_union([from_str, from_none], obj.get("setTimestampUsec"))
-        value = from_union([Value.from_dict, from_none], obj.get("value"))
-        return UserProperty(index, set_timestamp_usec, value)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["index"] = from_union([from_int, from_none], self.index)
-        result["setTimestampUsec"] = from_union([from_str, from_none], self.set_timestamp_usec)
-        result["value"] = from_union([lambda x: to_class(Value, x), from_none], self.value)
-        return result
-
 
 class UserDim:
-    """User related dimensions."""
+    """User related dimensions.
+    
+    Message containing information about the user associated with the event.
+    """
     """App information."""
     app_info: Optional[AppInfo]
     """Information regarding the bundle in which these events were uploaded."""
@@ -498,7 +277,7 @@ class UserDim:
     """Device information."""
     device_info: Optional[DeviceInfo]
     """The time (in microseconds) at which the user first opened the app."""
-    first_open_timestamp_micros: Optional[str]
+    first_open_timestamp_micros: Optional[int]
     """User's geographic information."""
     geo_info: Optional[GeoInfo]
     """Lifetime Value information about this user."""
@@ -510,9 +289,9 @@ class UserDim:
     """A repeated record of user properties set with the setUserProperty API.
     https://firebase.google.com/docs/analytics/android/properties
     """
-    user_properties: Optional[Dict[str, UserProperty]]
+    user_properties: Optional[Dict[str, UserPropertyValue]]
 
-    def __init__(self, app_info: Optional[AppInfo], bundle_info: Optional[BundleInfo], device_info: Optional[DeviceInfo], first_open_timestamp_micros: Optional[str], geo_info: Optional[GeoInfo], ltv_info: Optional[LtvInfo], traffic_source: Optional[TrafficSource], user_id: Optional[str], user_properties: Optional[Dict[str, UserProperty]]) -> None:
+    def __init__(self, app_info: Optional[AppInfo], bundle_info: Optional[BundleInfo], device_info: Optional[DeviceInfo], first_open_timestamp_micros: Optional[int], geo_info: Optional[GeoInfo], ltv_info: Optional[LtvInfo], traffic_source: Optional[TrafficSource], user_id: Optional[str], user_properties: Optional[Dict[str, UserPropertyValue]]) -> None:
         self.app_info = app_info
         self.bundle_info = bundle_info
         self.device_info = device_info
@@ -523,62 +302,14 @@ class UserDim:
         self.user_id = user_id
         self.user_properties = user_properties
 
-    @staticmethod
-    def from_dict(obj: Any) -> 'UserDim':
-        assert isinstance(obj, dict)
-        app_info = from_union([AppInfo.from_dict, from_none], obj.get("appInfo"))
-        bundle_info = from_union([BundleInfo.from_dict, from_none], obj.get("bundleInfo"))
-        device_info = from_union([DeviceInfo.from_dict, from_none], obj.get("deviceInfo"))
-        first_open_timestamp_micros = from_union([from_str, from_none], obj.get("firstOpenTimestampMicros"))
-        geo_info = from_union([GeoInfo.from_dict, from_none], obj.get("geoInfo"))
-        ltv_info = from_union([LtvInfo.from_dict, from_none], obj.get("ltvInfo"))
-        traffic_source = from_union([TrafficSource.from_dict, from_none], obj.get("trafficSource"))
-        user_id = from_union([from_str, from_none], obj.get("userId"))
-        user_properties = from_union([lambda x: from_dict(UserProperty.from_dict, x), from_none], obj.get("userProperties"))
-        return UserDim(app_info, bundle_info, device_info, first_open_timestamp_micros, geo_info, ltv_info, traffic_source, user_id, user_properties)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["appInfo"] = from_union([lambda x: to_class(AppInfo, x), from_none], self.app_info)
-        result["bundleInfo"] = from_union([lambda x: to_class(BundleInfo, x), from_none], self.bundle_info)
-        result["deviceInfo"] = from_union([lambda x: to_class(DeviceInfo, x), from_none], self.device_info)
-        result["firstOpenTimestampMicros"] = from_union([from_str, from_none], self.first_open_timestamp_micros)
-        result["geoInfo"] = from_union([lambda x: to_class(GeoInfo, x), from_none], self.geo_info)
-        result["ltvInfo"] = from_union([lambda x: to_class(LtvInfo, x), from_none], self.ltv_info)
-        result["trafficSource"] = from_union([lambda x: to_class(TrafficSource, x), from_none], self.traffic_source)
-        result["userId"] = from_union([from_str, from_none], self.user_id)
-        result["userProperties"] = from_union([lambda x: from_dict(lambda x: to_class(UserProperty, x), x), from_none], self.user_properties)
-        return result
-
 
 class AnalyticsLogData:
     """The data within Firebase Analytics log events."""
     """A repeated record of event related dimensions."""
-    event_dim: Optional[List[EventDim]]
+    event_dim: Optional[List[EventDimensions]]
     """User related dimensions."""
     user_dim: Optional[UserDim]
 
-    def __init__(self, event_dim: Optional[List[EventDim]], user_dim: Optional[UserDim]) -> None:
+    def __init__(self, event_dim: Optional[List[EventDimensions]], user_dim: Optional[UserDim]) -> None:
         self.event_dim = event_dim
         self.user_dim = user_dim
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'AnalyticsLogData':
-        assert isinstance(obj, dict)
-        event_dim = from_union([lambda x: from_list(EventDim.from_dict, x), from_none], obj.get("eventDim"))
-        user_dim = from_union([UserDim.from_dict, from_none], obj.get("userDim"))
-        return AnalyticsLogData(event_dim, user_dim)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["eventDim"] = from_union([lambda x: from_list(lambda x: to_class(EventDim, x), x), from_none], self.event_dim)
-        result["userDim"] = from_union([lambda x: to_class(UserDim, x), from_none], self.user_dim)
-        return result
-
-
-def analytics_log_data_from_dict(s: Any) -> AnalyticsLogData:
-    return AnalyticsLogData.from_dict(s)
-
-
-def analytics_log_data_to_dict(x: AnalyticsLogData) -> Any:
-    return to_class(AnalyticsLogData, x)

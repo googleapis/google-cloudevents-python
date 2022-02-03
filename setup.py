@@ -10,7 +10,7 @@ with open(readme_filename, encoding="utf-8") as readme_file:
 
 setup(
     name="google-events",
-    version = "0.2.0",
+    version="0.2.1",
     description="A collection of first party Google Cloud Platform event objects.",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -29,16 +29,13 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Topic :: Internet",
-        "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
     ],
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    install_requires=['python-dateutil==2.8.2'],
+    install_requires=['python-dateutil==2.8.1'],
     extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]}
 )

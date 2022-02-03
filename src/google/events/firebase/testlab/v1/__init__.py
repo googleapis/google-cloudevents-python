@@ -12,19 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-
-import stringcase
-
-from helper import compare_values
-
-def test_firebase_database_v1_referenceeventdata_simple():
-    from google.events.firebase.database.v1 import ReferenceEventData
-    with open('tests/data/firebase_database_v1_referenceeventdata_simple.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = ReferenceEventData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-
+from .TestMatrixEventData import TestMatrixEventData
