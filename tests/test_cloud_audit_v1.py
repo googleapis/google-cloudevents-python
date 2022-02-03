@@ -18,16 +18,6 @@ import stringcase
 
 from helper import compare_values
 
-def test_cloud_audit_v1_logentrydata_bigqueryjobcompleted():
-    from google.events.cloud.audit.v1 import LogEntryData
-    with open('tests/data/cloud_audit_v1_logentrydata_bigqueryjobcompleted.json') as f:
-        raw_data = f.read()
-    
-    event_dikt = json.loads(raw_data)
-
-    obj = LogEntryData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
-
 def test_cloud_audit_v1_logentrydata_pubsubcreatetopic():
     from google.events.cloud.audit.v1 import LogEntryData
     with open('tests/data/cloud_audit_v1_logentrydata_pubsubcreatetopic.json') as f:
