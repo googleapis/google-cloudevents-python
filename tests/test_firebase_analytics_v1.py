@@ -18,3 +18,13 @@ import stringcase
 
 from helper import compare_values
 
+def test_firebase_analytics_v1_analyticslogdata_complex():
+    from google.events.firebase.analytics.v1 import AnalyticsLogData
+    with open('tests/data/firebase_analytics_v1_analyticslogdata_complex.json') as f:
+        raw_data = f.read()
+    
+    event_dikt = json.loads(raw_data)
+
+    obj = AnalyticsLogData.from_dict(event_dikt)
+    compare_values(obj, event_dikt)
+
