@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-# # EVENTS_SPEC_REPO='https://github.com/googleapis/google-cloudevents'
+EVENTS_SPEC_REPO='https://github.com/googleapis/google-cloudevents'
 
-# # echo "Cleaning things up..."
-# # rm -rf workplace/ || true
-# # mkdir workplace
-# rm -rf src/ || true
+echo "Cleaning things up..."
+rm -rf workplace/ || true
+mkdir workplace
+rm -rf src/ || true
 mkdir src
 rm -rf gen/quicktype-wrapper || true
 
