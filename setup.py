@@ -10,7 +10,7 @@ with open(readme_filename, encoding="utf-8") as readme_file:
 
 setup(
     name="google-events",
-    version="0.1.1",
+    version="0.2.1",
     description="A collection of first party Google Cloud Platform event objects.",
     long_description=readme,
     long_description_content_type="text/markdown",
