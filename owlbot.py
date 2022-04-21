@@ -26,7 +26,7 @@ common = gcp.CommonTemplates()
 templated_files = common.py_library()
 
 # Copy templates for relases
-s.move(templated_files / ".kokoro")  # not everything in this directory is used
+s.move(templated_files / ".kokoro", excludes=["docker/docs"])  # not everything in this directory is used
 s.move(templated_files / ".github" / "release-please.yml")
 
 # Add a docs directory
