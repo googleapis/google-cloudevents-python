@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.0...v0.2.1) (2022-06-03)
+
+
+### Documentation
+
+* fix changelog header to consistent size ([#96](https://github.com/googleapis/google-cloudevents-python/issues/96)) ([c73c9ca](https://github.com/googleapis/google-cloudevents-python/commit/c73c9cab65fd3ed64939f5b0edbc915cc4d39131))
+
 ## [0.2.0](https://www.github.com/googleapis/google-cloudevents-python/compare/v0.1.4...v0.2.0) (2021-10-14)
 
 
