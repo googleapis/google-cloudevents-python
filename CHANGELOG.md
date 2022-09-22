@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.1...v0.2.2) (2022-09-22)
+
+
+### Documentation
+
+* **nodejs_mono_repo:** Update broken links in README ([#115](https://github.com/googleapis/google-cloudevents-python/issues/115)) ([ba347f6](https://github.com/googleapis/google-cloudevents-python/commit/ba347f684746773ccf7f96c40446d5997007a786))
+
 ## [0.2.1](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.0...v0.2.1) (2022-06-03)
 
 
