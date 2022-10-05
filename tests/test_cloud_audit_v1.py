@@ -12,19 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
-
-import stringcase
-
-from helper import compare_values
+import google.protobuf.json_format as json_format
 
 def test_cloud_audit_v1_logentrydata_pubsubcreatetopic():
-    from google.events.cloud.audit.v1 import LogEntryData
+    from google.events.cloud.audit.v1.data_pb2 import LogEntryData
     with open('tests/data/cloud_audit_v1_logentrydata_pubsubcreatetopic.json') as f:
         raw_data = f.read()
     
-    event_dikt = json.loads(raw_data)
-
-    obj = LogEntryData.from_dict(event_dikt)
-    compare_values(obj, event_dikt)
+    obj = json_format.Parse(raw_data, LogEntryData(), ignore_unknown_fields=True)
+    # Ensure the parsed object is not empty.
+    assert obj.IsInitialized()
+    assert obj != LogEntryData()
 
