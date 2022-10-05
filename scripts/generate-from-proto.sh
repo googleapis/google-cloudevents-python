@@ -18,22 +18,21 @@ fi
 
 echo "Generating the Google Events Library for Python..."
 export IN=$EVENTS_SPEC_DIR
-# export OUT="../"
-# export EXAMPLES="../workplace/testdata"
-
-# Extra includes needed.
 
 # Directories to include in protoc search path.
 PROTOC_INCLUDES="-I /usr/include -I ${EVENTS_SPEC_DIR}/proto -I ${GOOGLEAPIS_DIR}/"
 
-for protofile in $(find ${IN}/proto -name data.proto); do
-  echo $(realpath --relative-to ${IN}/proto $protofile)
-  protoc $PROTOC_INCLUDES $protofile --python_out=src
+for protofile in $(find ${IN}/proto -name 'data.proto' -type f); do
+  protopath=$(realpath --relative-to ${IN}/proto $protofile)
+  echo $protopath
+  if [ "$protopath" == "google/events/cloud/iot/v1/data.proto" ]; then
+    # pyi files cannot be produced for this proto. For further context see
+    # https://github.com/protocolbuffers/protobuf/issues/10246
+    protoc $PROTOC_INCLUDES $protofile --python_out=src
+  else
+    protoc $PROTOC_INCLUDES $protofile --pyi_out=src --python_out=src
+  fi
 done
-
-echo "Cleaning things up..."
-cd ..
-# rm -rf workplace/ || true
 
 echo "Completed!"
 echo "To install the generated package, run pip install -e ."
