@@ -1,3 +1,33 @@
+
+"""
+    Hand-written library to (kinda) match google/events/cloud/pubsub/v1/data.proto.
+
+    Use:
+
+        import json
+        import pubsub
+
+        json_file_name = "whatever.json"
+        with open(json_file_name, "rb") as f:
+            message_dict = json.loads(f.read())
+
+        msg = MessagePublishedData(from_dict=message_dict)
+
+        print(msg.subscription)
+        print(msg.message.data) # Decoded from base 64
+
+    Todo:
+        Probably nothing. This is an experiment
+
+        If going in this direction, then need to:
+        - add type hints
+        - to_dict method
+        - validate data on setting
+        - annotate with descriptions of fields
+        - generate from proto
+        
+"""
+
 import base64
 
 class PubsubMessage():
