@@ -79,13 +79,12 @@ def lint(session):
     Returns a failure if the linters find linting errors or sufficiently
     serious code quality issues.
     """
-    session.install("flake8", BLACK_VERSION)
+    session.install(BLACK_VERSION)
     session.run(
         "black",
         "--check",
         *LINT_PATHS,
     )
-    session.run("flake8", "tests")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
@@ -122,7 +121,7 @@ def format(session):
 def lint_setup_py(session):
     """Verify that setup.py is valid (including RST check)."""
     session.install("docutils", "pygments")
-    session.run("python", "setup.py", "check", "--restructuredtext", "--strict")
+    session.run("python", "setup.py", "check", "--strict")
 
 
 def install_unittest_dependencies(session, *constraints):
