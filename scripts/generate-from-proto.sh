@@ -34,5 +34,20 @@ for protofile in $(find ${IN}/proto -name 'data.proto' -type f); do
   fi
 done
 
+PROTO_DEPENDENCIES_TO_BUNDLE="\
+${GOOGLEAPIS_DIR}/google/type/latlng.proto
+${GOOGLEAPIS_DIR}/google/api/monitored_resource.proto
+${GOOGLEAPIS_DIR}/google/api/label.proto
+${GOOGLEAPIS_DIR}/google/api/launch_stage.proto
+${GOOGLEAPIS_DIR}/google/rpc/context/attribute_context.proto
+${GOOGLEAPIS_DIR}/google/rpc/status.proto
+"
+
+for protofile in $PROTO_DEPENDENCIES_TO_BUNDLE; do
+  protopath=$(realpath --relative-to ${IN}/proto $protofile)
+  echo $protopath
+  protoc $PROTOC_INCLUDES $protofile --pyi_out=src --python_out=src
+done
+
 echo "Completed!"
 echo "To install the generated package, run pip install -e ."

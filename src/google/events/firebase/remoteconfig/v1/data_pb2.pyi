@@ -15,7 +15,15 @@ REST_API: RemoteConfigUpdateOrigin
 ROLLBACK: RemoteConfigUpdateType
 
 class RemoteConfigEventData(_message.Message):
-    __slots__ = ["description", "rollback_source", "update_origin", "update_time", "update_type", "update_user", "version_number"]
+    __slots__ = [
+        "description",
+        "rollback_source",
+        "update_origin",
+        "update_time",
+        "update_type",
+        "update_user",
+        "version_number",
+    ]
     DESCRIPTION_FIELD_NUMBER: ClassVar[int]
     ROLLBACK_SOURCE_FIELD_NUMBER: ClassVar[int]
     UPDATE_ORIGIN_FIELD_NUMBER: ClassVar[int]
@@ -30,7 +38,16 @@ class RemoteConfigEventData(_message.Message):
     update_type: RemoteConfigUpdateType
     update_user: RemoteConfigUser
     version_number: int
-    def __init__(self, version_number: Optional[int] = ..., update_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., update_user: Optional[Union[RemoteConfigUser, Mapping]] = ..., description: Optional[str] = ..., update_origin: Optional[Union[RemoteConfigUpdateOrigin, str]] = ..., update_type: Optional[Union[RemoteConfigUpdateType, str]] = ..., rollback_source: Optional[int] = ...) -> None: ...
+    def __init__(
+        self,
+        version_number: Optional[int] = ...,
+        update_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        update_user: Optional[Union[RemoteConfigUser, Mapping]] = ...,
+        description: Optional[str] = ...,
+        update_origin: Optional[Union[RemoteConfigUpdateOrigin, str]] = ...,
+        update_type: Optional[Union[RemoteConfigUpdateType, str]] = ...,
+        rollback_source: Optional[int] = ...,
+    ) -> None: ...
 
 class RemoteConfigUser(_message.Message):
     __slots__ = ["email", "image_url", "name"]
@@ -40,7 +57,12 @@ class RemoteConfigUser(_message.Message):
     email: str
     image_url: str
     name: str
-    def __init__(self, name: Optional[str] = ..., email: Optional[str] = ..., image_url: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        name: Optional[str] = ...,
+        email: Optional[str] = ...,
+        image_url: Optional[str] = ...,
+    ) -> None: ...
 
 class RemoteConfigUpdateOrigin(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []

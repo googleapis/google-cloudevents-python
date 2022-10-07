@@ -6,6 +6,7 @@ from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -14,20 +15,24 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n1google/events/firebase/remoteconfig/v1/data.proto\x12&google.events.firebase.remoteconfig.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x03\n\x15RemoteConfigEventData\x12\x16\n\x0eversion_number\x18\x01 \x01(\x03\x12/\n\x0bupdate_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12M\n\x0bupdate_user\x18\x03 \x01(\x0b\x32\x38.google.events.firebase.remoteconfig.v1.RemoteConfigUser\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12W\n\rupdate_origin\x18\x05 \x01(\x0e\x32@.google.events.firebase.remoteconfig.v1.RemoteConfigUpdateOrigin\x12S\n\x0bupdate_type\x18\x06 \x01(\x0e\x32>.google.events.firebase.remoteconfig.v1.RemoteConfigUpdateType\x12\x17\n\x0frollback_source\x18\x07 \x01(\x03\"B\n\x10RemoteConfigUser\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\timage_url\x18\x03 \x01(\t*v\n\x18RemoteConfigUpdateOrigin\x12+\n\'REMOTE_CONFIG_UPDATE_ORIGIN_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x43ONSOLE\x10\x01\x12\x0c\n\x08REST_API\x10\x02\x12\x12\n\x0e\x41\x44MIN_SDK_NODE\x10\x03*|\n\x16RemoteConfigUpdateType\x12)\n%REMOTE_CONFIG_UPDATE_TYPE_UNSPECIFIED\x10\x00\x12\x16\n\x12INCREMENTAL_UPDATE\x10\x01\x12\x11\n\rFORCED_UPDATE\x10\x02\x12\x0c\n\x08ROLLBACK\x10\x03\x42i\n*com.google.events.firebase.remoteconfig.v1B\tDataProto\xaa\x02/Google.Events.Protobuf.Firebase.RemoteConfig.V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n1google/events/firebase/remoteconfig/v1/data.proto\x12&google.events.firebase.remoteconfig.v1\x1a\x1fgoogle/protobuf/timestamp.proto"\x8b\x03\n\x15RemoteConfigEventData\x12\x16\n\x0eversion_number\x18\x01 \x01(\x03\x12/\n\x0bupdate_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12M\n\x0bupdate_user\x18\x03 \x01(\x0b\x32\x38.google.events.firebase.remoteconfig.v1.RemoteConfigUser\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12W\n\rupdate_origin\x18\x05 \x01(\x0e\x32@.google.events.firebase.remoteconfig.v1.RemoteConfigUpdateOrigin\x12S\n\x0bupdate_type\x18\x06 \x01(\x0e\x32>.google.events.firebase.remoteconfig.v1.RemoteConfigUpdateType\x12\x17\n\x0frollback_source\x18\x07 \x01(\x03"B\n\x10RemoteConfigUser\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x11\n\timage_url\x18\x03 \x01(\t*v\n\x18RemoteConfigUpdateOrigin\x12+\n\'REMOTE_CONFIG_UPDATE_ORIGIN_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x43ONSOLE\x10\x01\x12\x0c\n\x08REST_API\x10\x02\x12\x12\n\x0e\x41\x44MIN_SDK_NODE\x10\x03*|\n\x16RemoteConfigUpdateType\x12)\n%REMOTE_CONFIG_UPDATE_TYPE_UNSPECIFIED\x10\x00\x12\x16\n\x12INCREMENTAL_UPDATE\x10\x01\x12\x11\n\rFORCED_UPDATE\x10\x02\x12\x0c\n\x08ROLLBACK\x10\x03\x42i\n*com.google.events.firebase.remoteconfig.v1B\tDataProto\xaa\x02/Google.Events.Protobuf.Firebase.RemoteConfig.V1b\x06proto3'
+)
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'google.events.firebase.remoteconfig.v1.data_pb2', globals())
+_builder.BuildTopDescriptorsAndMessages(
+    DESCRIPTOR, "google.events.firebase.remoteconfig.v1.data_pb2", globals()
+)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
-  DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'\n*com.google.events.firebase.remoteconfig.v1B\tDataProto\252\002/Google.Events.Protobuf.Firebase.RemoteConfig.V1'
-  _REMOTECONFIGUPDATEORIGIN._serialized_start=592
-  _REMOTECONFIGUPDATEORIGIN._serialized_end=710
-  _REMOTECONFIGUPDATETYPE._serialized_start=712
-  _REMOTECONFIGUPDATETYPE._serialized_end=836
-  _REMOTECONFIGEVENTDATA._serialized_start=127
-  _REMOTECONFIGEVENTDATA._serialized_end=522
-  _REMOTECONFIGUSER._serialized_start=524
-  _REMOTECONFIGUSER._serialized_end=590
+    DESCRIPTOR._options = None
+    DESCRIPTOR._serialized_options = b"\n*com.google.events.firebase.remoteconfig.v1B\tDataProto\252\002/Google.Events.Protobuf.Firebase.RemoteConfig.V1"
+    _REMOTECONFIGUPDATEORIGIN._serialized_start = 592
+    _REMOTECONFIGUPDATEORIGIN._serialized_end = 710
+    _REMOTECONFIGUPDATETYPE._serialized_start = 712
+    _REMOTECONFIGUPDATETYPE._serialized_end = 836
+    _REMOTECONFIGEVENTDATA._serialized_start = 127
+    _REMOTECONFIGEVENTDATA._serialized_end = 522
+    _REMOTECONFIGUSER._serialized_start = 524
+    _REMOTECONFIGUSER._serialized_end = 590
 # @@protoc_insertion_point(module_scope)

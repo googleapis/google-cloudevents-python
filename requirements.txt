@@ -1,2 +1,4 @@
-# Required from types that reads/parses date and times (e.g. google.events.cloud.audit.v1.LogEntryData).
+#grpcio==1.30.0
+protobuf==4.21.5
+proto-plus==1.22.0
 python-dateutil==2.8.2

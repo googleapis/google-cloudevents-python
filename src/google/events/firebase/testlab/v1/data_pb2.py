@@ -6,6 +6,7 @@ from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -14,26 +15,30 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n,google/events/firebase/testlab/v1/data.proto\x12!google.events.firebase.testlab.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x95\x03\n\x13TestMatrixEventData\x12/\n\x0b\x63reate_time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12;\n\x05state\x18\x02 \x01(\x0e\x32,.google.events.firebase.testlab.v1.TestState\x12\x1e\n\x16invalid_matrix_details\x18\x03 \x01(\t\x12J\n\x0foutcome_summary\x18\x04 \x01(\x0e\x32\x31.google.events.firebase.testlab.v1.OutcomeSummary\x12H\n\x0eresult_storage\x18\x05 \x01(\x0b\x32\x30.google.events.firebase.testlab.v1.ResultStorage\x12\x42\n\x0b\x63lient_info\x18\x06 \x01(\x0b\x32-.google.events.firebase.testlab.v1.ClientInfo\x12\x16\n\x0etest_matrix_id\x18\x07 \x01(\t\"\x99\x01\n\nClientInfo\x12\x0e\n\x06\x63lient\x18\x01 \x01(\t\x12K\n\x07\x64\x65tails\x18\x02 \x03(\x0b\x32:.google.events.firebase.testlab.v1.ClientInfo.DetailsEntry\x1a.\n\x0c\x44\x65tailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"t\n\rResultStorage\x12\x1c\n\x14tool_results_history\x18\x01 \x01(\t\x12\x1e\n\x16tool_results_execution\x18\x02 \x01(\t\x12\x13\n\x0bresults_uri\x18\x03 \x01(\t\x12\x10\n\x08gcs_path\x18\x04 \x01(\t*j\n\tTestState\x12\x1a\n\x16TEST_STATE_UNSPECIFIED\x10\x00\x12\x0e\n\nVALIDATING\x10\x01\x12\x0b\n\x07PENDING\x10\x02\x12\x0c\n\x08\x46INISHED\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x12\x0b\n\x07INVALID\x10\x05*j\n\x0eOutcomeSummary\x12\x1f\n\x1bOUTCOME_SUMMARY_UNSPECIFIED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x12\x10\n\x0cINCONCLUSIVE\x10\x03\x12\x0b\n\x07SKIPPED\x10\x04\x42\x61\n%com.google.events.firebase.testlab.v1B\tDataProtoP\x01\xaa\x02*Google.Events.Protobuf.Firebase.TestLab.V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n,google/events/firebase/testlab/v1/data.proto\x12!google.events.firebase.testlab.v1\x1a\x1fgoogle/protobuf/timestamp.proto"\x95\x03\n\x13TestMatrixEventData\x12/\n\x0b\x63reate_time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12;\n\x05state\x18\x02 \x01(\x0e\x32,.google.events.firebase.testlab.v1.TestState\x12\x1e\n\x16invalid_matrix_details\x18\x03 \x01(\t\x12J\n\x0foutcome_summary\x18\x04 \x01(\x0e\x32\x31.google.events.firebase.testlab.v1.OutcomeSummary\x12H\n\x0eresult_storage\x18\x05 \x01(\x0b\x32\x30.google.events.firebase.testlab.v1.ResultStorage\x12\x42\n\x0b\x63lient_info\x18\x06 \x01(\x0b\x32-.google.events.firebase.testlab.v1.ClientInfo\x12\x16\n\x0etest_matrix_id\x18\x07 \x01(\t"\x99\x01\n\nClientInfo\x12\x0e\n\x06\x63lient\x18\x01 \x01(\t\x12K\n\x07\x64\x65tails\x18\x02 \x03(\x0b\x32:.google.events.firebase.testlab.v1.ClientInfo.DetailsEntry\x1a.\n\x0c\x44\x65tailsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01"t\n\rResultStorage\x12\x1c\n\x14tool_results_history\x18\x01 \x01(\t\x12\x1e\n\x16tool_results_execution\x18\x02 \x01(\t\x12\x13\n\x0bresults_uri\x18\x03 \x01(\t\x12\x10\n\x08gcs_path\x18\x04 \x01(\t*j\n\tTestState\x12\x1a\n\x16TEST_STATE_UNSPECIFIED\x10\x00\x12\x0e\n\nVALIDATING\x10\x01\x12\x0b\n\x07PENDING\x10\x02\x12\x0c\n\x08\x46INISHED\x10\x03\x12\t\n\x05\x45RROR\x10\x04\x12\x0b\n\x07INVALID\x10\x05*j\n\x0eOutcomeSummary\x12\x1f\n\x1bOUTCOME_SUMMARY_UNSPECIFIED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0b\n\x07\x46\x41ILURE\x10\x02\x12\x10\n\x0cINCONCLUSIVE\x10\x03\x12\x0b\n\x07SKIPPED\x10\x04\x42\x61\n%com.google.events.firebase.testlab.v1B\tDataProtoP\x01\xaa\x02*Google.Events.Protobuf.Firebase.TestLab.V1b\x06proto3'
+)
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'google.events.firebase.testlab.v1.data_pb2', globals())
+_builder.BuildTopDescriptorsAndMessages(
+    DESCRIPTOR, "google.events.firebase.testlab.v1.data_pb2", globals()
+)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
-  DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'\n%com.google.events.firebase.testlab.v1B\tDataProtoP\001\252\002*Google.Events.Protobuf.Firebase.TestLab.V1'
-  _CLIENTINFO_DETAILSENTRY._options = None
-  _CLIENTINFO_DETAILSENTRY._serialized_options = b'8\001'
-  _TESTSTATE._serialized_start=798
-  _TESTSTATE._serialized_end=904
-  _OUTCOMESUMMARY._serialized_start=906
-  _OUTCOMESUMMARY._serialized_end=1012
-  _TESTMATRIXEVENTDATA._serialized_start=117
-  _TESTMATRIXEVENTDATA._serialized_end=522
-  _CLIENTINFO._serialized_start=525
-  _CLIENTINFO._serialized_end=678
-  _CLIENTINFO_DETAILSENTRY._serialized_start=632
-  _CLIENTINFO_DETAILSENTRY._serialized_end=678
-  _RESULTSTORAGE._serialized_start=680
-  _RESULTSTORAGE._serialized_end=796
+    DESCRIPTOR._options = None
+    DESCRIPTOR._serialized_options = b"\n%com.google.events.firebase.testlab.v1B\tDataProtoP\001\252\002*Google.Events.Protobuf.Firebase.TestLab.V1"
+    _CLIENTINFO_DETAILSENTRY._options = None
+    _CLIENTINFO_DETAILSENTRY._serialized_options = b"8\001"
+    _TESTSTATE._serialized_start = 798
+    _TESTSTATE._serialized_end = 904
+    _OUTCOMESUMMARY._serialized_start = 906
+    _OUTCOMESUMMARY._serialized_end = 1012
+    _TESTMATRIXEVENTDATA._serialized_start = 117
+    _TESTMATRIXEVENTDATA._serialized_end = 522
+    _CLIENTINFO._serialized_start = 525
+    _CLIENTINFO._serialized_end = 678
+    _CLIENTINFO_DETAILSENTRY._serialized_start = 632
+    _CLIENTINFO_DETAILSENTRY._serialized_end = 678
+    _RESULTSTORAGE._serialized_start = 680
+    _RESULTSTORAGE._serialized_end = 796
 # @@protoc_insertion_point(module_scope)

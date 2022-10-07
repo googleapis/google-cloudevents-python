@@ -12,17 +12,24 @@ class MessagePublishedData(_message.Message):
     SUBSCRIPTION_FIELD_NUMBER: ClassVar[int]
     message: PubsubMessage
     subscription: str
-    def __init__(self, message: Optional[Union[PubsubMessage, Mapping]] = ..., subscription: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        message: Optional[Union[PubsubMessage, Mapping]] = ...,
+        subscription: Optional[str] = ...,
+    ) -> None: ...
 
 class PubsubMessage(_message.Message):
     __slots__ = ["attributes", "data", "message_id", "ordering_key", "publish_time"]
+
     class AttributesEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: str
-        def __init__(self, key: Optional[str] = ..., value: Optional[str] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[str] = ...
+        ) -> None: ...
     ATTRIBUTES_FIELD_NUMBER: ClassVar[int]
     DATA_FIELD_NUMBER: ClassVar[int]
     MESSAGE_ID_FIELD_NUMBER: ClassVar[int]
@@ -33,4 +40,11 @@ class PubsubMessage(_message.Message):
     message_id: str
     ordering_key: str
     publish_time: _timestamp_pb2.Timestamp
-    def __init__(self, data: Optional[bytes] = ..., attributes: Optional[Mapping[str, str]] = ..., message_id: Optional[str] = ..., publish_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., ordering_key: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        data: Optional[bytes] = ...,
+        attributes: Optional[Mapping[str, str]] = ...,
+        message_id: Optional[str] = ...,
+        publish_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        ordering_key: Optional[str] = ...,
+    ) -> None: ...

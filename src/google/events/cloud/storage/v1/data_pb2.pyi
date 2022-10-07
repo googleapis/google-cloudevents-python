@@ -7,21 +7,59 @@ from typing import ClassVar, Mapping, Optional, Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class StorageObjectData(_message.Message):
-    __slots__ = ["bucket", "cache_control", "component_count", "content_disposition", "content_encoding", "content_language", "content_type", "crc32c", "customer_encryption", "etag", "event_based_hold", "generation", "id", "kind", "kms_key_name", "md5_hash", "media_link", "metadata", "metageneration", "name", "retention_expiration_time", "self_link", "size", "storage_class", "temporary_hold", "time_created", "time_deleted", "time_storage_class_updated", "updated"]
+    __slots__ = [
+        "bucket",
+        "cache_control",
+        "component_count",
+        "content_disposition",
+        "content_encoding",
+        "content_language",
+        "content_type",
+        "crc32c",
+        "customer_encryption",
+        "etag",
+        "event_based_hold",
+        "generation",
+        "id",
+        "kind",
+        "kms_key_name",
+        "md5_hash",
+        "media_link",
+        "metadata",
+        "metageneration",
+        "name",
+        "retention_expiration_time",
+        "self_link",
+        "size",
+        "storage_class",
+        "temporary_hold",
+        "time_created",
+        "time_deleted",
+        "time_storage_class_updated",
+        "updated",
+    ]
+
     class CustomerEncryption(_message.Message):
         __slots__ = ["encryption_algorithm", "key_sha256"]
         ENCRYPTION_ALGORITHM_FIELD_NUMBER: ClassVar[int]
         KEY_SHA256_FIELD_NUMBER: ClassVar[int]
         encryption_algorithm: str
         key_sha256: str
-        def __init__(self, encryption_algorithm: Optional[str] = ..., key_sha256: Optional[str] = ...) -> None: ...
+        def __init__(
+            self,
+            encryption_algorithm: Optional[str] = ...,
+            key_sha256: Optional[str] = ...,
+        ) -> None: ...
+
     class MetadataEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: str
-        def __init__(self, key: Optional[str] = ..., value: Optional[str] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[str] = ...
+        ) -> None: ...
     BUCKET_FIELD_NUMBER: ClassVar[int]
     CACHE_CONTROL_FIELD_NUMBER: ClassVar[int]
     COMPONENT_COUNT_FIELD_NUMBER: ClassVar[int]
@@ -80,4 +118,41 @@ class StorageObjectData(_message.Message):
     time_deleted: _timestamp_pb2.Timestamp
     time_storage_class_updated: _timestamp_pb2.Timestamp
     updated: _timestamp_pb2.Timestamp
-    def __init__(self, content_encoding: Optional[str] = ..., content_disposition: Optional[str] = ..., cache_control: Optional[str] = ..., content_language: Optional[str] = ..., metageneration: Optional[int] = ..., time_deleted: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., content_type: Optional[str] = ..., size: Optional[int] = ..., time_created: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., crc32c: Optional[str] = ..., component_count: Optional[int] = ..., md5_hash: Optional[str] = ..., etag: Optional[str] = ..., updated: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., storage_class: Optional[str] = ..., kms_key_name: Optional[str] = ..., time_storage_class_updated: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., temporary_hold: bool = ..., retention_expiration_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., metadata: Optional[Mapping[str, str]] = ..., event_based_hold: bool = ..., name: Optional[str] = ..., id: Optional[str] = ..., bucket: Optional[str] = ..., generation: Optional[int] = ..., customer_encryption: Optional[Union[StorageObjectData.CustomerEncryption, Mapping]] = ..., media_link: Optional[str] = ..., self_link: Optional[str] = ..., kind: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        content_encoding: Optional[str] = ...,
+        content_disposition: Optional[str] = ...,
+        cache_control: Optional[str] = ...,
+        content_language: Optional[str] = ...,
+        metageneration: Optional[int] = ...,
+        time_deleted: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        content_type: Optional[str] = ...,
+        size: Optional[int] = ...,
+        time_created: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        crc32c: Optional[str] = ...,
+        component_count: Optional[int] = ...,
+        md5_hash: Optional[str] = ...,
+        etag: Optional[str] = ...,
+        updated: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        storage_class: Optional[str] = ...,
+        kms_key_name: Optional[str] = ...,
+        time_storage_class_updated: Optional[
+            Union[_timestamp_pb2.Timestamp, Mapping]
+        ] = ...,
+        temporary_hold: bool = ...,
+        retention_expiration_time: Optional[
+            Union[_timestamp_pb2.Timestamp, Mapping]
+        ] = ...,
+        metadata: Optional[Mapping[str, str]] = ...,
+        event_based_hold: bool = ...,
+        name: Optional[str] = ...,
+        id: Optional[str] = ...,
+        bucket: Optional[str] = ...,
+        generation: Optional[int] = ...,
+        customer_encryption: Optional[
+            Union[StorageObjectData.CustomerEncryption, Mapping]
+        ] = ...,
+        media_link: Optional[str] = ...,
+        self_link: Optional[str] = ...,
+        kind: Optional[str] = ...,
+    ) -> None: ...

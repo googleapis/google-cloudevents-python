@@ -14,23 +14,26 @@
 
 import google.protobuf.json_format as json_format
 
+
 def test_cloud_firestore_v1_documenteventdata_complex():
     from google.events.cloud.firestore.v1.data_pb2 import DocumentEventData
-    with open('tests/data/cloud_firestore_v1_documenteventdata_complex.json') as f:
+
+    with open("tests/data/cloud_firestore_v1_documenteventdata_complex.json") as f:
         raw_data = f.read()
-    
+
     obj = json_format.Parse(raw_data, DocumentEventData(), ignore_unknown_fields=True)
     # Ensure the parsed object is not empty.
     assert obj.IsInitialized()
     assert obj != DocumentEventData()
+
 
 def test_cloud_firestore_v1_documenteventdata_simple():
     from google.events.cloud.firestore.v1.data_pb2 import DocumentEventData
-    with open('tests/data/cloud_firestore_v1_documenteventdata_simple.json') as f:
+
+    with open("tests/data/cloud_firestore_v1_documenteventdata_simple.json") as f:
         raw_data = f.read()
-    
+
     obj = json_format.Parse(raw_data, DocumentEventData(), ignore_unknown_fields=True)
     # Ensure the parsed object is not empty.
     assert obj.IsInitialized()
     assert obj != DocumentEventData()
-

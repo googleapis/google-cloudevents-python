@@ -11,4 +11,8 @@ class ReferenceEventData(_message.Message):
     DELTA_FIELD_NUMBER: ClassVar[int]
     data: _struct_pb2.Value
     delta: _struct_pb2.Value
-    def __init__(self, data: Optional[Union[_struct_pb2.Value, Mapping]] = ..., delta: Optional[Union[_struct_pb2.Value, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        data: Optional[Union[_struct_pb2.Value, Mapping]] = ...,
+        delta: Optional[Union[_struct_pb2.Value, Mapping]] = ...,
+    ) -> None: ...

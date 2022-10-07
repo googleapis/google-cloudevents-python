@@ -20,21 +20,31 @@ VALIDATING: TestState
 
 class ClientInfo(_message.Message):
     __slots__ = ["client", "details"]
+
     class DetailsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: str
-        def __init__(self, key: Optional[str] = ..., value: Optional[str] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[str] = ...
+        ) -> None: ...
     CLIENT_FIELD_NUMBER: ClassVar[int]
     DETAILS_FIELD_NUMBER: ClassVar[int]
     client: str
     details: _containers.ScalarMap[str, str]
-    def __init__(self, client: Optional[str] = ..., details: Optional[Mapping[str, str]] = ...) -> None: ...
+    def __init__(
+        self, client: Optional[str] = ..., details: Optional[Mapping[str, str]] = ...
+    ) -> None: ...
 
 class ResultStorage(_message.Message):
-    __slots__ = ["gcs_path", "results_uri", "tool_results_execution", "tool_results_history"]
+    __slots__ = [
+        "gcs_path",
+        "results_uri",
+        "tool_results_execution",
+        "tool_results_history",
+    ]
     GCS_PATH_FIELD_NUMBER: ClassVar[int]
     RESULTS_URI_FIELD_NUMBER: ClassVar[int]
     TOOL_RESULTS_EXECUTION_FIELD_NUMBER: ClassVar[int]
@@ -43,10 +53,24 @@ class ResultStorage(_message.Message):
     results_uri: str
     tool_results_execution: str
     tool_results_history: str
-    def __init__(self, tool_results_history: Optional[str] = ..., tool_results_execution: Optional[str] = ..., results_uri: Optional[str] = ..., gcs_path: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        tool_results_history: Optional[str] = ...,
+        tool_results_execution: Optional[str] = ...,
+        results_uri: Optional[str] = ...,
+        gcs_path: Optional[str] = ...,
+    ) -> None: ...
 
 class TestMatrixEventData(_message.Message):
-    __slots__ = ["client_info", "create_time", "invalid_matrix_details", "outcome_summary", "result_storage", "state", "test_matrix_id"]
+    __slots__ = [
+        "client_info",
+        "create_time",
+        "invalid_matrix_details",
+        "outcome_summary",
+        "result_storage",
+        "state",
+        "test_matrix_id",
+    ]
     CLIENT_INFO_FIELD_NUMBER: ClassVar[int]
     CREATE_TIME_FIELD_NUMBER: ClassVar[int]
     INVALID_MATRIX_DETAILS_FIELD_NUMBER: ClassVar[int]
@@ -61,7 +85,16 @@ class TestMatrixEventData(_message.Message):
     result_storage: ResultStorage
     state: TestState
     test_matrix_id: str
-    def __init__(self, create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., state: Optional[Union[TestState, str]] = ..., invalid_matrix_details: Optional[str] = ..., outcome_summary: Optional[Union[OutcomeSummary, str]] = ..., result_storage: Optional[Union[ResultStorage, Mapping]] = ..., client_info: Optional[Union[ClientInfo, Mapping]] = ..., test_matrix_id: Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        state: Optional[Union[TestState, str]] = ...,
+        invalid_matrix_details: Optional[str] = ...,
+        outcome_summary: Optional[Union[OutcomeSummary, str]] = ...,
+        result_storage: Optional[Union[ResultStorage, Mapping]] = ...,
+        client_info: Optional[Union[ClientInfo, Mapping]] = ...,
+        test_matrix_id: Optional[str] = ...,
+    ) -> None: ...
 
 class TestState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []

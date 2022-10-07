@@ -14,13 +14,14 @@
 
 import google.protobuf.json_format as json_format
 
+
 def test_cloud_audit_v1_logentrydata_pubsubcreatetopic():
     from google.events.cloud.audit.v1.data_pb2 import LogEntryData
-    with open('tests/data/cloud_audit_v1_logentrydata_pubsubcreatetopic.json') as f:
+
+    with open("tests/data/cloud_audit_v1_logentrydata_pubsubcreatetopic.json") as f:
         raw_data = f.read()
-    
+
     obj = json_format.Parse(raw_data, LogEntryData(), ignore_unknown_fields=True)
     # Ensure the parsed object is not empty.
     assert obj.IsInitialized()
     assert obj != LogEntryData()
-

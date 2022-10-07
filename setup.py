@@ -1,4 +1,5 @@
 import os
+
 from setuptools import find_packages, setup
 
 release_status = "Development Status :: 3 - Alpha"
@@ -10,7 +11,7 @@ with open(readme_filename, encoding="utf-8") as readme_file:
 
 setup(
     name="google-events",
-    version = "0.2.0",
+    version="0.2.0",
     description="A collection of first party Google Cloud Platform event objects.",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -39,6 +40,6 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    install_requires=['python-dateutil==2.8.2'],
-    extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]}
+    install_requires=["python-dateutil==2.8.2"],
+    extras_require={"dev": ["pylint", "pytest", "black", "stringcase"]},
 )

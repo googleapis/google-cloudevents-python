@@ -10,6 +10,7 @@ DESCRIPTOR: _descriptor.FileDescriptor
 
 class Artifacts(_message.Message):
     __slots__ = ["images", "objects"]
+
     class ArtifactObjects(_message.Message):
         __slots__ = ["location", "paths", "timing"]
         LOCATION_FIELD_NUMBER: ClassVar[int]
@@ -18,31 +19,73 @@ class Artifacts(_message.Message):
         location: str
         paths: _containers.RepeatedScalarFieldContainer[str]
         timing: TimeSpan
-        def __init__(self, location: Optional[str] = ..., paths: Optional[Iterable[str]] = ..., timing: Optional[Union[TimeSpan, Mapping]] = ...) -> None: ...
+        def __init__(
+            self,
+            location: Optional[str] = ...,
+            paths: Optional[Iterable[str]] = ...,
+            timing: Optional[Union[TimeSpan, Mapping]] = ...,
+        ) -> None: ...
     IMAGES_FIELD_NUMBER: ClassVar[int]
     OBJECTS_FIELD_NUMBER: ClassVar[int]
     images: _containers.RepeatedScalarFieldContainer[str]
     objects: Artifacts.ArtifactObjects
-    def __init__(self, images: Optional[Iterable[str]] = ..., objects: Optional[Union[Artifacts.ArtifactObjects, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        images: Optional[Iterable[str]] = ...,
+        objects: Optional[Union[Artifacts.ArtifactObjects, Mapping]] = ...,
+    ) -> None: ...
 
 class BuildEventData(_message.Message):
-    __slots__ = ["artifacts", "build_trigger_id", "create_time", "finish_time", "id", "images", "log_url", "logs_bucket", "options", "project_id", "queue_ttl", "results", "secrets", "source", "source_provenance", "start_time", "status", "status_detail", "steps", "substitutions", "tags", "timeout", "timing"]
+    __slots__ = [
+        "artifacts",
+        "build_trigger_id",
+        "create_time",
+        "finish_time",
+        "id",
+        "images",
+        "log_url",
+        "logs_bucket",
+        "options",
+        "project_id",
+        "queue_ttl",
+        "results",
+        "secrets",
+        "source",
+        "source_provenance",
+        "start_time",
+        "status",
+        "status_detail",
+        "steps",
+        "substitutions",
+        "tags",
+        "timeout",
+        "timing",
+    ]
+
     class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
+
     class SubstitutionsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: str
-        def __init__(self, key: Optional[str] = ..., value: Optional[str] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[str] = ...
+        ) -> None: ...
+
     class TimingEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: TimeSpan
-        def __init__(self, key: Optional[str] = ..., value: Optional[Union[TimeSpan, Mapping]] = ...) -> None: ...
+        def __init__(
+            self,
+            key: Optional[str] = ...,
+            value: Optional[Union[TimeSpan, Mapping]] = ...,
+        ) -> None: ...
     ARTIFACTS_FIELD_NUMBER: ClassVar[int]
     BUILD_TRIGGER_ID_FIELD_NUMBER: ClassVar[int]
     CANCELLED: BuildEventData.Status
@@ -98,18 +141,60 @@ class BuildEventData(_message.Message):
     tags: _containers.RepeatedScalarFieldContainer[str]
     timeout: _duration_pb2.Duration
     timing: _containers.MessageMap[str, TimeSpan]
-    def __init__(self, id: Optional[str] = ..., project_id: Optional[str] = ..., status: Optional[Union[BuildEventData.Status, str]] = ..., status_detail: Optional[str] = ..., source: Optional[Union[Source, Mapping]] = ..., steps: Optional[Iterable[Union[BuildStep, Mapping]]] = ..., results: Optional[Union[Results, Mapping]] = ..., create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., start_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., finish_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., timeout: Optional[Union[_duration_pb2.Duration, Mapping]] = ..., images: Optional[Iterable[str]] = ..., queue_ttl: Optional[Union[_duration_pb2.Duration, Mapping]] = ..., artifacts: Optional[Union[Artifacts, Mapping]] = ..., logs_bucket: Optional[str] = ..., source_provenance: Optional[Union[SourceProvenance, Mapping]] = ..., build_trigger_id: Optional[str] = ..., options: Optional[Union[BuildOptions, Mapping]] = ..., log_url: Optional[str] = ..., substitutions: Optional[Mapping[str, str]] = ..., tags: Optional[Iterable[str]] = ..., secrets: Optional[Iterable[Union[Secret, Mapping]]] = ..., timing: Optional[Mapping[str, TimeSpan]] = ...) -> None: ...
+    def __init__(
+        self,
+        id: Optional[str] = ...,
+        project_id: Optional[str] = ...,
+        status: Optional[Union[BuildEventData.Status, str]] = ...,
+        status_detail: Optional[str] = ...,
+        source: Optional[Union[Source, Mapping]] = ...,
+        steps: Optional[Iterable[Union[BuildStep, Mapping]]] = ...,
+        results: Optional[Union[Results, Mapping]] = ...,
+        create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        start_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        finish_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        timeout: Optional[Union[_duration_pb2.Duration, Mapping]] = ...,
+        images: Optional[Iterable[str]] = ...,
+        queue_ttl: Optional[Union[_duration_pb2.Duration, Mapping]] = ...,
+        artifacts: Optional[Union[Artifacts, Mapping]] = ...,
+        logs_bucket: Optional[str] = ...,
+        source_provenance: Optional[Union[SourceProvenance, Mapping]] = ...,
+        build_trigger_id: Optional[str] = ...,
+        options: Optional[Union[BuildOptions, Mapping]] = ...,
+        log_url: Optional[str] = ...,
+        substitutions: Optional[Mapping[str, str]] = ...,
+        tags: Optional[Iterable[str]] = ...,
+        secrets: Optional[Iterable[Union[Secret, Mapping]]] = ...,
+        timing: Optional[Mapping[str, TimeSpan]] = ...,
+    ) -> None: ...
 
 class BuildOptions(_message.Message):
-    __slots__ = ["disk_size_gb", "env", "log_streaming_option", "logging", "machine_type", "requested_verify_option", "secret_env", "source_provenance_hash", "substitution_option", "volumes", "worker_pool"]
+    __slots__ = [
+        "disk_size_gb",
+        "env",
+        "log_streaming_option",
+        "logging",
+        "machine_type",
+        "requested_verify_option",
+        "secret_env",
+        "source_provenance_hash",
+        "substitution_option",
+        "volumes",
+        "worker_pool",
+    ]
+
     class LogStreamingOption(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
+
     class LoggingMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
+
     class MachineType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
+
     class SubstitutionOption(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
+
     class VerifyOption(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     ALLOW_LOOSE: BuildOptions.SubstitutionOption
@@ -147,10 +232,41 @@ class BuildOptions(_message.Message):
     substitution_option: BuildOptions.SubstitutionOption
     volumes: _containers.RepeatedCompositeFieldContainer[Volume]
     worker_pool: str
-    def __init__(self, source_provenance_hash: Optional[Iterable[Union[Hash.HashType, str]]] = ..., requested_verify_option: Optional[Union[BuildOptions.VerifyOption, str]] = ..., machine_type: Optional[Union[BuildOptions.MachineType, str]] = ..., disk_size_gb: Optional[int] = ..., substitution_option: Optional[Union[BuildOptions.SubstitutionOption, str]] = ..., log_streaming_option: Optional[Union[BuildOptions.LogStreamingOption, str]] = ..., worker_pool: Optional[str] = ..., logging: Optional[Union[BuildOptions.LoggingMode, str]] = ..., env: Optional[Iterable[str]] = ..., secret_env: Optional[Iterable[str]] = ..., volumes: Optional[Iterable[Union[Volume, Mapping]]] = ...) -> None: ...
+    def __init__(
+        self,
+        source_provenance_hash: Optional[Iterable[Union[Hash.HashType, str]]] = ...,
+        requested_verify_option: Optional[Union[BuildOptions.VerifyOption, str]] = ...,
+        machine_type: Optional[Union[BuildOptions.MachineType, str]] = ...,
+        disk_size_gb: Optional[int] = ...,
+        substitution_option: Optional[
+            Union[BuildOptions.SubstitutionOption, str]
+        ] = ...,
+        log_streaming_option: Optional[
+            Union[BuildOptions.LogStreamingOption, str]
+        ] = ...,
+        worker_pool: Optional[str] = ...,
+        logging: Optional[Union[BuildOptions.LoggingMode, str]] = ...,
+        env: Optional[Iterable[str]] = ...,
+        secret_env: Optional[Iterable[str]] = ...,
+        volumes: Optional[Iterable[Union[Volume, Mapping]]] = ...,
+    ) -> None: ...
 
 class BuildStep(_message.Message):
-    __slots__ = ["args", "dir", "entrypoint", "env", "id", "name", "pull_timing", "secret_env", "status", "timeout", "timing", "volumes", "wait_for"]
+    __slots__ = [
+        "args",
+        "dir",
+        "entrypoint",
+        "env",
+        "id",
+        "name",
+        "pull_timing",
+        "secret_env",
+        "status",
+        "timeout",
+        "timing",
+        "volumes",
+        "wait_for",
+    ]
     ARGS_FIELD_NUMBER: ClassVar[int]
     DIR_FIELD_NUMBER: ClassVar[int]
     ENTRYPOINT_FIELD_NUMBER: ClassVar[int]
@@ -177,7 +293,22 @@ class BuildStep(_message.Message):
     timing: TimeSpan
     volumes: _containers.RepeatedCompositeFieldContainer[Volume]
     wait_for: _containers.RepeatedScalarFieldContainer[str]
-    def __init__(self, name: Optional[str] = ..., env: Optional[Iterable[str]] = ..., args: Optional[Iterable[str]] = ..., dir: Optional[str] = ..., id: Optional[str] = ..., wait_for: Optional[Iterable[str]] = ..., entrypoint: Optional[str] = ..., secret_env: Optional[Iterable[str]] = ..., volumes: Optional[Iterable[Union[Volume, Mapping]]] = ..., timing: Optional[Union[TimeSpan, Mapping]] = ..., pull_timing: Optional[Union[TimeSpan, Mapping]] = ..., timeout: Optional[Union[_duration_pb2.Duration, Mapping]] = ..., status: Optional[Union[BuildEventData.Status, str]] = ...) -> None: ...
+    def __init__(
+        self,
+        name: Optional[str] = ...,
+        env: Optional[Iterable[str]] = ...,
+        args: Optional[Iterable[str]] = ...,
+        dir: Optional[str] = ...,
+        id: Optional[str] = ...,
+        wait_for: Optional[Iterable[str]] = ...,
+        entrypoint: Optional[str] = ...,
+        secret_env: Optional[Iterable[str]] = ...,
+        volumes: Optional[Iterable[Union[Volume, Mapping]]] = ...,
+        timing: Optional[Union[TimeSpan, Mapping]] = ...,
+        pull_timing: Optional[Union[TimeSpan, Mapping]] = ...,
+        timeout: Optional[Union[_duration_pb2.Duration, Mapping]] = ...,
+        status: Optional[Union[BuildEventData.Status, str]] = ...,
+    ) -> None: ...
 
 class BuiltImage(_message.Message):
     __slots__ = ["digest", "name", "push_timing"]
@@ -187,16 +318,24 @@ class BuiltImage(_message.Message):
     digest: str
     name: str
     push_timing: TimeSpan
-    def __init__(self, name: Optional[str] = ..., digest: Optional[str] = ..., push_timing: Optional[Union[TimeSpan, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        name: Optional[str] = ...,
+        digest: Optional[str] = ...,
+        push_timing: Optional[Union[TimeSpan, Mapping]] = ...,
+    ) -> None: ...
 
 class FileHashes(_message.Message):
     __slots__ = ["file_hash"]
     FILE_HASH_FIELD_NUMBER: ClassVar[int]
     file_hash: _containers.RepeatedCompositeFieldContainer[Hash]
-    def __init__(self, file_hash: Optional[Iterable[Union[Hash, Mapping]]] = ...) -> None: ...
+    def __init__(
+        self, file_hash: Optional[Iterable[Union[Hash, Mapping]]] = ...
+    ) -> None: ...
 
 class Hash(_message.Message):
     __slots__ = ["type", "value"]
+
     class HashType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
     MD5: Hash.HashType
@@ -206,17 +345,33 @@ class Hash(_message.Message):
     VALUE_FIELD_NUMBER: ClassVar[int]
     type: Hash.HashType
     value: bytes
-    def __init__(self, type: Optional[Union[Hash.HashType, str]] = ..., value: Optional[bytes] = ...) -> None: ...
+    def __init__(
+        self,
+        type: Optional[Union[Hash.HashType, str]] = ...,
+        value: Optional[bytes] = ...,
+    ) -> None: ...
 
 class RepoSource(_message.Message):
-    __slots__ = ["branch_name", "commit_sha", "dir", "invert_regex", "project_id", "repo_name", "substitutions", "tag_name"]
+    __slots__ = [
+        "branch_name",
+        "commit_sha",
+        "dir",
+        "invert_regex",
+        "project_id",
+        "repo_name",
+        "substitutions",
+        "tag_name",
+    ]
+
     class SubstitutionsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: str
-        def __init__(self, key: Optional[str] = ..., value: Optional[str] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[str] = ...
+        ) -> None: ...
     BRANCH_NAME_FIELD_NUMBER: ClassVar[int]
     COMMIT_SHA_FIELD_NUMBER: ClassVar[int]
     DIR_FIELD_NUMBER: ClassVar[int]
@@ -233,10 +388,27 @@ class RepoSource(_message.Message):
     repo_name: str
     substitutions: _containers.ScalarMap[str, str]
     tag_name: str
-    def __init__(self, project_id: Optional[str] = ..., repo_name: Optional[str] = ..., branch_name: Optional[str] = ..., tag_name: Optional[str] = ..., commit_sha: Optional[str] = ..., dir: Optional[str] = ..., invert_regex: bool = ..., substitutions: Optional[Mapping[str, str]] = ...) -> None: ...
+    def __init__(
+        self,
+        project_id: Optional[str] = ...,
+        repo_name: Optional[str] = ...,
+        branch_name: Optional[str] = ...,
+        tag_name: Optional[str] = ...,
+        commit_sha: Optional[str] = ...,
+        dir: Optional[str] = ...,
+        invert_regex: bool = ...,
+        substitutions: Optional[Mapping[str, str]] = ...,
+    ) -> None: ...
 
 class Results(_message.Message):
-    __slots__ = ["artifact_manifest", "artifact_timing", "build_step_images", "build_step_outputs", "images", "num_artifacts"]
+    __slots__ = [
+        "artifact_manifest",
+        "artifact_timing",
+        "build_step_images",
+        "build_step_outputs",
+        "images",
+        "num_artifacts",
+    ]
     ARTIFACT_MANIFEST_FIELD_NUMBER: ClassVar[int]
     ARTIFACT_TIMING_FIELD_NUMBER: ClassVar[int]
     BUILD_STEP_IMAGES_FIELD_NUMBER: ClassVar[int]
@@ -249,22 +421,37 @@ class Results(_message.Message):
     build_step_outputs: _containers.RepeatedScalarFieldContainer[bytes]
     images: _containers.RepeatedCompositeFieldContainer[BuiltImage]
     num_artifacts: int
-    def __init__(self, images: Optional[Iterable[Union[BuiltImage, Mapping]]] = ..., build_step_images: Optional[Iterable[str]] = ..., artifact_manifest: Optional[str] = ..., num_artifacts: Optional[int] = ..., build_step_outputs: Optional[Iterable[bytes]] = ..., artifact_timing: Optional[Union[TimeSpan, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        images: Optional[Iterable[Union[BuiltImage, Mapping]]] = ...,
+        build_step_images: Optional[Iterable[str]] = ...,
+        artifact_manifest: Optional[str] = ...,
+        num_artifacts: Optional[int] = ...,
+        build_step_outputs: Optional[Iterable[bytes]] = ...,
+        artifact_timing: Optional[Union[TimeSpan, Mapping]] = ...,
+    ) -> None: ...
 
 class Secret(_message.Message):
     __slots__ = ["kms_key_name", "secret_env"]
+
     class SecretEnvEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: bytes
-        def __init__(self, key: Optional[str] = ..., value: Optional[bytes] = ...) -> None: ...
+        def __init__(
+            self, key: Optional[str] = ..., value: Optional[bytes] = ...
+        ) -> None: ...
     KMS_KEY_NAME_FIELD_NUMBER: ClassVar[int]
     SECRET_ENV_FIELD_NUMBER: ClassVar[int]
     kms_key_name: str
     secret_env: _containers.ScalarMap[str, bytes]
-    def __init__(self, kms_key_name: Optional[str] = ..., secret_env: Optional[Mapping[str, bytes]] = ...) -> None: ...
+    def __init__(
+        self,
+        kms_key_name: Optional[str] = ...,
+        secret_env: Optional[Mapping[str, bytes]] = ...,
+    ) -> None: ...
 
 class Source(_message.Message):
     __slots__ = ["repo_source", "storage_source"]
@@ -272,24 +459,38 @@ class Source(_message.Message):
     STORAGE_SOURCE_FIELD_NUMBER: ClassVar[int]
     repo_source: RepoSource
     storage_source: StorageSource
-    def __init__(self, storage_source: Optional[Union[StorageSource, Mapping]] = ..., repo_source: Optional[Union[RepoSource, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        storage_source: Optional[Union[StorageSource, Mapping]] = ...,
+        repo_source: Optional[Union[RepoSource, Mapping]] = ...,
+    ) -> None: ...
 
 class SourceProvenance(_message.Message):
     __slots__ = ["file_hashes", "resolved_repo_source", "resolved_storage_source"]
+
     class FileHashesEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: ClassVar[int]
         VALUE_FIELD_NUMBER: ClassVar[int]
         key: str
         value: FileHashes
-        def __init__(self, key: Optional[str] = ..., value: Optional[Union[FileHashes, Mapping]] = ...) -> None: ...
+        def __init__(
+            self,
+            key: Optional[str] = ...,
+            value: Optional[Union[FileHashes, Mapping]] = ...,
+        ) -> None: ...
     FILE_HASHES_FIELD_NUMBER: ClassVar[int]
     RESOLVED_REPO_SOURCE_FIELD_NUMBER: ClassVar[int]
     RESOLVED_STORAGE_SOURCE_FIELD_NUMBER: ClassVar[int]
     file_hashes: _containers.MessageMap[str, FileHashes]
     resolved_repo_source: RepoSource
     resolved_storage_source: StorageSource
-    def __init__(self, resolved_storage_source: Optional[Union[StorageSource, Mapping]] = ..., resolved_repo_source: Optional[Union[RepoSource, Mapping]] = ..., file_hashes: Optional[Mapping[str, FileHashes]] = ...) -> None: ...
+    def __init__(
+        self,
+        resolved_storage_source: Optional[Union[StorageSource, Mapping]] = ...,
+        resolved_repo_source: Optional[Union[RepoSource, Mapping]] = ...,
+        file_hashes: Optional[Mapping[str, FileHashes]] = ...,
+    ) -> None: ...
 
 class StorageSource(_message.Message):
     __slots__ = ["bucket", "generation", "object"]
@@ -299,7 +500,12 @@ class StorageSource(_message.Message):
     bucket: str
     generation: int
     object: str
-    def __init__(self, bucket: Optional[str] = ..., object: Optional[str] = ..., generation: Optional[int] = ...) -> None: ...
+    def __init__(
+        self,
+        bucket: Optional[str] = ...,
+        object: Optional[str] = ...,
+        generation: Optional[int] = ...,
+    ) -> None: ...
 
 class TimeSpan(_message.Message):
     __slots__ = ["end_time", "start_time"]
@@ -307,7 +513,11 @@ class TimeSpan(_message.Message):
     START_TIME_FIELD_NUMBER: ClassVar[int]
     end_time: _timestamp_pb2.Timestamp
     start_time: _timestamp_pb2.Timestamp
-    def __init__(self, start_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., end_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        start_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        end_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+    ) -> None: ...
 
 class Volume(_message.Message):
     __slots__ = ["name", "path"]
@@ -315,4 +525,6 @@ class Volume(_message.Message):
     PATH_FIELD_NUMBER: ClassVar[int]
     name: str
     path: str
-    def __init__(self, name: Optional[str] = ..., path: Optional[str] = ...) -> None: ...
+    def __init__(
+        self, name: Optional[str] = ..., path: Optional[str] = ...
+    ) -> None: ...

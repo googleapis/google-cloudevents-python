@@ -14,4 +14,9 @@ class AlertData(_message.Message):
     create_time: _timestamp_pb2.Timestamp
     end_time: _timestamp_pb2.Timestamp
     payload: _struct_pb2.Struct
-    def __init__(self, create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., end_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ..., payload: Optional[Union[_struct_pb2.Struct, Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        create_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        end_time: Optional[Union[_timestamp_pb2.Timestamp, Mapping]] = ...,
+        payload: Optional[Union[_struct_pb2.Struct, Mapping]] = ...,
+    ) -> None: ...
