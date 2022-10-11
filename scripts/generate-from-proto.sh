@@ -4,24 +4,18 @@ set -e
 EVENTS_SPEC_REPO='https://github.com/googleapis/google-cloudevents'
 EVENTS_SPEC_DIR=${EVENTS_SPEC_DIR:="./tmp/cloudevents-parent"}
 
-GOOGLEAPIS_REPO='https://github.com/googleapis/googleapis'
-GOOGLEAPIS_DIR=${GOOGLEAPIS_DIR:="./tmp/googleapis-protos"}
-
 echo "Cloning the event specification repository from GitHub..."
 if [ ! -d $EVENTS_SPEC_DIR ]; then
   git clone $EVENTS_SPEC_REPO $EVENTS_SPEC_DIR
-fi
-echo "Cloning Google API proto types repository from GitHub..."
-if [ ! -d $GOOGLEAPIS_DIR ]; then
-  git clone $GOOGLEAPIS_REPO $GOOGLEAPIS_DIR
 fi
 
 echo "Generating the Google Events Library for Python..."
 export IN=$EVENTS_SPEC_DIR
 
 # Directories to include in protoc search path.
-PROTOC_INCLUDES="-I /usr/include -I ${EVENTS_SPEC_DIR}/proto -I ${GOOGLEAPIS_DIR}/"
+PROTOC_INCLUDES="-I /usr/include -I ${EVENTS_SPEC_DIR}/proto -I  ${EVENTS_SPEC_DIR}/third_party/googleapis/ "
 
+# Generate code for protos defined in this repo
 for protofile in $(find ${IN}/proto -name 'data.proto' -type f); do
   protopath=$(realpath --relative-to ${IN}/proto $protofile)
   echo $protopath
@@ -34,16 +28,8 @@ for protofile in $(find ${IN}/proto -name 'data.proto' -type f); do
   fi
 done
 
-PROTO_DEPENDENCIES_TO_BUNDLE="\
-${GOOGLEAPIS_DIR}/google/type/latlng.proto
-${GOOGLEAPIS_DIR}/google/api/monitored_resource.proto
-${GOOGLEAPIS_DIR}/google/api/label.proto
-${GOOGLEAPIS_DIR}/google/api/launch_stage.proto
-${GOOGLEAPIS_DIR}/google/rpc/context/attribute_context.proto
-${GOOGLEAPIS_DIR}/google/rpc/status.proto
-"
-
-for protofile in $PROTO_DEPENDENCIES_TO_BUNDLE; do
+# Generate code for dependencies included in this repo.
+for protofile in $(find ${IN}/third_party/googleapis -type f -name '*.proto'); do
   protopath=$(realpath --relative-to ${IN}/proto $protofile)
   echo $protopath
   protoc $PROTOC_INCLUDES $protofile --pyi_out=src --python_out=src
