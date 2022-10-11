@@ -1,8 +1,9 @@
+from typing import ClassVar, Iterable, Mapping, Optional, Union
+
 from google.protobuf import any_pb2 as _any_pb2
-from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Iterable, Mapping, Optional, Union
+from google.protobuf.internal import containers as _containers
 
 DESCRIPTOR: _descriptor.FileDescriptor
 

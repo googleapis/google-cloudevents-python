@@ -1,7 +1,8 @@
-from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from typing import ClassVar, Optional, Union
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Optional, Union
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 
 DESCRIPTOR: _descriptor.FileDescriptor
 

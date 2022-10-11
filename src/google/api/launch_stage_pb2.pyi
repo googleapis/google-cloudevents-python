@@ -1,6 +1,7 @@
-from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
-from google.protobuf import descriptor as _descriptor
 from typing import ClassVar
+
+from google.protobuf import descriptor as _descriptor
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 
 ALPHA: LaunchStage
 BETA: LaunchStage

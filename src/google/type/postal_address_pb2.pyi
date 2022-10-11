@@ -1,7 +1,8 @@
-from google.protobuf.internal import containers as _containers
+from typing import ClassVar, Iterable, Optional
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Iterable, Optional
+from google.protobuf.internal import containers as _containers
 
 DESCRIPTOR: _descriptor.FileDescriptor
 

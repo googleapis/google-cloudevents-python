@@ -1,6 +1,7 @@
+from typing import ClassVar, Optional
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 

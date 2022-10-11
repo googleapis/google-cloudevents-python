@@ -1,7 +1,8 @@
-from google.protobuf import wrappers_pb2 as _wrappers_pb2
+from typing import ClassVar, Mapping, Optional, Union
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Mapping, Optional, Union
+from google.protobuf import wrappers_pb2 as _wrappers_pb2
 
 DESCRIPTOR: _descriptor.FileDescriptor
 

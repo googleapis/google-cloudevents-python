@@ -1,13 +1,15 @@
-from google.api import monitored_resource_pb2 as _monitored_resource_pb2
-from google.protobuf import struct_pb2 as _struct_pb2
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
-from google.rpc.context import attribute_context_pb2 as _attribute_context_pb2
-from google.rpc import status_pb2 as _status_pb2
-from google.protobuf.internal import containers as _containers
-from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from typing import ClassVar, Iterable, Mapping, Optional, Union
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar, Iterable, Mapping, Optional, Union
+from google.protobuf import struct_pb2 as _struct_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf.internal import containers as _containers
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+
+from google.api import monitored_resource_pb2 as _monitored_resource_pb2
+from google.rpc import status_pb2 as _status_pb2
+from google.rpc.context import attribute_context_pb2 as _attribute_context_pb2
 
 ALERT: LogSeverity
 CRITICAL: LogSeverity
