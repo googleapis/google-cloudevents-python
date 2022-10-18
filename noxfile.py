@@ -228,9 +228,11 @@ def docs(session):
     """Build the docs for this library."""
 
     session.install("-e", ".")
-    session.install("sphinx==4.0.1", "alabaster", "recommonmark")
+    session.install("sphinx==4.0.1", "alabaster", "myst_parser")
 
     shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
+    # Copy the readme into the docs site so it is available as source
+    shutil.copy("README.md", "docs/index.md")
     session.run(
         "sphinx-build",
         "-W",  # warnings as errors
