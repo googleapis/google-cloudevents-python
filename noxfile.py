@@ -30,7 +30,7 @@ LINT_PATHS = ["docs", "tests", "noxfile.py", "setup.py", "src"]
 
 DEFAULT_PYTHON_VERSION = "3.9"
 
-UNIT_TEST_PYTHON_VERSIONS = ["3.9"]
+UNIT_TEST_PYTHON_VERSIONS = ["3.7", "3.8", "3.9", "3.10"]
 UNIT_TEST_STANDARD_DEPENDENCIES = [
     "mock",
     "asyncmock",
@@ -369,3 +369,11 @@ def prerelease_deps(session):
             system_test_folder_path,
             *session.posargs,
         )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def generate_proto_lib(session):
+    """Generate python classes for proto files from google-cloudevents repo."""
+    session.install("gapic-generator")
+    session.install("grpcio-tools")
+    session.run("sh", "./scripts/generate-from-proto.sh", external=True)

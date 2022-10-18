@@ -16,9 +16,7 @@ def make_test_case(filename, pkg, cls):
         with open(filename) as f:
             raw_data = f.read()
         mod = importlib.import_module(pkg)
-        obj = json_format.Parse(
-            raw_data, mod.__dict__.get(cls)(), ignore_unknown_fields=True
-        )
+        obj = mod.__dict__.get(cls).from_json(raw_data, ignore_unknown_fields=True)
         emptyobj = mod.__dict__.get(cls)()
         assert obj != emptyobj
 
@@ -28,9 +26,10 @@ def make_test_case(filename, pkg, cls):
 def get_import_for_file(relfile):
     """return the python package and class name for a given testdata file."""
     pkg = os.path.dirname(relfile).replace("/", ".")
-    if pkg != "":
-        # python proto modules are named after their proto files.
-        pkg += ".data_pb2"
+    # gapic-generator does not make a "version" package, but appends _vN to the
+    # previous package component.
+    pos = pkg.rfind(".v")
+    pkg[pos] = "_"
     cls = os.path.basename(relfile).split("-")[0]
     return pkg, cls
 
@@ -50,7 +49,7 @@ class TestdataParsing(unittest.TestCase):
                 )
                 (pkg, cls) = get_import_for_file(rfile)
                 with self.subTest(f=loadpath):
-                    if file[-5:] != ".json":
+                    if not file.endswith(".json"):
                         self.skipTest("Skipping non-json file {}".format(loadpath))
                         continue
                     make_test_case(loadpath, pkg, cls)()

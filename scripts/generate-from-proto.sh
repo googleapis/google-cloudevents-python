@@ -19,16 +19,12 @@ PROTOC_INCLUDES="-I /usr/include -I ${EVENTS_SPEC_DIR}/proto -I  ${EVENTS_SPEC_D
 for protofile in $(find ${IN}/proto -name 'data.proto' -type f); do
   protopath=$(realpath --relative-to ${IN}/proto $protofile)
   echo $protopath
-  if [ "$protopath" == "google/events/cloud/iot/v1/data.proto" ]; then
-    # pyi files cannot be produced for this proto. For further context see
-    # https://github.com/protocolbuffers/protobuf/issues/10246
-    protoc $PROTOC_INCLUDES $protofile --python_out=src
-  else
-    protoc $PROTOC_INCLUDES $protofile --pyi_out=src --python_out=src
-  fi
+  python -m grpc_tools.protoc $PROTOC_INCLUDES $protofile --python_gapic_out=src
 done
 
 # Generate code for dependencies included in this repo.
+# Note that we're using the regular python generator here, as the gapic-generator produces
+# different import paths, and does not find the generated types.
 for protofile in $(find ${IN}/third_party/googleapis -type f -name '*.proto'); do
   protopath=$(realpath --relative-to ${IN}/proto $protofile)
   echo $protopath

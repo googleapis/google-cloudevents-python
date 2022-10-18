@@ -16,27 +16,21 @@ import google.protobuf.json_format as json_format
 
 
 def test_cloud_pubsub_v1_messagepublisheddata_binary():
-    from google.events.cloud.pubsub.v1.data_pb2 import MessagePublishedData
+    from google.events.cloud.pubsub_v1 import MessagePublishedData
 
     with open("tests/data/cloud_pubsub_v1_messagepublisheddata_binary.json") as f:
         raw_data = f.read()
 
-    obj = json_format.Parse(
-        raw_data, MessagePublishedData(), ignore_unknown_fields=True
-    )
+    obj = MessagePublishedData.from_json(raw_data, ignore_unknown_fields=True)
     # Ensure the parsed object is not empty.
-    assert obj.IsInitialized()
     assert obj != MessagePublishedData()
 
 
 def test_cloud_pubsub_v1_messagepublisheddata_text():
-    from google.events.cloud.pubsub.v1.data_pb2 import MessagePublishedData
+    from google.events.cloud.pubsub_v1 import MessagePublishedData
 
     with open("tests/data/cloud_pubsub_v1_messagepublisheddata_text.json") as f:
         raw_data = f.read()
-    obj = json_format.Parse(
-        raw_data, MessagePublishedData(), ignore_unknown_fields=True
-    )
+    obj = MessagePublishedData.from_json(raw_data, ignore_unknown_fields=True)
     # Ensure the parsed object is not empty.
-    assert obj.IsInitialized()
     assert obj != MessagePublishedData()

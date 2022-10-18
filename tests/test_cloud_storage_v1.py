@@ -16,11 +16,10 @@ import google.protobuf.json_format as json_format
 
 
 def test_cloud_storage_v1_storageobjectdata_simple():
-    from google.events.cloud.storage.v1.data_pb2 import StorageObjectData
+    from google.events.cloud.storage_v1 import StorageObjectData
 
     with open("tests/data/cloud_storage_v1_storageobjectdata_simple.json") as f:
         raw_data = f.read()
-    obj = json_format.Parse(raw_data, StorageObjectData(), ignore_unknown_fields=True)
+    obj = StorageObjectData.from_json(raw_data, ignore_unknown_fields=True)
     # Ensure the parsed object is valid and not empty.
-    assert obj.IsInitialized()
     assert obj != StorageObjectData()

@@ -40,8 +40,16 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     python_requires=">=3.7",
-    install_requires=["protobuf", "python-dateutil"],
+    install_requires=["proto-plus", "python-dateutil"],
     extras_require={
-        "dev": ["pylint", "pytest", "black", "stringcase", "grpcio", "proto-plus"]
+        "dev": [
+            "pylint",
+            "pytest",
+            "black",
+            "stringcase",
+            "grpcio-tools",
+            "proto-plus",
+            "gapic_generator",
+        ]
     },
 )
