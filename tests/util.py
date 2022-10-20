@@ -2,6 +2,7 @@
 
 import importlib
 
+
 def make_test_case(filename, pkg, cls):
     """Returns a test function that loads the given file as the supplied proto class."""
 

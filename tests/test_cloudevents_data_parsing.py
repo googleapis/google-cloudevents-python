@@ -10,6 +10,7 @@ from util import make_test_case
 
 class TestdataParsing(unittest.TestCase):
     """Load testdata files from $GOOGLE_EVENTS_TESTDATA directory and verify parsing."""
+
     def setUp(self) -> None:
         self.testdata_root = os.getenv("GOOGLE_EVENTS_TESTDATA", "")
         if self.testdata_root == "":
@@ -19,72 +20,152 @@ class TestdataParsing(unittest.TestCase):
     # sorted the order files appear when running the following command in the testdata dir:
     # find . -type f -name '*.json' | sort
     def test_LogEntryData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/audit/v1/LogEntryData-bigqueryjobcompleted.json"),
-        "google.events.cloud.audit_v1", "LogEntryData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/audit/v1/LogEntryData-pubsubCreateTopic.json"),
-        "google.events.cloud.audit_v1", "LogEntryData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/audit/v1/LogEntryData-bigqueryjobcompleted.json",
+            ),
+            "google.events.cloud.audit_v1",
+            "LogEntryData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/audit/v1/LogEntryData-pubsubCreateTopic.json",
+            ),
+            "google.events.cloud.audit_v1",
+            "LogEntryData",
+        )()
 
     def test_BuildEventData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/cloudbuild/v1/BuildEventData-simple.json"),
-        "google.events.cloud.cloudbuild_v1", "BuildEventData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/cloudbuild/v1/BuildEventData-complex.json"),
-        "google.events.cloud.cloudbuild_v1", "BuildEventData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/cloudbuild/v1/BuildEventData-simple.json",
+            ),
+            "google.events.cloud.cloudbuild_v1",
+            "BuildEventData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/cloudbuild/v1/BuildEventData-complex.json",
+            ),
+            "google.events.cloud.cloudbuild_v1",
+            "BuildEventData",
+        )()
 
     def test_DocumentEventData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/firestore/v1/DocumentEventData-simple.json"),
-        "google.events.cloud.firestore_v1", "DocumentEventData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/firestore/v1/DocumentEventData-complex.json"),
-        "google.events.cloud.firestore_v1", "DocumentEventData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/firestore/v1/DocumentEventData-simple.json",
+            ),
+            "google.events.cloud.firestore_v1",
+            "DocumentEventData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/firestore/v1/DocumentEventData-complex.json",
+            ),
+            "google.events.cloud.firestore_v1",
+            "DocumentEventData",
+        )()
 
     def test_MessagePublishedData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/pubsub/v1/MessagePublishedData-text.json"),
-        "google.events.cloud.pubsub_v1", "MessagePublishedData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/pubsub/v1/MessagePublishedData-binary.json"),
-        "google.events.cloud.pubsub_v1", "MessagePublishedData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/pubsub/v1/MessagePublishedData-duplicatedFields.json"),
-        "google.events.cloud.pubsub_v1", "MessagePublishedData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/pubsub/v1/MessagePublishedData-text.json",
+            ),
+            "google.events.cloud.pubsub_v1",
+            "MessagePublishedData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/pubsub/v1/MessagePublishedData-binary.json",
+            ),
+            "google.events.cloud.pubsub_v1",
+            "MessagePublishedData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/pubsub/v1/MessagePublishedData-duplicatedFields.json",
+            ),
+            "google.events.cloud.pubsub_v1",
+            "MessagePublishedData",
+        )()
 
     def test_SchedulerJobData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/scheduler/v1/SchedulerJobData-simple.json"),
-        "google.events.cloud.scheduler_v1", "SchedulerJobData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/scheduler/v1/SchedulerJobData-simple.json",
+            ),
+            "google.events.cloud.scheduler_v1",
+            "SchedulerJobData",
+        )()
 
     def test_StorageObjectData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/storage/v1/StorageObjectData-simple.json"),
-        "google.events.cloud.storage_v1", "StorageObjectData")()
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/cloud/storage/v1/StorageObjectData-complex.json"),
-        "google.events.cloud.storage_v1", "StorageObjectData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/storage/v1/StorageObjectData-simple.json",
+            ),
+            "google.events.cloud.storage_v1",
+            "StorageObjectData",
+        )()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/cloud/storage/v1/StorageObjectData-complex.json",
+            ),
+            "google.events.cloud.storage_v1",
+            "StorageObjectData",
+        )()
 
     def test_AnalyticsLogData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/firebase/analytics/v1/AnalyticsLogData-complex.json"),
-        "google.events.firebase.analytics_v1", "AnalyticsLogData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/firebase/analytics/v1/AnalyticsLogData-complex.json",
+            ),
+            "google.events.firebase.analytics_v1",
+            "AnalyticsLogData",
+        )()
 
     def test_AuthEventData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/firebase/auth/v1/AuthEventData-complex.json"),
-        "google.events.firebase.auth_v1", "AuthEventData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/firebase/auth/v1/AuthEventData-complex.json",
+            ),
+            "google.events.firebase.auth_v1",
+            "AuthEventData",
+        )()
 
     def test_ReferenceEventData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/firebase/database/v1/ReferenceEventData-simple.json"),
-        "google.events.firebase.database_v1", "ReferenceEventData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/firebase/database/v1/ReferenceEventData-simple.json",
+            ),
+            "google.events.firebase.database_v1",
+            "ReferenceEventData",
+        )()
 
     def test_RemoteConfigEventData(self):
-        make_test_case(os.path.join(self.testdata_root,
-            "google/events/firebase/remoteconfig/v1/RemoteConfigEventData-simple.json"),
-        "google.events.firebase.remoteconfig_v1", "RemoteConfigEventData")()
+        make_test_case(
+            os.path.join(
+                self.testdata_root,
+                "google/events/firebase/remoteconfig/v1/RemoteConfigEventData-simple.json",
+            ),
+            "google.events.firebase.remoteconfig_v1",
+            "RemoteConfigEventData",
+        )()
 
 
 if __name__ == "__main__":
