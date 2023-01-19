@@ -1,5 +1,6 @@
 
 import argparse
+import fnmatch
 import os
 import shutil
 import tempfile
@@ -9,28 +10,28 @@ from grpc_tools import protoc
 import requests
 
 
-#SPEC_URL = "https://github.com/googleapis/google-cloudevents/archive/refs/heads/main.zip"
-
-
-def protofiles(proto_dir, proto_names=["data.proto"]):
+def protofiles(proto_dir, proto_names):
     files = []
 
     for (dirpath, _, filenames) in os.walk(proto_dir):
         for filename in filenames:
-            if filename in proto_names:
-                full_name = os.path.join(dirpath, filename)
-                relative_name = os.path.relpath(full_name, proto_dir)
-                files.append(relative_name)
+            for protoname in proto_names:
+                if fnmatch.fnmatch(filename, protoname):
+                    full_name = os.path.join(dirpath, filename)
+                    relative_name = os.path.relpath(full_name, proto_dir)
+                    files.append(relative_name)
     return files
 
 
-def generate(includes, protofile,  out_dir):
+def generate(includes, protofile, other_args):
     cli_params = []
     for inc in includes:
         cli_params.append(f"-I{inc}")
 
     cli_params.append(protofile)
-    cli_params.append(f"--python_gapic_out={out_dir}")
+
+    for arg in other_args:
+        cli_params.append(arg)
 
     protoc.main(cli_params)
 
@@ -54,35 +55,56 @@ def download(url, filename):
     with requests.get(url, stream=True) as req:
         req.raise_for_status()
         with open(filename, "wb") as f:
-            for chunk in req.iter_content(chunk_size=8192):
-                f.write(chunk)
+            f.write(req.raw.read())
 
 
-def fetch_proto_repo(repo_name, branch):
+def fetch_repo(repo_name, branch, dir_name):
+    # Github convention for downloading as zip:
     repo_zip_url = f"https://github.com/{repo_name}/archive/refs/heads/{branch}.zip"
-   
-    temp_dir = tempfile.TemporaryDirectory()
-    temp_dir_name = temp_dir.name
 
-    repo_zip_file = os.path.join(temp_dir_name, "repo.zip")
-    download(repo_zip_url, repo_zip_file)
+    # Name downloaded zip file for end of repo_name
+    repo_zip_name = f"{repo_name.split('/')[1]}.zip"
+    repo_zip_path = os.path.join(dir_name, repo_zip_name)
 
-    zipfile.ZipFile(repo_zip_file).extractall(path=temp_dir_name)
+    download(repo_zip_url, repo_zip_path)
+    zipfile.ZipFile(repo_zip_path).extractall(path=dir_name)
 
-    repo_root_path = os.path.join(temp_dir_name, f"{repo_name.split('/')[1]}-{branch}")
+    repo_root_path = os.path.join(dir_name, f"{repo_name.split('/')[1]}-{branch}")
 
-    # Don't let the temp_dir object go out of scope until it's okay to remove
-    return repo_root_path, temp_dir
+    return repo_root_path
 
 
-def generate_code_for_protos(repo_path, module_path):
-    for fname in protofiles(f"{repo_path}/proto"):
-        generate(["/usr/include", f"{repo_path}/proto", f"{repo_path}/third_party/googleapis/", "/home/engelke/Git/protobuf/src/"], fname, module_path)
-    pass
+def generate_code_for_protos(proto_path, std_proto_path, module_path):
+    for fname in protofiles(f"{proto_path}/proto", ["data.proto"]):
+        generate(
+            [
+                "/usr/include",
+                f"{proto_path}/proto",
+                f"{proto_path}/third_party/googleapis/",
+                f"{std_proto_path}/src/"
+            ],
+            fname,
+            [
+                f"--python_gapic_out={module_path}",
+            ]
+        )
 
 
-def generate_code_for_dependencies(repo_path, module_path):
-    pass
+def generate_code_for_dependencies(proto_path, std_proto_path, module_path):
+    for fname in protofiles(f"{proto_path}/third_party/googleapis", ["*.proto"]):
+        generate(
+            [
+                "/usr/include",
+                f"{proto_path}/proto",
+                f"{proto_path}/third_party/googleapis/",
+                f"{std_proto_path}/src/"
+            ],
+            fname,
+            [
+                f"--pyi_out={module_path}",
+                f"--python_out={module_path}",
+            ]
+        )
 
 
 def generate_module(module_dir, proto_repo, branch, do_not_confirm_actions):
@@ -91,11 +113,13 @@ def generate_module(module_dir, proto_repo, branch, do_not_confirm_actions):
         print("Operation aborted by user.")
         return False
 
-    repo_root_path, temp_dir = fetch_proto_repo(proto_repo, branch)
-    generate_code_for_protos(repo_root_path, module_path)
-    generate_code_for_dependencies(repo_root_path, module_path)
+    with tempfile.TemporaryDirectory() as tempdir:
+        proto_path = fetch_repo(proto_repo, branch, tempdir)
+        std_proto__path = fetch_repo("protocolbuffers/protobuf", "main", tempdir)
 
-    temp_dir.cleanup()
+        generate_code_for_protos(proto_path, std_proto__path, module_path)
+        generate_code_for_dependencies(proto_path, std_proto__path, module_path)
+
     return True
 
 
