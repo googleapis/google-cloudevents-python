@@ -24,9 +24,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import sys
 import os
 import shlex
-import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -56,7 +56,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
-    "myst_parser",
+    "recommonmark",
 ]
 
 # autodoc/autosummary flags
@@ -70,10 +70,8 @@ templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-source_suffix = {
-    ".rst": "restructuredtext",
-    ".md": "markdown",
-}
+# source_suffix = ['.rst', '.md']
+source_suffix = [".rst", ".md"]
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
@@ -370,6 +368,7 @@ intersphinx_mapping = {
     "grpc": ("https://grpc.github.io/grpc/python/", None),
     "proto-plus": ("https://proto-plus-python.readthedocs.io/en/latest/", None),
     "protobuf": ("https://googleapis.dev/python/protobuf/latest/", None),
+    
 }
 
 
