@@ -1,4 +1,3 @@
-
 import argparse
 import fnmatch
 import os
@@ -41,7 +40,7 @@ def create_module_directory(directory, confirm_deletions):
     if os.path.exists(path):
         if confirm_deletions:
             confirmation = input(f"Delete {path} and all its contents? (y/N) ")
-            if confirmation.lower() != 'y':
+            if confirmation.lower() != "y":
                 return None
 
         # WARNING: Data deleting operation below!
@@ -81,12 +80,12 @@ def generate_code_for_protos(proto_path, std_proto_path, module_path):
                 "/usr/include",
                 f"{proto_path}/proto",
                 f"{proto_path}/third_party/googleapis/",
-                f"{std_proto_path}/src/"
+                f"{std_proto_path}/src/",
             ],
             fname,
             [
                 f"--python_gapic_out={module_path}",
-            ]
+            ],
         )
 
 
@@ -97,13 +96,13 @@ def generate_code_for_dependencies(proto_path, std_proto_path, module_path):
                 "/usr/include",
                 f"{proto_path}/proto",
                 f"{proto_path}/third_party/googleapis/",
-                f"{std_proto_path}/src/"
+                f"{std_proto_path}/src/",
             ],
             fname,
             [
                 f"--pyi_out={module_path}",
                 f"--python_out={module_path}",
-            ]
+            ],
         )
 
 
@@ -130,26 +129,32 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "-o", "--output", required=True,
+        "-o",
+        "--output",
+        required=True,
         help="Directory to write the module source. "
         "Will be created if necessary. "
         "WARNING - preexisting contents will be deleted!",
     )
 
     parser.add_argument(
-        "-r", "--repo",
+        "-r",
+        "--repo",
         help="GitHub repo containing protofiles for Cloud events",
         default="googleapis/google-cloudevents",
     )
 
     parser.add_argument(
-        "-b", "--branch",
+        "-b",
+        "--branch",
         help="Repo branch to fetch",
         default="main",
     )
 
     parser.add_argument(
-        "-q", "--quiet", action='store_true',
+        "-q",
+        "--quiet",
+        action="store_true",
         help="do not confirm any steps (even data destructive ones)",
     )
 

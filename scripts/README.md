@@ -4,6 +4,14 @@ The program `generate-from-proto.py` will fetch the Google Cloudevents proto
 files from a Github repository and generate Python libraries for each type of
 event defined there.
 
+Before running the generator, create a virtual Python environment (recommended)
+and install the libraries it needs with:
+
+    pip install -r requirements.txt
+
+You will also need an Internet connection as the generator fetches the event
+definitions from Github.
+
 ## Code generator usage: python generate-from-proto.py *[arguments]*
 
 Arguments are:
@@ -51,7 +59,7 @@ The generated code can be packaged and installed using standard Python packaging
 tools. Or, the library can be installed directly from source by changing to the
 generated code library and running:
 
-`pip install .`
+    pip install .
 
 ## Sample code using the libraries
 
