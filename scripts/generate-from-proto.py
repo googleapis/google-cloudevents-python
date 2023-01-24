@@ -113,11 +113,14 @@ def generate_module(module_dir, proto_repo, branch, do_not_confirm_actions):
         return False
 
     with tempfile.TemporaryDirectory() as tempdir:
+        # Fetch repo with cloudevent proto definitions
         proto_path = fetch_repo(proto_repo, branch, tempdir)
-        std_proto__path = fetch_repo("protocolbuffers/protobuf", "main", tempdir)
 
-        generate_code_for_protos(proto_path, std_proto__path, module_path)
-        generate_code_for_dependencies(proto_path, std_proto__path, module_path)
+        # Fetch repo with referenced common protos (e.g., timestamp)
+        std_proto_path = fetch_repo("protocolbuffers/protobuf", "main", tempdir)
+
+        generate_code_for_protos(proto_path, std_proto_path, module_path)
+        generate_code_for_dependencies(proto_path, std_proto_path, module_path)
 
     return True
 
