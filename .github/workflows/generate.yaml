@@ -27,7 +27,7 @@ jobs:
       issues: write
       pull-requests: write
     concurrency:
-      group: ${{ github.workflow }}
+      group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     env:
       LIBRARY_CHECKOUT_PATH: library
