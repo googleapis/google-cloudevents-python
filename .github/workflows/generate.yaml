@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,12 +38,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: ${{ env.LIBRARY_CHECKOUT_PATH }}
-
-      - name: Proto Schemas > Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          repository: googleapis/google-cloudevents
-          path: ${{ env.DATA_SOURCE_CHECKOUT_PATH }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
