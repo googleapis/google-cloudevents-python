@@ -59,6 +59,8 @@ jobs:
 
       - name: Run library tests
         working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        env:
+          GOOGLE_EVENTS_TESTDATA: ../${{env.DATA_SOURCE_CHECKOUT_PATH}}
         run: |
           pip install -r requirements-dev.txt
           pytest -v .
