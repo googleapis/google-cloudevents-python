@@ -50,6 +50,7 @@ jobs:
           cache: 'pip'
 
       - name: Install Generator Dependencies
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
         run: pip install -r ./scripts/requirements.txt
 
       - name: Run the generator
