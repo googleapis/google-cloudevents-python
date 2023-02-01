@@ -13,6 +13,9 @@
 # limitations under the License.
 
 name: Test Library Generation
+# This workflow verifies the tooling that creates the library. It does this by
+# running the generator, and verifying that the tests pass on the
+# newly-generated library (not the library code currently committed)
 on:
   pull_request:
     paths:
