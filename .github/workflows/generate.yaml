@@ -46,6 +46,7 @@ jobs:
           cache: 'pip'
 
       - name: Install Generator Dependencies
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
         run: pip install -r ./scripts/requirements.txt
 
       - name: Run the generator
@@ -113,5 +114,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Library generation failed (${{ steps.source-version.outputs.revision }})',
-              body: `See [failed job](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              body: `See [failed job](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
             });
