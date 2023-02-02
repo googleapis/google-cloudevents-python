@@ -46,11 +46,21 @@ jobs:
           cache: 'pip'
 
       - name: Install Generator Dependencies
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
         run: pip install -r ./scripts/requirements.txt
 
       - name: Run the generator
         working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
         run: ./scripts/generate-from-proto.py -o ./src --quiet
+
+      - name: Run library tests
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        env:
+          GOOGLE_EVENTS_TESTDATA: ../${{env.DATA_SOURCE_CHECKOUT_PATH}}/testdata
+        run: |
+          pip install -r requirements-dev.txt
+          pip install ./src
+          pytest -v .
 
       - name: View generator output
         if: ${{ failure() }}
@@ -104,5 +114,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Library generation failed (${{ steps.source-version.outputs.revision }})',
-              body: `See [failed job](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              body: `See [failed job](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
             });
