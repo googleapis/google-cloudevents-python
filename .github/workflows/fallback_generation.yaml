@@ -12,21 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Utility functions for writing tests for google-cloudevents
+name: Test Library Generation
+on:
+  pull_request:
+    paths-ignore:
+      - "scripts/**"
+      - ".github/workflows/test_generation.yaml"
 
-import importlib
+jobs:
+  test-generator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: none
 
-
-def make_test_case(filename, pkg, cls):
-    """Returns a test function that loads the given file as the supplied proto class."""
-
-    def testfn():
-        with open(filename) as f:
-            raw_data = f.read()
-        klass = getattr(importlib.import_module(pkg), cls)
-        obj = klass.from_json(raw_data, ignore_unknown_fields=True)
-        emptyobj = klass()
-        assert obj != emptyobj
-        return obj
-
-    return testfn
+    steps:
+      - run: echo "No build required."
