@@ -1,6 +1,6 @@
 env/
+tmp/
 .vscode/
-.github/*
 __pycache__
 *.egg-info
 node_modules/
