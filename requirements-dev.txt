@@ -1,5 +1,0 @@
--r requirements.txt
-black==20.8b1
-pylint==2.6.0
-pytest==7.2.1
-stringcase==1.2.0
