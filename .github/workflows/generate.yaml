@@ -51,7 +51,7 @@ jobs:
 
       - name: Run the generator
         working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
-        run: ./scripts/generate-from-proto.py -o ./src --quiet
+        run: python ./scripts/generate-from-proto.py -o ./src --quiet
 
       - name: Run library tests
         working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
