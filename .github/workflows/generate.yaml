@@ -1,0 +1,118 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Generate Library
+on:
+  schedule:
+    # Run at the end of every day. (10:10pm PT, 5:10am UTC)
+    - cron: 10 5 * * *
+  workflow_dispatch:
+
+jobs:
+  run-generator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    env:
+      LIBRARY_CHECKOUT_PATH: library
+      DATA_SOURCE_CHECKOUT_PATH: google-cloudevents
+
+    steps:
+      - name: Python Library > Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.LIBRARY_CHECKOUT_PATH }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Generator Dependencies
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        run: pip install -r ./scripts/requirements.txt
+
+      - name: Run the generator
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        run: python ./scripts/generate-from-proto.py -o ./src --quiet
+
+      - name: Run library tests
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        env:
+          GOOGLE_EVENTS_TESTDATA: ../${{env.DATA_SOURCE_CHECKOUT_PATH}}/testdata
+        run: |
+          pip install -r requirements-dev.txt
+          pip install ./src
+          pytest -v .
+
+      - name: View generator output
+        if: ${{ failure() }}
+        working-directory: ${{ env.LIBRARY_CHECKOUT_PATH }}
+        run: |
+          git add -N . # Needed if files are untracked
+          git diff
+
+      - name: Get source version
+        id: source-version
+        working-directory: ${{ env.DATA_SOURCE_CHECKOUT_PATH }}
+        run: |
+          rev=$(git rev-parse --short HEAD)
+          echo "revision=${rev}" >> $GITHUB_OUTPUT
+
+      - name: Create a pull request with updates
+        # https://github.com/googleapis/code-suggester#Action
+        uses: googleapis/code-suggester@v4
+        env:
+          # Provided by the GitHub Automation team
+          ACCESS_TOKEN: ${{ secrets.YOSHI_CODE_BOT_TOKEN }}
+        with:
+          command: pr
+          upstream_owner: ${{ github.repository_owner }}
+          upstream_repo: "google-cloudevents-python"
+          title: "feat: Run the code generator"
+          message: "feat: Run the code generator (${{ steps.source-version.outputs.revision }})"
+          description: |
+            :robot: Auto-generated Pull Request.
+            This PR was created from a recent update in the [google-cloudevents](https://github.com/googleapis/google-cloudevents) repository.
+            Specifically, the change at https://github.com/googleapis/google-cloudevents/commit/${{ steps.source-version.outputs.revision }}.
+            Future updates to the protos in that repository made before this PR is
+            merged will lead to a force push update of this Pull Request with
+            the latest changes.
+            * **Generator configuration:** https://github.com/${{ github.repository }}/blob/${{ steps.source-version.outputs.revision }}/.github/workflows/generate.yml
+            * **Generator script:** https://github.com/${{ github.repository }}/blob/${{ github.sha }}/scripts/generate-from-proto.py
+          # A static branch name and force pushes are meant to create
+          # a single open PR with all pending updates.
+          branch: "generator"
+          force: true
+          fork: true # action automatically forks repo
+          git_dir: ${{ env.LIBRARY_CHECKOUT_PATH }}
+          primary: "main"
+
+      - name: Notify for failure
+        if: ${{ failure() && github.event_name == 'schedule' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Library generation failed (${{ steps.source-version.outputs.revision }})',
+              body: `See [failed job](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+            });
