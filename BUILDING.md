@@ -35,10 +35,10 @@ Python *google-events* library can be updated to match, as follows:
     `cd scripts`
 1. Install the required libraries to run the generator script:  
     `pip install -r requirements.txt`
-1. Run the script, specifying a folder of your choice for the output:  
-    `python generator-from-proto.py -o [OUTPUT_DIR]`
+1. For a test run, run the script, specifying a folder of your choice for the output:  
+    `python generate-from-proto.py -o [OUTPUT_DIR]`  
+    and examine the contents of *[OUTPUT_DIR]*.
+1. Update the library by having the generator script replace the repository src folder:  
+    `python generate-from-proto.py -o ../src`
 
-You can use the updated library directly from the generated *[OUTPUT_DIR]/src*
-folder by adding it to your `PYTHONPATH`, or you can replace the contents of the
-local repository's `/src` folder with the generated *[OUTPUT_DIR]/src* folder
-and install or distribute it with the previous instructions.
+You can install or distribute the updated library with the previous instructions.
