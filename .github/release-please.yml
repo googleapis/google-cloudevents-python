@@ -1,4 +1,2 @@
 releaseType: python
 handleGHRelease: true
-releaseLabel: "autorelease: published"
-bumpMinorPreMajor: true
