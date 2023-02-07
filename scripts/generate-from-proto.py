@@ -74,7 +74,10 @@ def fetch_repo(repo_name, branch, dir_name):
 
 
 def generate_code_for_protos(proto_path, std_proto_path, module_path):
+    print(f"Generating code for protos:")
+
     for fname in protofiles(f"{proto_path}/proto", ["data.proto"]):
+        print(f"   {fname}")
         generate(
             [
                 "/usr/include",
@@ -90,7 +93,10 @@ def generate_code_for_protos(proto_path, std_proto_path, module_path):
 
 
 def generate_code_for_dependencies(proto_path, std_proto_path, module_path):
+    print(f"Generating code for protobuf dependencies:")
+
     for fname in protofiles(f"{proto_path}/third_party/googleapis", ["*.proto"]):
+        print(f"   {fname}")
         generate(
             [
                 "/usr/include",
@@ -108,20 +114,24 @@ def generate_code_for_dependencies(proto_path, std_proto_path, module_path):
 
 def generate_module(module_dir, proto_repo, branch, do_not_confirm_actions):
     module_path = create_module_directory(module_dir, not do_not_confirm_actions)
+
     if module_path is None:
         print("Operation aborted by user.")
         return False
 
+    print(f"Created temp working director {module_path}")
+
     with tempfile.TemporaryDirectory() as tempdir:
         # Fetch repo with cloudevent proto definitions
+        print(f"Fetching proto repo from {proto_repo}")
         proto_path = fetch_repo(proto_repo, branch, tempdir)
 
         # Fetch repo with referenced common protos (e.g., timestamp)
+        print(f"Fetching protobuf repo from {proto_repo}")
         std_proto_path = fetch_repo("protocolbuffers/protobuf", "main", tempdir)
 
         generate_code_for_protos(proto_path, std_proto_path, module_path)
         generate_code_for_dependencies(proto_path, std_proto_path, module_path)
-
     return True
 
 
