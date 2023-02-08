@@ -65,7 +65,7 @@ jobs:
         env:
           GOOGLE_EVENTS_TESTDATA: ../${{env.DATA_SOURCE_CHECKOUT_PATH}}/testdata
         run: |
-          pip install ./src
+          pip install .
           pytest -v .
 
       - name: View generator output
