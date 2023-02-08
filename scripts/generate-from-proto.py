@@ -130,8 +130,19 @@ def generate_module(module_dir, proto_repo, branch, do_not_confirm_actions):
         print(f"Fetching protobuf repo from {proto_repo}")
         std_proto_path = fetch_repo("protocolbuffers/protobuf", "main", tempdir)
 
-        generate_code_for_protos(proto_path, std_proto_path, module_path)
-        generate_code_for_dependencies(proto_path, std_proto_path, module_path)
+        output_path = os.path.join(tempdir, "output_path")
+        os.mkdir(output_path)
+
+        generate_code_for_protos(proto_path, std_proto_path, output_path)
+        generate_code_for_dependencies(proto_path, std_proto_path, output_path)
+
+        os.mkdir(os.path.join(module_path, "google"))
+
+        shutil.move(
+            os.path.join(output_path, "google", "events"),
+            os.path.join(module_path, "google"),
+        )
+
     return True
 
 
