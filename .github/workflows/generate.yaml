@@ -58,8 +58,8 @@ jobs:
         env:
           GOOGLE_EVENTS_TESTDATA: ../${{env.DATA_SOURCE_CHECKOUT_PATH}}/testdata
         run: |
-          pip install -r requirements-dev.txt
-          pip install ./src
+          pip install .
+          pip install -r ./tests/requirements.txt
           pytest -v .
 
       - name: View generator output
