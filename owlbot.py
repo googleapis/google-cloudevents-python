@@ -39,4 +39,3 @@ s.move(templated_files / "renovate.json")
 
 # Files for releasing
 s.move(templated_files / "MANIFEST.in")
-s.move(templated_files / "setup.cfg")
