@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.0.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.1...v1.0.0) (2023-02-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace previous library version tests with new ones. ([#139](https://github.com/googleapis/google-cloudevents-python/issues/139))
+
+### Features
+
+* Generator script in Python ([#134](https://github.com/googleapis/google-cloudevents-python/issues/134)) ([0673c46](https://github.com/googleapis/google-cloudevents-python/commit/0673c46fea35f9351bcc99ce4b86ceb9cf085893))
+* **generator:** Workflow to auto-generate library ([#138](https://github.com/googleapis/google-cloudevents-python/issues/138)) ([970f6cc](https://github.com/googleapis/google-cloudevents-python/commit/970f6cc553849499906477be7149bc9e31e3bff2))
+* Replace previous library version tests with new ones. ([#139](https://github.com/googleapis/google-cloudevents-python/issues/139)) ([a547c64](https://github.com/googleapis/google-cloudevents-python/commit/a547c643650c664aef26ef9c7ff67bcc7b5fd1d8))
+* Run tests after generating new library ([#140](https://github.com/googleapis/google-cloudevents-python/issues/140)) ([8d2abbb](https://github.com/googleapis/google-cloudevents-python/commit/8d2abbb79fa2d4ecdf7492115bd9e2015081d7ee))
+* Show progress of generation ([#142](https://github.com/googleapis/google-cloudevents-python/issues/142)) ([4a1153e](https://github.com/googleapis/google-cloudevents-python/commit/4a1153e17deb90ec4cb1059e2fbcac7d32108968))
+
+
+### Bug Fixes
+
+* Don't wipeout setup.cfg ([#154](https://github.com/googleapis/google-cloudevents-python/issues/154)) ([5726949](https://github.com/googleapis/google-cloudevents-python/commit/57269493b7f95de1be5b4f699a97089e1ab4f6ac))
+* Final touches ([#151](https://github.com/googleapis/google-cloudevents-python/issues/151)) ([16d8413](https://github.com/googleapis/google-cloudevents-python/commit/16d8413619289e178b9350e8296f2842a4322809))
+* Remove outdated files ([#145](https://github.com/googleapis/google-cloudevents-python/issues/145)) ([888ccc5](https://github.com/googleapis/google-cloudevents-python/commit/888ccc54b46225ee27c3485e09eda0922535a195))
+* **workflows:** Generator not executable, needs an interpreter. ([#150](https://github.com/googleapis/google-cloudevents-python/issues/150)) ([9c8db0e](https://github.com/googleapis/google-cloudevents-python/commit/9c8db0ea7f343e91ec51d9aaad6d90cad09cb4dd))
+
 ## [0.2.1](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.0...v0.2.1) (2022-06-03)
 
 
