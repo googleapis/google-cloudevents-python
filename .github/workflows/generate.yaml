@@ -71,6 +71,7 @@ jobs:
 
       - name: Get source version
         id: source-version
+        if: ${{ always() }}
         working-directory: ${{ env.DATA_SOURCE_CHECKOUT_PATH }}
         run: |
           rev=$(git rev-parse --short HEAD)
