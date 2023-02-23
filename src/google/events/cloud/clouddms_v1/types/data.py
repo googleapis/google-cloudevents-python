@@ -55,7 +55,7 @@ class NetworkArchitecture(proto.Enum):
 
     Values:
         NETWORK_ARCHITECTURE_UNSPECIFIED (0):
-
+            No description available.
         NETWORK_ARCHITECTURE_OLD_CSQL_PRODUCER (1):
             Instance is in Cloud SQL's old producer
             network architecture.

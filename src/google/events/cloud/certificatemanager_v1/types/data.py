@@ -303,7 +303,7 @@ class Certificate(proto.Message):
 
             Values:
                 STATE_UNSPECIFIED (0):
-
+                    No description available.
                 PROVISIONING (1):
                     Certificate Manager attempts to provision or renew the
                     certificate. If the process takes longer than expected,
@@ -341,7 +341,7 @@ class Certificate(proto.Message):
 
                 Values:
                     REASON_UNSPECIFIED (0):
-
+                        No description available.
                     AUTHORIZATION_ISSUE (1):
                         Certificate provisioning failed due to an issue with one or
                         more of the domains on the certificate. For details of which
@@ -391,7 +391,7 @@ class Certificate(proto.Message):
 
                 Values:
                     STATE_UNSPECIFIED (0):
-
+                        No description available.
                     AUTHORIZING (1):
                         Certificate provisioning for this domain is
                         under way. GCP will attempt to authorize the
@@ -415,7 +415,7 @@ class Certificate(proto.Message):
 
                 Values:
                     FAILURE_REASON_UNSPECIFIED (0):
-
+                        No description available.
                     CONFIG (1):
                         There was a problem with the user's DNS or
                         load balancer configuration for this domain.
