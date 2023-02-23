@@ -1,7 +1,15 @@
 # Changelog
 
-## [1.0.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.1...v1.0.0) (2023-02-16)
+### Bug Fixes
 
+* Fill in home-page url ([#184](https://github.com/googleapis/google-cloudevents-python/issues/184)) ([7c5ba89](https://github.com/googleapis/google-cloudevents-python/commit/7c5ba895c8c124c4a871eb5f150bcf010c772d04))
+
+* Fill in url ([#182](https://github.com/googleapis/google-cloudevents-python/issues/182)) ([1d0dd8d](https://github.com/googleapis/google-cloudevents-python/commit/1d0dd8d794567ea841a1ebed237cc9f5897822bc))
+
+### Bug Fixes
+
+* Check out test data ([#180](https://github.com/googleapis/google-cloudevents-python/issues/180)) ([0e94a11](https://github.com/googleapis/google-cloudevents-python/commit/0e94a11dfc9f91690ad6d6aa2eb4ffa5a125f4ac))
+* Release 0.3.0 ([#175](https://github.com/googleapis/google-cloudevents-python/issues/175)) ([1a34817](https://github.com/googleapis/google-cloudevents-python/commit/1a34817c737eee26bd4932166f5dfe42145f4d1e))
 
 ### ⚠ BREAKING CHANGES
 
@@ -22,6 +30,20 @@
 * Final touches ([#151](https://github.com/googleapis/google-cloudevents-python/issues/151)) ([16d8413](https://github.com/googleapis/google-cloudevents-python/commit/16d8413619289e178b9350e8296f2842a4322809))
 * Remove outdated files ([#145](https://github.com/googleapis/google-cloudevents-python/issues/145)) ([888ccc5](https://github.com/googleapis/google-cloudevents-python/commit/888ccc54b46225ee27c3485e09eda0922535a195))
 * **workflows:** Generator not executable, needs an interpreter. ([#150](https://github.com/googleapis/google-cloudevents-python/issues/150)) ([9c8db0e](https://github.com/googleapis/google-cloudevents-python/commit/9c8db0ea7f343e91ec51d9aaad6d90cad09cb4dd))
+
+## [0.3.4](https://github.com/googleapis/google-cloudevents-python/compare/v0.3.3...v0.3.4) (2023-02-23)
+
+
+### Bug Fixes
+
+* Specify description type ([#189](https://github.com/googleapis/google-cloudevents-python/issues/189)) ([0bed1d6](https://github.com/googleapis/google-cloudevents-python/commit/0bed1d6d51d5f54adccac45e921621805bccf550))
+
+## [0.3.3](https://github.com/googleapis/google-cloudevents-python/compare/v0.3.2...v0.3.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* Remove quotes on home-page url ([#186](https://github.com/googleapis/google-cloudevents-python/issues/186)) ([8715ff3](https://github.com/googleapis/google-cloudevents-python/commit/8715ff3717d9f2db90d533beff79fe04aecd6d13))
 
 ## [0.2.1](https://github.com/googleapis/google-cloudevents-python/compare/v0.2.0...v0.2.1) (2022-06-03)
 
