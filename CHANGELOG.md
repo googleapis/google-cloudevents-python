@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/googleapis/google-cloudevents-python/compare/v0.3.0...v0.3.1) (2023-02-23)
+
+
+### Bug Fixes
+
+* Fill in url ([#182](https://github.com/googleapis/google-cloudevents-python/issues/182)) ([1d0dd8d](https://github.com/googleapis/google-cloudevents-python/commit/1d0dd8d794567ea841a1ebed237cc9f5897822bc))
+
 ## [0.3.0](https://github.com/googleapis/google-cloudevents-python/compare/v1.0.0...v0.3.0) (2023-02-22)
 
 
