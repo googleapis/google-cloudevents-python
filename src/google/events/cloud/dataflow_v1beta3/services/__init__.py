@@ -13,34 +13,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from __future__ import annotations
-
-from typing import MutableMapping, MutableSequence
-
-import proto  # type: ignore
-
-
-__protobuf__ = proto.module(
-    package='google.events.cloud.scheduler.v1',
-    manifest={
-        'SchedulerJobData',
-    },
-)
-
-
-class SchedulerJobData(proto.Message):
-    r"""Scheduler job data.
-
-    Attributes:
-        custom_data (bytes):
-            The custom data the user specified when
-            creating the scheduler source.
-    """
-
-    custom_data: bytes = proto.Field(
-        proto.BYTES,
-        number=1,
-    )
-
-
-__all__ = tuple(sorted(__protobuf__.manifest))
