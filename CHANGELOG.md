@@ -31,6 +31,13 @@
 * Remove outdated files ([#145](https://github.com/googleapis/google-cloudevents-python/issues/145)) ([888ccc5](https://github.com/googleapis/google-cloudevents-python/commit/888ccc54b46225ee27c3485e09eda0922535a195))
 * **workflows:** Generator not executable, needs an interpreter. ([#150](https://github.com/googleapis/google-cloudevents-python/issues/150)) ([9c8db0e](https://github.com/googleapis/google-cloudevents-python/commit/9c8db0ea7f343e91ec51d9aaad6d90cad09cb4dd))
 
+## [0.5.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.4.0...v0.5.0) (2023-03-24)
+
+
+### Features
+
+* Run the code generator (778716e) ([#199](https://github.com/googleapis/google-cloudevents-python/issues/199)) ([a0ed8c3](https://github.com/googleapis/google-cloudevents-python/commit/a0ed8c30e5bcc2f4cf99c697693f7e90d70e1485))
+
 ## [0.4.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.3.4...v0.4.0) (2023-02-23)
 
 
