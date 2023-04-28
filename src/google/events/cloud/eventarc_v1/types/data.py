@@ -86,8 +86,8 @@ class Channel(proto.Message):
             channel. The token must be used by the provider
             to register the channel for publishing.
         crypto_key_name (str):
-            Optional. Resource name of a KMS crypto key (managed by the
-            user) used to encrypt/decrypt their event data.
+            Resource name of a KMS crypto key (managed by the user) used
+            to encrypt/decrypt their event data.
 
             It must match the pattern
             ``projects/*/locations/*/keyRings/*/cryptoKeys/*``.
@@ -264,7 +264,7 @@ class Trigger(proto.Message):
             events should be sent to.
         transport (google.events.cloud.eventarc_v1.types.Transport):
             Optional. To deliver messages, Eventarc might
-            use other GCP products as a transport
+            use other Google Cloud products as a transport
             intermediary. This field contains a reference to
             that transport intermediary. This information
             can be used for debugging purposes.
@@ -280,6 +280,11 @@ class Trigger(proto.Message):
         conditions (MutableMapping[str, google.events.cloud.eventarc_v1.types.StateCondition]):
             Output only. The reason(s) why a trigger is
             in FAILED state.
+        event_data_content_type (str):
+            Optional. EventDataContentType specifies the type of payload
+            in MIME format that is expected from the CloudEvent data
+            field. This is set to ``application/json`` if the value is
+            not defined.
         etag (str):
             Output only. This checksum is computed by the
             server based on the value of other fields, and
@@ -339,6 +344,10 @@ class Trigger(proto.Message):
         proto.MESSAGE,
         number=15,
         message='StateCondition',
+    )
+    event_data_content_type: str = proto.Field(
+        proto.STRING,
+        number=16,
     )
     etag: str = proto.Field(
         proto.STRING,
@@ -422,6 +431,10 @@ class Destination(proto.Message):
             The Cloud Function resource name. Only Cloud Functions V2 is
             supported. Format:
             ``projects/{project}/locations/{location}/functions/{function}``
+
+            This is a read-only field. Creating Cloud Functions V2
+            triggers is only supported via the Cloud Functions product.
+            An error will be returned if the user sets this value.
 
             This field is a member of `oneof`_ ``descriptor``.
         gke (google.events.cloud.eventarc_v1.types.GKE):
