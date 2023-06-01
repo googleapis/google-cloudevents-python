@@ -1,4 +1,4 @@
 gapic_generator==1.10.0
 grpcio-tools==1.54.2
 pypandoc_binary==1.11
-requests==2.30.0
+requests==2.31.0
