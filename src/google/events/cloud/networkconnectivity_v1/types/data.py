@@ -190,7 +190,29 @@ class ServiceConnectionMap(proto.Message):
                 This is used in PSC consumer ForwardingRule
                 to control whether the PSC endpoint can be
                 accessed from another region.
+            state (google.events.cloud.networkconnectivity_v1.types.ServiceConnectionMap.ConsumerPscConfig.State):
+                Output only. Overall state of PSC Connections
+                management for this consumer psc config.
         """
+        class State(proto.Enum):
+            r"""PSC Consumer Config State.
+
+            Values:
+                STATE_UNSPECIFIED (0):
+                    Default state, when Connection Map is created
+                    initially.
+                VALID (1):
+                    Set when policy and map configuration is
+                    valid, and their matching can lead to allowing
+                    creation of PSC Connections subject to other
+                    constraints like connections limit.
+                CONNECTION_POLICY_MISSING (2):
+                    No Service Connection Policy found for this
+                    network and Service Class
+            """
+            STATE_UNSPECIFIED = 0
+            VALID = 1
+            CONNECTION_POLICY_MISSING = 2
 
         project: str = proto.Field(
             proto.STRING,
@@ -203,6 +225,11 @@ class ServiceConnectionMap(proto.Message):
         disable_global_access: bool = proto.Field(
             proto.BOOL,
             number=3,
+        )
+        state: 'ServiceConnectionMap.ConsumerPscConfig.State' = proto.Field(
+            proto.ENUM,
+            number=4,
+            enum='ServiceConnectionMap.ConsumerPscConfig.State',
         )
 
     class ConsumerPscConnection(proto.Message):
@@ -440,14 +467,19 @@ class ServiceConnectionPolicy(proto.Message):
         r"""Configuration used for Private Service Connect connections.
         Used when Infrastructure is PSC.
 
+
+        .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
         Attributes:
             subnetworks (MutableSequence[str]):
                 The resource paths of subnetworks to use for
                 IP address management. Example:
                 projects/{projectNumOrId}/regions/{region}/subnetworks/{resourceId}.
             limit (int):
-                Max number of PSC connections for this
-                policy.
+                Optional. Max number of PSC connections for
+                this policy.
+
+                This field is a member of `oneof`_ ``_limit``.
         """
 
         subnetworks: MutableSequence[str] = proto.RepeatedField(
@@ -457,6 +489,7 @@ class ServiceConnectionPolicy(proto.Message):
         limit: int = proto.Field(
             proto.INT64,
             number=2,
+            optional=True,
         )
 
     class PscConnection(proto.Message):
