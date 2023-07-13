@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1115,7 +1115,8 @@ class RestoreConfig(proto.Message):
         Some group kinds are not reasonable choices for a restore, and
         will cause an error if selected here. Any scope selection that
         would restore "all valid" resources automatically excludes these
-        group kinds. - gkebackup.gke.io/BackupJob
+        group kinds.
+        - gkebackup.gke.io/BackupJob
         - gkebackup.gke.io/RestoreJob
         - metrics.k8s.io/NodeMetrics
         - migration.k8s.io/StorageState

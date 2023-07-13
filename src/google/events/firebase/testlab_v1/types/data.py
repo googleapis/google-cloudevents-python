@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,9 +72,10 @@ class OutcomeSummary(proto.Enum):
             state is omitted.
         SUCCESS (1):
             The test matrix run was successful, for
-            instance: - All test cases passed.
+            instance:
+            - All test cases passed.
             - No crash of the application under test was
-            detected.
+              detected.
         FAILURE (2):
             A run failed, for instance:
             - One or more test case failed.

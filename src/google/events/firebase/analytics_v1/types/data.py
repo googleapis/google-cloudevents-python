@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -139,7 +139,8 @@ class UserDimensions(proto.Message):
 
 class UserPropertyValue(proto.Message):
     r"""Predefined (eg: LTV) or custom properties (eg: birthday)
-    stored on client side and associated with subsequent HitBundles.
+    stored on client
+    side and associated with subsequent HitBundles.
 
     Attributes:
         value (google.events.firebase.analytics_v1.types.AnalyticsValue):

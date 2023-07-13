@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -419,7 +419,7 @@ class ServiceConnectionPolicy(proto.Message):
             The resource path of the consumer network.
             Example:
             -
-            projects/{projectNumOrId}/global/networks/{resourceId}.
+              projects/{projectNumOrId}/global/networks/{resourceId}.
         service_class (str):
             The service class identifier for which this
             ServiceConnectionPolicy is for. The service
