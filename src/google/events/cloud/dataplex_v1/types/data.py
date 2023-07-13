@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -2526,12 +2526,12 @@ class DataAttribute(proto.Message):
             has an up-to-date value before proceeding.
         resource_access_spec (google.events.cloud.dataplex_v1.types.ResourceAccessSpec):
             Optional. Specified when applied to a
-            resource (eg: Cloud Storage bucket, BigQuery
-            dataset, BigQuery table).
+            resource (eg: Cloud Storage bucket,
+            BigQuery dataset, BigQuery table).
         data_access_spec (google.events.cloud.dataplex_v1.types.DataAccessSpec):
             Optional. Specified when applied to data
-            stored on the resource (eg: rows, columns in
-            BigQuery Tables).
+            stored on the resource (eg: rows,
+            columns in BigQuery Tables).
     """
 
     name: str = proto.Field(
@@ -2591,7 +2591,8 @@ class DataAttribute(proto.Message):
 
 class DataAttributeBinding(proto.Message):
     r"""DataAttributeBinding represents binding of attributes to
-    resources. Eg: Bind 'CustomerInfo' entity with 'PII' attribute.
+    resources. Eg: Bind
+    'CustomerInfo' entity with 'PII' attribute.
 
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
