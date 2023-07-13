@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -2229,7 +2229,8 @@ class AppliedLicense(proto.Message):
 
 class SchedulingNodeAffinity(proto.Message):
     r"""Node Affinity: the configuration of desired nodes onto which
-    this Instance could be scheduled. Based on
+    this Instance
+    could be scheduled. Based on
     https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
 
     Attributes:

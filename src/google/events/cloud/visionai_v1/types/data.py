@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -764,9 +764,9 @@ class Process(proto.Message):
             Optional. Optional: Batch ID of the Process.
         retry_count (int):
             Optional. Optional: The number of retries for
-            a process in submission mode the system should
-            try before declaring failure. By default, no
-            retry will be performed.
+            a process in submission mode
+            the system should try before declaring failure.
+            By default, no retry will be performed.
     """
 
     name: str = proto.Field(
