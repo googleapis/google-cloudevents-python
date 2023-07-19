@@ -73,11 +73,13 @@ class OutcomeSummary(proto.Enum):
         SUCCESS (1):
             The test matrix run was successful, for
             instance:
+
             - All test cases passed.
             - No crash of the application under test was
               detected.
         FAILURE (2):
             A run failed, for instance:
+
             - One or more test case failed.
             - A test timed out.
             - The application under test crashed.

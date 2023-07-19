@@ -2217,7 +2217,9 @@ class VertexCustomConfig(proto.Message):
         attach_application_metadata (bool):
             If true, the prediction request received by
             custom model will also contain metadata with the
-            following schema: 'appPlatformMetadata': {
+            following schema:
+
+            'appPlatformMetadata': {
                   'ingestionTime': DOUBLE; (UNIX timestamp)
             'application': STRING;
                   'instanceId': STRING;

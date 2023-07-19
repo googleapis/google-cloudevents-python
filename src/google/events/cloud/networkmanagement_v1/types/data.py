@@ -2014,6 +2014,7 @@ class ConnectivityTest(proto.Message):
             location.
 
             Examples:
+
             If the source IP address is an internal IP
             address within a Google Cloud Virtual Private
             Cloud (VPC) network, then you must also specify
@@ -2175,9 +2176,10 @@ class Endpoint(proto.Message):
             The Project ID can be derived from the URI if
             you provide a VM instance or network URI.
             The following are two cases where you must
-            provide the project ID: 1. Only the IP address
-            is specified, and the IP address is within a
-            Google Cloud project.
+            provide the project ID:
+
+            1. Only the IP address is specified, and the IP
+            address is within a Google Cloud project.
             2. When you are using Shared VPC and the IP
             address that you provide is from the service
             project. In this case, the network that the IP
