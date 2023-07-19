@@ -163,6 +163,7 @@ class ServiceConnectionMap(proto.Message):
             service_attachment_uri (str):
                 The resource path of a service attachment.
                 Example:
+
                 projects/{projectNumOrId}/regions/{region}/serviceAttachments/{resourceId}.
         """
 
@@ -185,6 +186,7 @@ class ServiceConnectionMap(proto.Message):
                 in. Note, this network does not need be in the
                 ConsumerPscConfig.project in the case of
                 SharedVPC. Example:
+
                 projects/{projectNumOrId}/global/networks/{networkId}.
             disable_global_access (bool):
                 This is used in PSC consumer ForwardingRule
@@ -273,6 +275,7 @@ class ServiceConnectionMap(proto.Message):
             forwarding_rule (str):
                 The URI of the consumer forwarding rule
                 created. Example:
+
                 projects/{projectNumOrId}/regions/us-east1/networks/{resourceId}.
         """
         class State(proto.Enum):
@@ -418,6 +421,7 @@ class ServiceConnectionPolicy(proto.Message):
         network (str):
             The resource path of the consumer network.
             Example:
+
             -
               projects/{projectNumOrId}/global/networks/{resourceId}.
         service_class (str):
@@ -474,6 +478,7 @@ class ServiceConnectionPolicy(proto.Message):
             subnetworks (MutableSequence[str]):
                 The resource paths of subnetworks to use for
                 IP address management. Example:
+
                 projects/{projectNumOrId}/regions/{region}/subnetworks/{resourceId}.
             limit (int):
                 Optional. Max number of PSC connections for
@@ -693,6 +698,7 @@ class ServiceConnectionToken(proto.Message):
         network (str):
             The resource path of the network associated
             with this token. Example:
+
             projects/{projectNumOrId}/global/networks/{resourceId}.
     """
 
