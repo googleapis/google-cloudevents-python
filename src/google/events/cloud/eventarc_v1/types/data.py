@@ -115,9 +115,9 @@ class Channel(proto.Message):
                 possible cases this state can happen:
 
                 1. The SaaS provider disconnected from this
-                Channel. 2. The Channel activation token has
-                expired but the SaaS provider    wasn't
-                connected.
+                    Channel.
+                2. The Channel activation token has expired but
+                    the SaaS provider    wasn't connected.
 
                 To re-establish a Connection with a provider,
                 the subscriber should create a new Channel and
@@ -365,6 +365,7 @@ class EventFilter(proto.Message):
             Required. The name of a CloudEvents
             attribute. Currently, only a subset of
             attributes are supported for filtering.
+
             All triggers MUST provide a filter for the
             'type' attribute.
         value (str):
@@ -508,6 +509,7 @@ class CloudRun(proto.Message):
             Required. The name of the Cloud Run service
             being addressed. See
             https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services.
+
             Only services located in the same project as the
             trigger object can be addressed.
         path (str):

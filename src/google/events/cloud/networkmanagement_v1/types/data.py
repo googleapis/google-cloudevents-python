@@ -82,6 +82,7 @@ class Trace(proto.Message):
             A trace of a test contains multiple steps
             from the initial state to the final state
             (delivered, dropped, forwarded, or aborted).
+
             The steps are ordered by the processing sequence
             within the simulated network state machine. It
             is critical to preserve the order of the steps
@@ -232,52 +233,44 @@ class Step(proto.Message):
                 Unspecified state.
             START_FROM_INSTANCE (1):
                 Initial state: packet originating from a
-                Compute Engine instance.
-                An InstanceInfo is populated with starting
-                instance information.
+                Compute Engine instance. An InstanceInfo is
+                populated with starting instance information.
             START_FROM_INTERNET (2):
                 Initial state: packet originating from the
-                internet.
-                The endpoint information is populated.
+                internet. The endpoint information is populated.
             START_FROM_GOOGLE_SERVICE (27):
                 Initial state: packet originating from a
-                Google service. Some Google
-                services, such as health check probers or
-                Identity Aware Proxy use special routes, outside
-                VPC routing configuration to reach Compute
-                Engine Instances.
+                Google service. Some Google services, such as
+                health check probers or Identity Aware Proxy use
+                special routes, outside VPC routing
+                configuration to reach Compute Engine Instances.
             START_FROM_PRIVATE_NETWORK (3):
                 Initial state: packet originating from a VPC
-                or on-premises network
-                with internal source IP.
+                or on-premises network with internal source IP.
                 If the source is a VPC network visible to the
                 user, a NetworkInfo is populated with details of
                 the network.
             START_FROM_GKE_MASTER (21):
                 Initial state: packet originating from a
-                Google Kubernetes Engine cluster
-                master. A GKEMasterInfo is populated with
-                starting instance information.
+                Google Kubernetes Engine cluster master. A
+                GKEMasterInfo is populated with starting
+                instance information.
             START_FROM_CLOUD_SQL_INSTANCE (22):
                 Initial state: packet originating from a
-                Cloud SQL instance.
-                A CloudSQLInstanceInfo is populated with
-                starting instance information.
+                Cloud SQL instance. A CloudSQLInstanceInfo is
+                populated with starting instance information.
             START_FROM_CLOUD_FUNCTION (23):
                 Initial state: packet originating from a
-                Cloud Function.
-                A CloudFunctionInfo is populated with starting
-                function information.
+                Cloud Function. A CloudFunctionInfo is populated
+                with starting function information.
             START_FROM_APP_ENGINE_VERSION (25):
                 Initial state: packet originating from an App
-                Engine service version.
-                An AppEngineVersionInfo is populated with
-                starting version information.
+                Engine service version. An AppEngineVersionInfo
+                is populated with starting version information.
             START_FROM_CLOUD_RUN_REVISION (26):
                 Initial state: packet originating from a
-                Cloud Run revision.
-                A CloudRunRevisionInfo is populated with
-                starting revision information.
+                Cloud Run revision. A CloudRunRevisionInfo is
+                populated with starting revision information.
             APPLY_INGRESS_FIREWALL_RULE (4):
                 Config checking state: verify ingress
                 firewall rule.
@@ -290,8 +283,7 @@ class Step(proto.Message):
                 Config checking state: match forwarding rule.
             SPOOFING_APPROVED (8):
                 Config checking state: packet sent or
-                received under foreign IP
-                address and allowed.
+                received under foreign IP address and allowed.
             ARRIVE_AT_INSTANCE (9):
                 Forwarding state: arriving at a Compute
                 Engine instance.
@@ -314,22 +306,21 @@ class Step(proto.Message):
                 Transition state: packet header translated.
             PROXY_CONNECTION (15):
                 Transition state: original connection is
-                terminated and a new proxied
-                connection is initiated.
+                terminated and a new proxied connection is
+                initiated.
             DELIVER (16):
                 Final state: packet could be delivered.
             DROP (17):
                 Final state: packet could be dropped.
             FORWARD (18):
                 Final state: packet could be forwarded to a
-                network with an unknown
-                configuration.
+                network with an unknown configuration.
             ABORT (19):
                 Final state: analysis is aborted.
             VIEWER_PERMISSION_MISSING (20):
                 Special state: viewer of the test result does
-                not have permission to
-                see the configuration in this step.
+                not have permission to see the configuration in
+                this step.
         """
         STATE_UNSPECIFIED = 0
         START_FROM_INSTANCE = 1
@@ -1603,11 +1594,10 @@ class DropInfo(proto.Message):
                 hop is a blackhole.
             ROUTE_WRONG_NETWORK (6):
                 Packet is sent to a wrong (unintended)
-                network. Example: you trace a
-                packet from VM1:Network1 to VM2:Network2,
-                however, the route configured in Network1 sends
-                the packet destined for VM2's IP addresss to
-                Network3.
+                network. Example: you trace a packet from
+                VM1:Network1 to VM2:Network2, however, the route
+                configured in Network1 sends the packet destined
+                for VM2's IP addresss to Network3.
             PRIVATE_TRAFFIC_TO_INTERNET (7):
                 Packet with internal destination address sent
                 to the internet gateway.
@@ -2021,6 +2011,7 @@ class ConnectivityTest(proto.Message):
             the VPC network. Otherwise, specify the VM
             instance, which already contains its internal IP
             address and VPC network information.
+
             If the source of the test is within an
             on-premises network, then you must provide the
             destination VPC network.
@@ -2030,6 +2021,7 @@ class ConnectivityTest(proto.Message):
             instance itself is not sufficient to identify
             the endpoint. So, you must also specify the
             source IP address or VPC network.
+
             A reachability analysis proceeds even if the
             source location is ambiguous. However, the test
             result may include endpoints that you don't
@@ -2179,12 +2171,12 @@ class Endpoint(proto.Message):
             provide the project ID:
 
             1. Only the IP address is specified, and the IP
-            address is within a Google Cloud project.
+                address is within a Google Cloud project.
             2. When you are using Shared VPC and the IP
-            address that you provide is from the service
-            project. In this case, the network that the IP
-            address resides in is defined in the host
-            project.
+                address that you provide is from the service
+                project. In this case, the network that the
+                IP address resides in is defined in the host
+                project.
     """
     class NetworkType(proto.Enum):
         r"""The type definition of an endpoint's network. Use one of the

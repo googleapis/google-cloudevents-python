@@ -777,6 +777,7 @@ class KubernetesResource(proto.Message):
             Output only. Additional Kubernetes resources
             that need to be applied to the cluster after
             Membership creation, and after every update.
+
             This field is only populated in the Membership
             returned from a successful long-running
             operation from CreateMembership or
@@ -887,8 +888,8 @@ class GkeCluster(proto.Message):
         resource_link (str):
             Immutable. Self-link of the GCP resource for
             the GKE cluster. For example:
-
             //container.googleapis.com/projects/my-project/locations/us-west1-a/clusters/my-cluster
+
             Zonal clusters are also supported.
         cluster_missing (bool):
             Output only. If cluster_missing is set then it denotes that

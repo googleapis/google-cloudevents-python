@@ -139,8 +139,7 @@ class UserDimensions(proto.Message):
 
 class UserPropertyValue(proto.Message):
     r"""Predefined (eg: LTV) or custom properties (eg: birthday)
-    stored on client
-    side and associated with subsequent HitBundles.
+    stored on client side and associated with subsequent HitBundles.
 
     Attributes:
         value (google.events.firebase.analytics_v1.types.AnalyticsValue):

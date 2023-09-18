@@ -465,7 +465,6 @@ class AuthorizationInfo(proto.Message):
         resource (str):
             The resource being accessed, as a REST-style
             string. For example:
-
             bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
         permission (str):
             The required IAM permission.
