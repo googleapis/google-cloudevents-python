@@ -644,11 +644,13 @@ class BackupPlan(proto.Message):
                 This flag specifies whether volume data
                 should be backed up when PVCs are included in
                 the scope of a Backup.
+
                 Default: False
             include_secrets (bool):
                 This flag specifies whether Kubernetes Secret
                 resources should be included when they fall into
                 the scope of Backups.
+
                 Default: False
             encryption_key (google.events.cloud.gkebackup_v1.types.EncryptionKey):
                 This defines a customer managed encryption
@@ -1112,6 +1114,7 @@ class RestoreConfig(proto.Message):
 
     class ClusterResourceRestoreScope(proto.Message):
         r"""Defines the scope of cluster-scoped resources to restore.
+
         Some group kinds are not reasonable choices for a restore, and
         will cause an error if selected here. Any scope selection that
         would restore "all valid" resources automatically excludes these

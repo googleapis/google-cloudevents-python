@@ -372,6 +372,7 @@ class RepoSource(proto.Message):
             Name of the Cloud Source Repository.
         branch_name (str):
             Regex matching branches to build.
+
             The syntax of the regular expressions accepted
             is the syntax accepted by RE2 and described at
             https://github.com/google/re2/wiki/Syntax
@@ -379,6 +380,7 @@ class RepoSource(proto.Message):
             This field is a member of `oneof`_ ``revision``.
         tag_name (str):
             Regex matching tags to build.
+
             The syntax of the regular expressions accepted
             is the syntax accepted by RE2 and described at
             https://github.com/google/re2/wiki/Syntax
@@ -511,6 +513,7 @@ class BuildStep(proto.Message):
             be specified in the build's ``Secret``.
         volumes (MutableSequence[google.events.cloud.cloudbuild_v1.types.Volume]):
             List of volumes to mount into the build step.
+
             Each volume is created as an empty volume prior
             to execution of the build step. Upon completion
             of the build, volumes and their contents are
@@ -604,12 +607,14 @@ class Volume(proto.Message):
     Attributes:
         name (str):
             Name of the volume to mount.
+
             Volume names must be unique per build step and
             must be valid names for Docker volumes. Each
             named volume must be used by at least two build
             steps.
         path (str):
             Path at which to mount the volume.
+
             Paths must be absolute and cannot conflict with
             other volume paths on the same build step or
             with certain reserved volume paths.
@@ -722,6 +727,7 @@ class Artifacts(proto.Message):
 
             The images will be pushed using the builder
             service account's credentials.
+
             The digests of the pushed images will be stored
             in the Build resource's results field.
 
@@ -731,6 +737,7 @@ class Artifacts(proto.Message):
             A list of objects to be uploaded to Cloud
             Storage upon successful completion of all build
             steps.
+
             Files in the workspace matching specified paths
             globs will be uploaded to the specified Cloud
             Storage location using the builder service
@@ -974,6 +981,7 @@ class BuildOptions(proto.Message):
             in this build. If a variable is defined in both
             globally and in a build step, the variable will
             use the build step value.
+
             The elements are of the form "KEY=VALUE" for the
             environment variable "KEY" being given the value
             "VALUE".

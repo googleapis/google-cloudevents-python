@@ -188,12 +188,14 @@ class Value(proto.Message):
             This field is a member of `oneof`_ ``value_type``.
         timestamp_value (google.protobuf.timestamp_pb2.Timestamp):
             A timestamp value.
+
             Precise only to microseconds. When stored, any
             additional precision is rounded down.
 
             This field is a member of `oneof`_ ``value_type``.
         string_value (str):
             A string value.
+
             The string, represented as UTF-8, must not
             exceed 1 MiB - 89 bytes. Only the first 1,500
             bytes of the UTF-8 representation are considered
@@ -202,6 +204,7 @@ class Value(proto.Message):
             This field is a member of `oneof`_ ``value_type``.
         bytes_value (bytes):
             A bytes value.
+
             Must not exceed 1 MiB - 89 bytes.
             Only the first 1,500 bytes are considered by
             queries.
@@ -219,6 +222,7 @@ class Value(proto.Message):
             This field is a member of `oneof`_ ``value_type``.
         array_value (google.events.cloud.firestore_v1.types.ArrayValue):
             An array value.
+
             Cannot directly contain another array value,
             though can contain an map which contains another
             array.

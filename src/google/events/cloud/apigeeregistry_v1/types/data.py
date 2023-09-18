@@ -357,8 +357,7 @@ class ApiSpec(proto.Message):
             when the represented revision was created.
         revision_update_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. Last update timestamp: when the
-            represented revision was last
-            modified.
+            represented revision was last modified.
         mime_type (str):
             A style (format) descriptor for this spec that is specified
             as a Media Type (https://en.wikipedia.org/wiki/Media_type).
@@ -494,8 +493,7 @@ class ApiDeployment(proto.Message):
             when the represented revision was created.
         revision_update_time (google.protobuf.timestamp_pb2.Timestamp):
             Output only. Last update timestamp: when the
-            represented revision was last
-            modified.
+            represented revision was last modified.
         api_spec_revision (str):
             The full resource name (including revision ID) of the spec
             of the API being served by the deployment. Changes to this
