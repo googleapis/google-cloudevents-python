@@ -19,8 +19,28 @@ __version__ = package_version.__version__
 
 
 
+from .types.data import AppEngineHttpTarget
+from .types.data import AppEngineRouting
+from .types.data import HttpTarget
+from .types.data import Job
+from .types.data import JobEventData
+from .types.data import OAuthToken
+from .types.data import OidcToken
+from .types.data import PubsubTarget
+from .types.data import RetryConfig
 from .types.data import SchedulerJobData
+from .types.data import HttpMethod
 
 __all__ = (
+'AppEngineHttpTarget',
+'AppEngineRouting',
+'HttpMethod',
+'HttpTarget',
+'Job',
+'JobEventData',
+'OAuthToken',
+'OidcToken',
+'PubsubTarget',
+'RetryConfig',
 'SchedulerJobData',
 )
