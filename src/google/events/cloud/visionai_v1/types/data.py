@@ -98,7 +98,7 @@ class StreamAnnotationType(proto.Enum):
             crossing_line annotation defines a polyline on top of the
             content from an image/video based Vision AI stream, events
             happening across the line will be captured. For example, the
-            counts of people who goes acroos the line in Occupancy
+            counts of people who goes across the line in Occupancy
             Analytic Processor.
     """
     STREAM_ANNOTATION_TYPE_UNSPECIFIED = 0
@@ -1971,7 +1971,7 @@ class OccupancyCountConfig(proto.Message):
             Whether to count the appearances of vehicles,
             output counts will have 'vehicle' as the key.
         enable_dwelling_time_tracking (bool):
-            Whether to track each invidual object's
+            Whether to track each individual object's
             loitering time inside the scene or specific
             zone.
     """

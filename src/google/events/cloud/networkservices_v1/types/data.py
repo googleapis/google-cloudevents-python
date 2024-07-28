@@ -354,7 +354,7 @@ class Gateway(proto.Message):
             across multiple Gateway instances are merged.
             The configuration for multiple Gateway instances
             with the same scope will be merged as presented
-            as a single coniguration to the proxy/load
+            as a single configuration to the proxy/load
             balancer.
 
             Max length 64 characters.
@@ -2424,7 +2424,7 @@ class TlsRoute(proto.Message):
                 Required. The URL of a BackendService to
                 route traffic to.
             weight (int):
-                Optional. Specifies the proportion of requests forwareded to
+                Optional. Specifies the proportion of requests forwarded to
                 the backend referenced by the service_name field. This is
                 computed as: weight/Sum(weights in destinations) Weights in
                 all destinations does not need to sum up to 100.

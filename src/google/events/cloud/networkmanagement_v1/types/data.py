@@ -1597,7 +1597,7 @@ class DropInfo(proto.Message):
                 network. Example: you trace a packet from
                 VM1:Network1 to VM2:Network2, however, the route
                 configured in Network1 sends the packet destined
-                for VM2's IP addresss to Network3.
+                for VM2's IP address to Network3.
             PRIVATE_TRAFFIC_TO_INTERNET (7):
                 Packet with internal destination address sent
                 to the internet gateway.

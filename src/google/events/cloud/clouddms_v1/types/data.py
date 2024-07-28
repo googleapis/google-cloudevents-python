@@ -571,7 +571,7 @@ class CloudSqlSettings(proto.Message):
             SQL_AVAILABILITY_TYPE_UNSPECIFIED (0):
                 This is an unknown Availability type.
             ZONAL (1):
-                Zonal availablility instance.
+                Zonal availability instance.
             REGIONAL (2):
                 Regional availability instance.
         """

@@ -215,7 +215,7 @@ class AnalyticsValue(proto.Message):
 
 
 class DeviceInfo(proto.Message):
-    r"""Message containing device informations.
+    r"""Message containing device information.
 
     Attributes:
         device_category (str):
@@ -349,7 +349,7 @@ class AppInfo(proto.Message):
 
 
 class GeoInfo(proto.Message):
-    r"""User's geographic informaiton.
+    r"""User's geographic information.
 
     Attributes:
         continent (str):
@@ -385,7 +385,7 @@ class GeoInfo(proto.Message):
 
 
 class TrafficSource(proto.Message):
-    r"""Mesage containing marketing campaign information which
+    r"""Message containing marketing campaign information which
     acquired the user.
 
     Attributes:

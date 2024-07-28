@@ -982,7 +982,7 @@ class Instance(proto.Message):
 
     class Node(proto.Message):
         r"""Details of a single node in the instance.
-        Nodes in an AlloyDB instance are ephemereal, they can change
+        Nodes in an AlloyDB instance are ephemeral, they can change
         during update, failover, autohealing and resize operations.
 
         Attributes:

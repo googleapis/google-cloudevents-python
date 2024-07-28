@@ -425,7 +425,7 @@ class Runnable(proto.Message):
                 script using bash, ``#!/bin/bash`` should be the first line
                 of the file. To execute the script using\ ``Python3``,
                 ``#!/usr/bin/env python3`` should be the first line of the
-                file.) Otherwise, the file will by default be excuted by
+                file.) Otherwise, the file will by default be executed by
                 ``/bin/sh``.
 
                 This field is a member of `oneof`_ ``command``.
@@ -437,7 +437,7 @@ class Runnable(proto.Message):
                 example, to execute the script using bash, ``#!/bin/bash\n``
                 should be added. To execute the script using\ ``Python3``,
                 ``#!/usr/bin/env python3\n`` should be added.) Otherwise,
-                the script will by default be excuted by ``/bin/sh``.
+                the script will by default be executed by ``/bin/sh``.
 
                 This field is a member of `oneof`_ ``command``.
         """
@@ -1190,7 +1190,7 @@ class AllocationPolicy(proto.Message):
                 size_gb should be a multiple of 375GB, otherwise, the final
                 size will be the next greater multiple of 375 GB. For boot
                 disk, Batch will calculate the boot disk size based on
-                source image and task requirements if you do not speicify
+                source image and task requirements if you do not specify
                 the size. If both this field and the boot_disk_mib field in
                 task spec's compute_resource are defined, Batch will only
                 honor this field.

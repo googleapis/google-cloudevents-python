@@ -2343,7 +2343,7 @@ class Rollout(proto.Message):
                 successfully; check Cloud Build logs.
             DEADLINE_EXCEEDED (3):
                 Deployment did not complete within the
-                alloted time.
+                allotted time.
             RELEASE_FAILED (4):
                 Release is in a failed state.
             RELEASE_ABANDONED (5):

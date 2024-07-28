@@ -1086,7 +1086,7 @@ class SourceConfig(proto.Message):
 
     Attributes:
         source_connection_profile (str):
-            Required. Source connection profile resoource. Format:
+            Required. Source connection profile resource. Format:
             ``projects/{project}/locations/{location}/connectionProfiles/{name}``
         oracle_source_config (google.events.cloud.datastream_v1.types.OracleSourceConfig):
             Oracle data source configuration.

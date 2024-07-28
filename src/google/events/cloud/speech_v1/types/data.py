@@ -279,7 +279,7 @@ class PhraseSet(proto.Message):
         groups of words that represent common concepts that occur in natural
         language. For example, rather than providing a phrase hint for every
         month of the year (e.g. "i was born in january", "i was born in
-        febuary", ...), use the pre-built ``$MONTH`` class improves the
+        february", ...), use the pre-built ``$MONTH`` class improves the
         likelihood of correctly transcribing audio that includes months
         (e.g. "i was born in $month"). To refer to pre-built classes, use
         the class' symbol prepended with ``$`` e.g. ``$MONTH``. To refer to

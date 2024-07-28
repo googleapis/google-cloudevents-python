@@ -401,7 +401,7 @@ class AuthenticationInfo(proto.Message):
             logs <https://cloud.google.com/logging/docs/audit#user-id>`__.
         authority_selector (str):
             The authority selector specified by the
-            requestor, if any. It is not guaranteed that the
+            requester, if any. It is not guaranteed that the
             principal was allowed to use this authority.
         third_party_principal (google.protobuf.struct_pb2.Struct):
             The third party identification (if any) of the authenticated

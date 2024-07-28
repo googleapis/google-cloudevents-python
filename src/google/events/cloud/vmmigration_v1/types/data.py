@@ -1478,7 +1478,7 @@ class UpgradeStatus(proto.Message):
 
 
 class AvailableUpdates(proto.Message):
-    r"""Holds informatiom about the available versions for upgrade.
+    r"""Holds information about the available versions for upgrade.
 
     Attributes:
         new_deployable_appliance (google.events.cloud.vmmigration_v1.types.ApplianceVersion):
