@@ -14,9 +14,29 @@
 # limitations under the License.
 #
 from .data import (
+    AppEngineHttpTarget,
+    AppEngineRouting,
+    HttpTarget,
+    Job,
+    JobEventData,
+    OAuthToken,
+    OidcToken,
+    PubsubTarget,
+    RetryConfig,
     SchedulerJobData,
+    HttpMethod,
 )
 
 __all__ = (
+    'AppEngineHttpTarget',
+    'AppEngineRouting',
+    'HttpTarget',
+    'Job',
+    'JobEventData',
+    'OAuthToken',
+    'OidcToken',
+    'PubsubTarget',
+    'RetryConfig',
     'SchedulerJobData',
+    'HttpMethod',
 )
