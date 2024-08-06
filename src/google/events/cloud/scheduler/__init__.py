@@ -19,7 +19,27 @@ __version__ = package_version.__version__
 
 
 
+from google.events.cloud.scheduler_v1.types.data import AppEngineHttpTarget
+from google.events.cloud.scheduler_v1.types.data import AppEngineRouting
+from google.events.cloud.scheduler_v1.types.data import HttpTarget
+from google.events.cloud.scheduler_v1.types.data import Job
+from google.events.cloud.scheduler_v1.types.data import JobEventData
+from google.events.cloud.scheduler_v1.types.data import OAuthToken
+from google.events.cloud.scheduler_v1.types.data import OidcToken
+from google.events.cloud.scheduler_v1.types.data import PubsubTarget
+from google.events.cloud.scheduler_v1.types.data import RetryConfig
 from google.events.cloud.scheduler_v1.types.data import SchedulerJobData
+from google.events.cloud.scheduler_v1.types.data import HttpMethod
 
-__all__ = ('SchedulerJobData',
+__all__ = ('AppEngineHttpTarget',
+    'AppEngineRouting',
+    'HttpTarget',
+    'Job',
+    'JobEventData',
+    'OAuthToken',
+    'OidcToken',
+    'PubsubTarget',
+    'RetryConfig',
+    'SchedulerJobData',
+    'HttpMethod',
 )
