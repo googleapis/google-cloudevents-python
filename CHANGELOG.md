@@ -31,6 +31,14 @@
 * Remove outdated files ([#145](https://github.com/googleapis/google-cloudevents-python/issues/145)) ([888ccc5](https://github.com/googleapis/google-cloudevents-python/commit/888ccc54b46225ee27c3485e09eda0922535a195))
 * **workflows:** Generator not executable, needs an interpreter. ([#150](https://github.com/googleapis/google-cloudevents-python/issues/150)) ([9c8db0e](https://github.com/googleapis/google-cloudevents-python/commit/9c8db0ea7f343e91ec51d9aaad6d90cad09cb4dd))
 
+## [0.13.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.12.0...v0.13.0) (2024-09-26)
+
+
+### Features
+
+* Add Cloud Deploy event types ([#273](https://github.com/googleapis/google-cloudevents-python/issues/273)) ([4ff8ef8](https://github.com/googleapis/google-cloudevents-python/commit/4ff8ef85ef04038091590980fedcbda0b6c1d41f))
+* Add event types for [Cloud Scheduler](https://cloud.google.com/eventarc/docs/reference/supported-events#cloud-scheduler) ([#282](https://github.com/googleapis/google-cloudevents-python/issues/282)) ([b8e8957](https://github.com/googleapis/google-cloudevents-python/commit/b8e8957c910012c4f4a931f94c95798ca68fdeab))
+
 ## [0.12.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.11.0...v0.12.0) (2024-03-29)
 
 
