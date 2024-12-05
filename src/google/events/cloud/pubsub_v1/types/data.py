@@ -41,6 +41,19 @@ class MessagePublishedData(proto.Message):
             The resource name of the subscription for which this event
             was generated. The format of the value is
             ``projects/{project-id}/subscriptions/{subscription-id}``.
+        delivery_attempt (int):
+            The approximate number of times that Pub/Sub has attempted
+            to deliver the associated message to a subscriber.
+
+            More precisely, this is 1 + (number of NACKs) + (number of
+            ack_deadline exceeds) for this message.
+
+            Upon the first delivery of a given message,
+            ``delivery_attempt`` will have a value of 1. The value is
+            calculated at best effort and is approximate.
+
+            If a DeadLetterPolicy is not set on the subscription, this
+            will be 0.
     """
 
     message: 'PubsubMessage' = proto.Field(
@@ -51,6 +64,10 @@ class MessagePublishedData(proto.Message):
     subscription: str = proto.Field(
         proto.STRING,
         number=2,
+    )
+    delivery_attempt: int = proto.Field(
+        proto.INT32,
+        number=3,
     )
 
 
