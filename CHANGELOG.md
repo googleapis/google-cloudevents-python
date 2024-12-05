@@ -31,6 +31,13 @@
 * Remove outdated files ([#145](https://github.com/googleapis/google-cloudevents-python/issues/145)) ([888ccc5](https://github.com/googleapis/google-cloudevents-python/commit/888ccc54b46225ee27c3485e09eda0922535a195))
 * **workflows:** Generator not executable, needs an interpreter. ([#150](https://github.com/googleapis/google-cloudevents-python/issues/150)) ([9c8db0e](https://github.com/googleapis/google-cloudevents-python/commit/9c8db0ea7f343e91ec51d9aaad6d90cad09cb4dd))
 
+## [0.14.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.13.0...v0.14.0) (2024-12-05)
+
+
+### Features
+
+* Add delivery_attempt integer field to PubsubMessage ([#306](https://github.com/googleapis/google-cloudevents-python/issues/306)) ([1b96a3a](https://github.com/googleapis/google-cloudevents-python/commit/1b96a3a22ef60e62ca83b4d435add60dc1ed523a))
+
 ## [0.13.0](https://github.com/googleapis/google-cloudevents-python/compare/v0.12.0...v0.13.0) (2024-09-26)
 
 
