@@ -64,7 +64,7 @@ class RemoteConfigUpdateType(proto.Enum):
         INCREMENTAL_UPDATE (1):
             A regular incremental update.
         FORCED_UPDATE (2):
-            A forced update. The ETag was specified as "*" in an
+            A forced update. The ETag was specified as "\*" in an
             UpdateRemoteConfigRequest request or the "Force Update"
             button was pressed on the console.
         ROLLBACK (3):
