@@ -131,9 +131,9 @@ class BuildEventData(proto.Message):
             Stores timing information for phases of the build. Valid
             keys are:
 
-            -  BUILD: time to execute all build steps
-            -  PUSH: time to push all specified images.
-            -  FETCHSOURCE: time to fetch source.
+            - BUILD: time to execute all build steps
+            - PUSH: time to push all specified images.
+            - FETCHSOURCE: time to fetch source.
 
             If the build does not specify source or images, these keys
             will not be included.
