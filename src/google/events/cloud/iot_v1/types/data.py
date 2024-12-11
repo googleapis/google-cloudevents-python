@@ -314,7 +314,7 @@ class Device(proto.Message):
             can be used to add contextual information for the device.
 
             Keys must conform to the regular expression
-            [a-zA-Z][a-zA-Z0-9-_.+~%]+ and be less than 128 bytes in
+            [a-zA-Z][a-zA-Z0-9-\_.+~%]+ and be less than 128 bytes in
             length.
 
             Values are free-form strings. Each value must be less than
