@@ -46,9 +46,9 @@ class ClientConnectorService(proto.Message):
             Optional. User-provided name. The display name should follow
             certain format.
 
-            -  Must be 6 to 30 characters in length.
-            -  Can only contain lowercase letters, numbers, and hyphens.
-            -  Must start with a letter.
+            - Must be 6 to 30 characters in length.
+            - Can only contain lowercase letters, numbers, and hyphens.
+            - Must start with a letter.
         ingress (google.events.cloud.beyondcorp.clientconnectorservices_v1.types.ClientConnectorService.Ingress):
             Required. The details of the ingress
             settings.
