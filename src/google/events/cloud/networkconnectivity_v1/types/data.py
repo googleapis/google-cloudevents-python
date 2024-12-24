@@ -844,9 +844,9 @@ class Spoke(proto.Message):
     When you create a spoke, you associate it with a hub. You must also
     identify a value for exactly one of the following fields:
 
-    -  linked_vpn_tunnels
-    -  linked_interconnect_attachments
-    -  linked_router_appliance_instances
+    - linked_vpn_tunnels
+    - linked_interconnect_attachments
+    - linked_router_appliance_instances
 
     Attributes:
         name (str):
