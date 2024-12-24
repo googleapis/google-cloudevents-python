@@ -106,10 +106,10 @@ class Instance(proto.Message):
             latest supported version will be used. Currently, the
             supported values are:
 
-            -  ``REDIS_3_2`` for Redis 3.2 compatibility
-            -  ``REDIS_4_0`` for Redis 4.0 compatibility (default)
-            -  ``REDIS_5_0`` for Redis 5.0 compatibility
-            -  ``REDIS_6_X`` for Redis 6.x compatibility
+            - ``REDIS_3_2`` for Redis 3.2 compatibility
+            - ``REDIS_4_0`` for Redis 4.0 compatibility (default)
+            - ``REDIS_5_0`` for Redis 5.0 compatibility
+            - ``REDIS_6_X`` for Redis 6.x compatibility
         reserved_ip_range (str):
             Optional. For DIRECT_PEERING mode, the CIDR range of
             internal addresses that are reserved for this instance.
@@ -155,20 +155,20 @@ class Instance(proto.Message):
 
             Redis version 3.2 and newer:
 
-            -  maxmemory-policy
-            -  notify-keyspace-events
+            - maxmemory-policy
+            - notify-keyspace-events
 
             Redis version 4.0 and newer:
 
-            -  activedefrag
-            -  lfu-decay-time
-            -  lfu-log-factor
-            -  maxmemory-gb
+            - activedefrag
+            - lfu-decay-time
+            - lfu-log-factor
+            - maxmemory-gb
 
             Redis version 5.0 and newer:
 
-            -  stream-node-max-bytes
-            -  stream-node-max-entries
+            - stream-node-max-bytes
+            - stream-node-max-entries
         tier (google.events.cloud.redis_v1.types.Instance.Tier):
             Required. The service tier of the instance.
         memory_size_gb (int):

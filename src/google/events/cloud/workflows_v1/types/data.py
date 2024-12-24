@@ -53,10 +53,10 @@ class Workflow(proto.Message):
             a workflow is created as a result of updating the following
             properties of a workflow:
 
-            -  [Service
-               account][google.cloud.workflows.v1.Workflow.service_account]
-            -  [Workflow code to be
-               executed][google.cloud.workflows.v1.Workflow.source_contents]
+            - [Service
+              account][google.cloud.workflows.v1.Workflow.service_account]
+            - [Workflow code to be
+              executed][google.cloud.workflows.v1.Workflow.source_contents]
 
             The format is "000001-a4d", where the first 6 characters
             define the zero-padded revision ordinal number. They are
