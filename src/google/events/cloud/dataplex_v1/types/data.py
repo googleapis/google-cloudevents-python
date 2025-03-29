@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -458,9 +458,9 @@ class Zone(proto.Message):
 
                 -
 
-                   -
+                  -
 
-                      -  \*\ ``, or``\ TZ=America/New_York 1 \* \* \* \*`.
+                    - \*\ ``, or``\ TZ=America/New_York 1 \* \* \* \*\`.
 
                 This field is a member of `oneof`_ ``trigger``.
         """
@@ -753,9 +753,9 @@ class Asset(proto.Message):
 
                 -
 
-                   -
+                  -
 
-                      -  \*\ ``, or``\ TZ=America/New_York 1 \* \* \* \*`.
+                    - \*\ ``, or``\ TZ=America/New_York 1 \* \* \* \*\`.
 
                 This field is a member of `oneof`_ ``trigger``.
         """
@@ -1573,27 +1573,27 @@ class DataProfileResult(proto.Message):
                 type_ (str):
                     The field data type. Possible values include:
 
-                    -  STRING
-                    -  BYTE
-                    -  INT64
-                    -  INT32
-                    -  INT16
-                    -  DOUBLE
-                    -  FLOAT
-                    -  DECIMAL
-                    -  BOOLEAN
-                    -  BINARY
-                    -  TIMESTAMP
-                    -  DATE
-                    -  TIME
-                    -  NULL
-                    -  RECORD
+                    - STRING
+                    - BYTE
+                    - INT64
+                    - INT32
+                    - INT16
+                    - DOUBLE
+                    - FLOAT
+                    - DECIMAL
+                    - BOOLEAN
+                    - BINARY
+                    - TIMESTAMP
+                    - DATE
+                    - TIME
+                    - NULL
+                    - RECORD
                 mode (str):
                     The mode of the field. Possible values include:
 
-                    -  REQUIRED, if it is a required field.
-                    -  NULLABLE, if it is an optional field.
-                    -  REPEATED, if it is a repeated field.
+                    - REQUIRED, if it is a required field.
+                    - NULLABLE, if it is an optional field.
+                    - REPEATED, if it is a repeated field.
                 profile (google.events.cloud.dataplex_v1.types.DataProfileResult.Profile.Field.ProfileInfo):
                     Profile information for the corresponding
                     field.
@@ -1945,10 +1945,10 @@ class DataQualityRuleResult(proto.Message):
 
             Evaluated count can be configured to either
 
-            -  include all rows (default) - with ``null`` rows
-               automatically failing rule evaluation, or
-            -  exclude ``null`` rows from the ``evaluated_count``, by
-               setting ``ignore_nulls = true``.
+            - include all rows (default) - with ``null`` rows
+              automatically failing rule evaluation, or
+            - exclude ``null`` rows from the ``evaluated_count``, by
+              setting ``ignore_nulls = true``.
         passed_count (int):
             The number of rows which passed a rule
             evaluation. This field is only valid for
@@ -2731,11 +2731,11 @@ class DataScan(proto.Message):
 
     For example:
 
-    -  Data Quality: generates queries based on the rules and runs
-       against the data to get data quality check results.
-    -  Data Profile: analyzes the data in table(s) and generates
-       insights about the structure, content and relationships (such as
-       null percent, cardinality, min/max/mean, etc).
+    - Data Quality: generates queries based on the rules and runs
+      against the data to get data quality check results.
+    - Data Profile: analyzes the data in table(s) and generates insights
+      about the structure, content and relationships (such as null
+      percent, cardinality, min/max/mean, etc).
 
     This message has `oneof`_ fields (mutually exclusive fields).
     For each oneof, at most one member field can be set at the same time.
@@ -2759,11 +2759,11 @@ class DataScan(proto.Message):
         description (str):
             Optional. Description of the scan.
 
-            -  Must be between 1-1024 characters.
+            - Must be between 1-1024 characters.
         display_name (str):
             Optional. User friendly display name.
 
-            -  Must be between 1-256 characters.
+            - Must be between 1-256 characters.
         labels (MutableMapping[str, str]):
             Optional. User-defined labels for the scan.
         state (google.events.cloud.dataplex_v1.types.State):
@@ -3235,14 +3235,14 @@ class Task(proto.Message):
                 key/value string. These will be interpolated before passing
                 the args to the driver. Currently supported placeholders:
 
-                -  ${task_id}
-                -  ${job_time} To pass positional args, set the key as
-                   TASK_ARGS. The value should be a comma-separated string
-                   of all the positional arguments. To use a delimiter other
-                   than comma, refer to
-                   https://cloud.google.com/sdk/gcloud/reference/topic/escaping.
-                   In case of other keys being present in the args, then
-                   TASK_ARGS will be passed as the last argument.
+                - ${task_id}
+                - ${job_time} To pass positional args, set the key as
+                  TASK_ARGS. The value should be a comma-separated string of
+                  all the positional arguments. To use a delimiter other
+                  than comma, refer to
+                  https://cloud.google.com/sdk/gcloud/reference/topic/escaping.
+                  In case of other keys being present in the args, then
+                  TASK_ARGS will be passed as the last argument.
             service_account (str):
                 Required. Service account to use to execute a
                 task. If not provided, the default Compute
