@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -131,9 +131,9 @@ class BuildEventData(proto.Message):
             Stores timing information for phases of the build. Valid
             keys are:
 
-            -  BUILD: time to execute all build steps
-            -  PUSH: time to push all specified images.
-            -  FETCHSOURCE: time to fetch source.
+            - BUILD: time to execute all build steps
+            - PUSH: time to push all specified images.
+            - FETCHSOURCE: time to fetch source.
 
             If the build does not specify source or images, these keys
             will not be included.
