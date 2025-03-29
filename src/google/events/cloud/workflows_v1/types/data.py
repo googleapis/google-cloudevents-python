@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,10 +53,10 @@ class Workflow(proto.Message):
             a workflow is created as a result of updating the following
             properties of a workflow:
 
-            -  [Service
-               account][google.cloud.workflows.v1.Workflow.service_account]
-            -  [Workflow code to be
-               executed][google.cloud.workflows.v1.Workflow.source_contents]
+            - [Service
+              account][google.cloud.workflows.v1.Workflow.service_account]
+            - [Workflow code to be
+              executed][google.cloud.workflows.v1.Workflow.source_contents]
 
             The format is "000001-a4d", where the first 6 characters
             define the zero-padded revision ordinal number. They are

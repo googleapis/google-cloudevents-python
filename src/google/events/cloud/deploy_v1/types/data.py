@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -161,13 +161,13 @@ class DeliveryPipeline(proto.Message):
             user and by Cloud Deploy. Labels must meet the following
             constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             128 bytes.
@@ -955,13 +955,13 @@ class Target(proto.Message):
             both the user and by Cloud Deploy. Labels must meet the
             following constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             128 bytes.
@@ -1395,13 +1395,13 @@ class CustomTargetType(proto.Message):
             both the user and by Cloud Deploy. Labels must meet the
             following constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             128 bytes.
@@ -1565,7 +1565,7 @@ class SkaffoldModules(proto.Message):
         Attributes:
             source (str):
                 Required. Cloud Storage source paths to copy recursively.
-                For example, providing "gs://my-bucket/dir/configs/*" will
+                For example, providing "gs://my-bucket/dir/configs/\*" will
                 result in Skaffold copying all files within the
                 "dir/configs" directory in the bucket "my-bucket".
             path (str):
@@ -1608,9 +1608,9 @@ class TargetAttribute(proto.Message):
             ID of the ``Target``. The value of this field could be one
             of the following:
 
-            -  The last segment of a target name. It only needs the ID
-               to determine which target is being referred to
-            -  "*", all targets in a location.
+            - The last segment of a target name. It only needs the ID to
+              determine which target is being referred to
+            - "\*", all targets in a location.
         labels (MutableMapping[str, str]):
             Target labels.
     """
@@ -1652,13 +1652,13 @@ class Release(proto.Message):
             user and by Cloud Deploy. Labels must meet the following
             constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             128 bytes.
@@ -2203,13 +2203,13 @@ class Rollout(proto.Message):
             user and by Cloud Deploy. Labels must meet the following
             constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             128 bytes.
@@ -2954,17 +2954,17 @@ class Automation(proto.Message):
             and used by the user, and not by Cloud Deploy. Annotations
             must meet the following constraints:
 
-            -  Annotations are key/value pairs.
-            -  Valid annotation keys have two segments: an optional
-               prefix and name, separated by a slash (``/``).
-            -  The name segment is required and must be 63 characters or
-               less, beginning and ending with an alphanumeric character
-               (``[a-z0-9A-Z]``) with dashes (``-``), underscores
-               (``_``), dots (``.``), and alphanumerics between.
-            -  The prefix is optional. If specified, the prefix must be
-               a DNS subdomain: a series of DNS labels separated by
-               dots(``.``), not longer than 253 characters in total,
-               followed by a slash (``/``).
+            - Annotations are key/value pairs.
+            - Valid annotation keys have two segments: an optional
+              prefix and name, separated by a slash (``/``).
+            - The name segment is required and must be 63 characters or
+              less, beginning and ending with an alphanumeric character
+              (``[a-z0-9A-Z]``) with dashes (``-``), underscores
+              (``_``), dots (``.``), and alphanumerics between.
+            - The prefix is optional. If specified, the prefix must be a
+              DNS subdomain: a series of DNS labels separated by
+              dots(``.``), not longer than 253 characters in total,
+              followed by a slash (``/``).
 
             See
             https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
@@ -2974,13 +2974,13 @@ class Automation(proto.Message):
             both the user and by Cloud Deploy. Labels must meet the
             following constraints:
 
-            -  Keys and values can contain only lowercase letters,
-               numeric characters, underscores, and dashes.
-            -  All characters must use UTF-8 encoding, and international
-               characters are allowed.
-            -  Keys must start with a lowercase letter or international
-               character.
-            -  Each resource is limited to a maximum of 64 labels.
+            - Keys and values can contain only lowercase letters,
+              numeric characters, underscores, and dashes.
+            - All characters must use UTF-8 encoding, and international
+              characters are allowed.
+            - Keys must start with a lowercase letter or international
+              character.
+            - Each resource is limited to a maximum of 64 labels.
 
             Both keys and values are additionally constrained to be <=
             63 characters.
@@ -3146,10 +3146,10 @@ class PromoteReleaseRule(proto.Message):
             next stage in the promotion flow. The value of this field
             could be one of the following:
 
-            -  The last segment of a target name. It only needs the ID
-               to determine if the target is one of the stages in the
-               promotion sequence defined in the pipeline.
-            -  "@next", the next target in the promotion sequence.
+            - The last segment of a target name. It only needs the ID to
+              determine if the target is one of the stages in the
+              promotion sequence defined in the pipeline.
+            - "@next", the next target in the promotion sequence.
         condition (google.events.cloud.deploy_v1.types.AutomationRuleCondition):
             Output only. Information around the state of
             the Automation rule.

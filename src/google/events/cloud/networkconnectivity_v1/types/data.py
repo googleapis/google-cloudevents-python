@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -844,9 +844,9 @@ class Spoke(proto.Message):
     When you create a spoke, you associate it with a hub. You must also
     identify a value for exactly one of the following fields:
 
-    -  linked_vpn_tunnels
-    -  linked_interconnect_attachments
-    -  linked_router_appliance_instances
+    - linked_vpn_tunnels
+    - linked_interconnect_attachments
+    - linked_router_appliance_instances
 
     Attributes:
         name (str):

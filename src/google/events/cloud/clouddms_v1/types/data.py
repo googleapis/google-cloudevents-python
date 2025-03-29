@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -493,10 +493,10 @@ class CloudSqlSettings(proto.Message):
         availability_type (google.events.cloud.clouddms_v1.types.CloudSqlSettings.SqlAvailabilityType):
             Optional. Availability type. Potential values:
 
-            -  ``ZONAL``: The instance serves data from only one zone.
-               Outages in that zone affect data availability.
-            -  ``REGIONAL``: The instance can serve data from more than
-               one zone in a region (it is highly available).
+            - ``ZONAL``: The instance serves data from only one zone.
+              Outages in that zone affect data availability.
+            - ``REGIONAL``: The instance can serve data from more than
+              one zone in a region (it is highly available).
     """
     class SqlActivationPolicy(proto.Enum):
         r"""Specifies when the instance should be activated.

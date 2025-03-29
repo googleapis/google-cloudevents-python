@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1158,18 +1158,18 @@ class AllocationPolicy(proto.Message):
                 Name of a public or custom image used as the data source.
                 For example, the following are all valid URLs:
 
-                -  Specify the image by its family name:
-                   projects/{project}/global/images/family/{image_family}
-                -  Specify the image version:
-                   projects/{project}/global/images/{image_version}
+                - Specify the image by its family name:
+                  projects/{project}/global/images/family/{image_family}
+                - Specify the image version:
+                  projects/{project}/global/images/{image_version}
 
                 You can also use Batch customized image in short names. The
                 following image values are supported for a boot disk:
 
-                -  "batch-debian": use Batch Debian images.
-                -  "batch-centos": use Batch CentOS images.
-                -  "batch-cos": use Batch Container-Optimized images.
-                -  "batch-hpc-centos": use Batch HPC CentOS images.
+                - "batch-debian": use Batch Debian images.
+                - "batch-centos": use Batch CentOS images.
+                - "batch-cos": use Batch Container-Optimized images.
+                - "batch-hpc-centos": use Batch HPC CentOS images.
 
                 This field is a member of `oneof`_ ``data_source``.
             snapshot (str):
@@ -1404,18 +1404,18 @@ class AllocationPolicy(proto.Message):
 
                 For example, the following are all valid URLs:
 
-                -  https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
-                -  projects/{project}/global/networks/{network}
-                -  global/networks/{network}
+                - https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
+                - projects/{project}/global/networks/{network}
+                - global/networks/{network}
             subnetwork (str):
                 The URL of an existing subnetwork resource in the network.
                 You can specify the subnetwork as a full or partial URL.
 
                 For example, the following are all valid URLs:
 
-                -  https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}
-                -  projects/{project}/regions/{region}/subnetworks/{subnetwork}
-                -  regions/{region}/subnetworks/{subnetwork}
+                - https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}
+                - projects/{project}/regions/{region}/subnetworks/{subnetwork}
+                - regions/{region}/subnetworks/{subnetwork}
             no_external_ip_address (bool):
                 Default is false (with an external IP
                 address). Required if no external public IP

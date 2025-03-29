@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -314,7 +314,7 @@ class Device(proto.Message):
             can be used to add contextual information for the device.
 
             Keys must conform to the regular expression
-            [a-zA-Z][a-zA-Z0-9-_.+~%]+ and be less than 128 bytes in
+            [a-zA-Z][a-zA-Z0-9-\_.+~%]+ and be less than 128 bytes in
             length.
 
             Values are free-form strings. Each value must be less than

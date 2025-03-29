@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ class RemoteConfigUpdateType(proto.Enum):
         INCREMENTAL_UPDATE (1):
             A regular incremental update.
         FORCED_UPDATE (2):
-            A forced update. The ETag was specified as "*" in an
+            A forced update. The ETag was specified as "\*" in an
             UpdateRemoteConfigRequest request or the "Force Update"
             button was pressed on the console.
         ROLLBACK (3):
