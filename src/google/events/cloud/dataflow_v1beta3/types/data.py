@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -771,9 +771,9 @@ class Job(proto.Message):
     confidential information when you supply string values using the
     API. Fields stripped from source Job proto:
 
-    -  steps
-    -  pipeline_description
-    -  transform_name_mapping
+    - steps
+    - pipeline_description
+    - transform_name_mapping
 
     Attributes:
         id (str):
@@ -877,12 +877,12 @@ class Job(proto.Message):
             of the labels map are UTF8 strings that comply with the
             following restrictions:
 
-            -  Keys must conform to regexp:
-               [\\p{Ll}\\p{Lo}][\\p{Ll}\\p{Lo}\\p{N}_-]{0,62}
-            -  Values must conform to regexp:
-               [\\p{Ll}\\p{Lo}\\p{N}_-]{0,63}
-            -  Both keys and values are additionally constrained to be
-               <= 128 bytes in size.
+            - Keys must conform to regexp:
+              [\\p{Ll}\\p{Lo}][\\p{Ll}\\p{Lo}\\p{N}\_-]{0,62}
+            - Values must conform to regexp:
+              [\\p{Ll}\\p{Lo}\\p{N}\_-]{0,63}
+            - Both keys and values are additionally constrained to be <=
+              128 bytes in size.
         location (str):
             The [regional endpoint]
             (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
