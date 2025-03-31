@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -60,11 +60,11 @@ __protobuf__ = proto.module(
 class Trace(proto.Message):
     r"""Trace represents one simulated packet forwarding path.
 
-    -  Each trace contains multiple ordered steps.
-    -  Each step is in a particular state with associated configuration.
-    -  State is categorized as final or non-final states.
-    -  Each final state has a reason associated.
-    -  Each trace must end with a final state (the last step).
+    - Each trace contains multiple ordered steps.
+    - Each step is in a particular state with associated configuration.
+    - State is categorized as final or non-final states.
+    - Each final state has a reason associated.
+    - Each trace must end with a final state (the last step).
 
     ::
 
@@ -895,9 +895,9 @@ class GoogleServiceInfo(proto.Message):
             GFE_PROXY_OR_HEALTH_CHECK_PROBER (2):
                 One of two services sharing IP ranges:
 
-                -  Load Balancer proxy
-                -  Centralized Health Check prober
-                   https://cloud.google.com/load-balancing/docs/firewall-rules
+                - Load Balancer proxy
+                - Centralized Health Check prober
+                  https://cloud.google.com/load-balancing/docs/firewall-rules
             CLOUD_DNS (3):
                 Connectivity from Cloud DNS to forwarding
                 targets or alternate name servers that use
@@ -2322,13 +2322,13 @@ class ReachabilityDetails(proto.Message):
             REACHABLE (1):
                 Possible scenarios are:
 
-                -  The configuration analysis determined that a packet
-                   originating from the source is expected to reach the
-                   destination.
-                -  The analysis didn't complete because the user lacks
-                   permission for some of the resources in the trace.
-                   However, at the time the user's permission became
-                   insufficient, the trace had been successful so far.
+                - The configuration analysis determined that a packet
+                  originating from the source is expected to reach the
+                  destination.
+                - The analysis didn't complete because the user lacks
+                  permission for some of the resources in the trace.
+                  However, at the time the user's permission became
+                  insufficient, the trace had been successful so far.
             UNREACHABLE (2):
                 A packet originating from the source is
                 expected to be dropped before reaching the
@@ -2343,12 +2343,12 @@ class ReachabilityDetails(proto.Message):
                 The configuration analysis did not complete. Possible
                 reasons are:
 
-                -  A permissions error occurred--for example, the user might
-                   not have read permission for all of the resources named
-                   in the test.
-                -  An internal error occurred.
-                -  The analyzer received an invalid or unsupported argument
-                   or was unable to identify a known endpoint.
+                - A permissions error occurred--for example, the user might
+                  not have read permission for all of the resources named in
+                  the test.
+                - An internal error occurred.
+                - The analyzer received an invalid or unsupported argument
+                  or was unable to identify a known endpoint.
         """
         RESULT_UNSPECIFIED = 0
         REACHABLE = 1

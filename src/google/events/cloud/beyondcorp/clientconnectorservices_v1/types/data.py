@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,9 +46,9 @@ class ClientConnectorService(proto.Message):
             Optional. User-provided name. The display name should follow
             certain format.
 
-            -  Must be 6 to 30 characters in length.
-            -  Can only contain lowercase letters, numbers, and hyphens.
-            -  Must start with a letter.
+            - Must be 6 to 30 characters in length.
+            - Can only contain lowercase letters, numbers, and hyphens.
+            - Must start with a letter.
         ingress (google.events.cloud.beyondcorp.clientconnectorservices_v1.types.ClientConnectorService.Ingress):
             Required. The details of the ingress
             settings.

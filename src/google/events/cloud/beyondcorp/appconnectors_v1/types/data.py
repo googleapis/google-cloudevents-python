@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -60,20 +60,20 @@ class ResourceInfo(proto.Message):
     r"""ResourceInfo represents the information/status of an app connector
     resource. Such as:
 
-    -  remote_agent
+    - remote_agent
 
-       -  container
+      - container
 
-          -  runtime
-          -  appgateway
+        - runtime
+        - appgateway
 
-             -  appconnector
+          - appconnector
 
-                -  appconnection
+            - appconnection
 
-                   -  tunnel
+              - tunnel
 
-             -  logagent
+          - logagent
 
     Attributes:
         id (str):
