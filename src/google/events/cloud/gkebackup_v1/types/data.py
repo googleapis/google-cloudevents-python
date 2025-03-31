@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -161,10 +161,10 @@ class Backup(proto.Message):
             The age (in days) after which this Backup will be
             automatically deleted. Must be an integer value >= 0:
 
-            -  If 0, no automatic deletion will occur for this Backup.
-            -  If not 0, this must be >=
-               [delete_lock_days][google.cloud.gkebackup.v1.Backup.delete_lock_days]
-               and <= 365.
+            - If 0, no automatic deletion will occur for this Backup.
+            - If not 0, this must be >=
+              [delete_lock_days][google.cloud.gkebackup.v1.Backup.delete_lock_days]
+              and <= 365.
 
             Once a Backup is created, this value may only be increased.
 
@@ -294,8 +294,8 @@ class Backup(proto.Message):
                 The source cluster from which this Backup was created. Valid
                 formats:
 
-                -  ``projects/*/locations/*/clusters/*``
-                -  ``projects/*/zones/*/clusters/*``
+                - ``projects/*/locations/*/clusters/*``
+                - ``projects/*/zones/*/clusters/*``
 
                 This is inherited from the parent BackupPlan's
                 [cluster][google.cloud.gkebackup.v1.BackupPlan.cluster]
@@ -489,8 +489,8 @@ class BackupPlan(proto.Message):
             Required. Immutable. The source cluster from which Backups
             will be created via this BackupPlan. Valid formats:
 
-            -  ``projects/*/locations/*/clusters/*``
-            -  ``projects/*/zones/*/clusters/*``
+            - ``projects/*/locations/*/clusters/*``
+            - ``projects/*/zones/*/clusters/*``
         retention_policy (google.events.cloud.gkebackup_v1.types.BackupPlan.RetentionPolicy):
             RetentionPolicy governs lifecycle of Backups
             created under this plan.
@@ -786,8 +786,8 @@ class Restore(proto.Message):
             Output only. The target cluster into which this Restore will
             restore data. Valid formats:
 
-            -  ``projects/*/locations/*/clusters/*``
-            -  ``projects/*/zones/*/clusters/*``
+            - ``projects/*/locations/*/clusters/*``
+            - ``projects/*/zones/*/clusters/*``
 
             Inherited from parent RestorePlan's
             [cluster][google.cloud.gkebackup.v1.RestorePlan.cluster]
@@ -1301,8 +1301,8 @@ class RestorePlan(proto.Message):
             cluster's region must be the same as the RestorePlan. Valid
             formats:
 
-            -  ``projects/*/locations/*/clusters/*``
-            -  ``projects/*/zones/*/clusters/*``
+            - ``projects/*/locations/*/clusters/*``
+            - ``projects/*/zones/*/clusters/*``
         restore_config (google.events.cloud.gkebackup_v1.types.RestoreConfig):
             Required. Configuration of Restores created
             via this RestorePlan.
