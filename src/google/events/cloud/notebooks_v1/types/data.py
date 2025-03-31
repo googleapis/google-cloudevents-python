@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -359,12 +359,12 @@ class RuntimeAcceleratorConfig(proto.Message):
     AcceleratorTypes <https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes>`__.
     Examples:
 
-    -  ``nvidia-tesla-k80``
-    -  ``nvidia-tesla-p100``
-    -  ``nvidia-tesla-v100``
-    -  ``nvidia-tesla-p4``
-    -  ``nvidia-tesla-t4``
-    -  ``nvidia-tesla-a100``
+    - ``nvidia-tesla-k80``
+    - ``nvidia-tesla-p100``
+    - ``nvidia-tesla-v100``
+    - ``nvidia-tesla-p4``
+    - ``nvidia-tesla-t4``
+    - ``nvidia-tesla-a100``
 
     Attributes:
         type_ (google.events.cloud.notebooks_v1.types.RuntimeAcceleratorConfig.AcceleratorType):
@@ -493,8 +493,8 @@ class LocalDisk(proto.Message):
             For performance characteristics of SCSI over NVMe, see Local
             SSD performance. Valid values:
 
-            -  ``NVME``
-            -  ``SCSI``
+            - ``NVME``
+            - ``SCSI``
         kind (str):
             Output only. Type of the resource. Always
             compute#attachedDisk for attached disks.
@@ -506,8 +506,8 @@ class LocalDisk(proto.Message):
             or ``READ_ONLY``. If not specified, the default is to attach
             the disk in ``READ_WRITE`` mode. Valid values:
 
-            -  ``READ_ONLY``
-            -  ``READ_WRITE``
+            - ``READ_ONLY``
+            - ``READ_WRITE``
         source (str):
             Specifies a valid partial or full URL to an
             existing Persistent Disk resource.
@@ -516,8 +516,8 @@ class LocalDisk(proto.Message):
             ``PERSISTENT``. If not specified, the default is
             ``PERSISTENT``. Valid values:
 
-            -  ``PERSISTENT``
-            -  ``SCRATCH``
+            - ``PERSISTENT``
+            - ``SCRATCH``
     """
 
     class RuntimeGuestOsFeature(proto.Message):
@@ -536,12 +536,12 @@ class LocalDisk(proto.Message):
 
                 Valid values:
 
-                -  ``FEATURE_TYPE_UNSPECIFIED``
-                -  ``MULTI_IP_SUBNET``
-                -  ``SECURE_BOOT``
-                -  ``UEFI_COMPATIBLE``
-                -  ``VIRTIO_SCSI_MULTIQUEUE``
-                -  ``WINDOWS``
+                - ``FEATURE_TYPE_UNSPECIFIED``
+                - ``MULTI_IP_SUBNET``
+                - ``SECURE_BOOT``
+                - ``UEFI_COMPATIBLE``
+                - ``VIRTIO_SCSI_MULTIQUEUE``
+                - ``WINDOWS``
         """
 
         type_: str = proto.Field(
@@ -720,9 +720,9 @@ class RuntimeSoftwareConfig(proto.Message):
     runtime. The properties to set on runtime. Properties keys are
     specified in ``key:value`` format, for example:
 
-    -  ``idle_shutdown: true``
-    -  ``idle_shutdown_timeout: 180``
-    -  ``enable_health_monitoring: true``
+    - ``idle_shutdown: true``
+    - ``idle_shutdown_timeout: 180``
+    - ``enable_health_monitoring: true``
 
 
     .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
@@ -960,13 +960,13 @@ class VirtualMachineConfig(proto.Message):
             location in the corresponding runtime region. On a get
             request, zone will always be present. Example:
 
-            -  ``us-central1-b``
+            - ``us-central1-b``
         machine_type (str):
             Required. The Compute Engine machine type used for runtimes.
             Short name is valid. Examples:
 
-            -  ``n1-standard-2``
-            -  ``e2-standard-8``
+            - ``n1-standard-2``
+            - ``e2-standard-8``
         container_images (MutableSequence[google.events.cloud.notebooks_v1.types.ContainerImage]):
             Optional. Use a list of container images to
             use as Kernels in the notebook instance.
@@ -990,25 +990,25 @@ class VirtualMachineConfig(proto.Message):
 
             A full URL or partial URI. Examples:
 
-            -  ``https://www.googleapis.com/compute/v1/projects/[project_id]/global/networks/default``
-            -  ``projects/[project_id]/global/networks/default``
+            - ``https://www.googleapis.com/compute/v1/projects/[project_id]/global/networks/default``
+            - ``projects/[project_id]/global/networks/default``
 
             Runtimes are managed resources inside Google Infrastructure.
             Runtimes support the following network configurations:
 
-            -  Google Managed Network (Network & subnet are empty)
-            -  Consumer Project VPC (network & subnet are required).
-               Requires configuring Private Service Access.
-            -  Shared VPC (network & subnet are required). Requires
-               configuring Private Service Access.
+            - Google Managed Network (Network & subnet are empty)
+            - Consumer Project VPC (network & subnet are required).
+              Requires configuring Private Service Access.
+            - Shared VPC (network & subnet are required). Requires
+              configuring Private Service Access.
         subnet (str):
             Optional. The Compute Engine subnetwork to be used for
             machine communications. Cannot be specified with network.
 
             A full URL or partial URI are valid. Examples:
 
-            -  ``https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/subnetworks/sub0``
-            -  ``projects/[project_id]/regions/us-east1/subnetworks/sub0``
+            - ``https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/subnetworks/sub0``
+            - ``projects/[project_id]/regions/us-east1/subnetworks/sub0``
         internal_ip_only (bool):
             Optional. If true, runtime will only have internal IP
             addresses. By default, runtimes are not restricted to
@@ -1188,41 +1188,41 @@ class ExecutionTemplate(proto.Message):
             You can use certain Compute Engine machine types directly in
             this field. The following types are supported:
 
-            -  ``n1-standard-4``
-            -  ``n1-standard-8``
-            -  ``n1-standard-16``
-            -  ``n1-standard-32``
-            -  ``n1-standard-64``
-            -  ``n1-standard-96``
-            -  ``n1-highmem-2``
-            -  ``n1-highmem-4``
-            -  ``n1-highmem-8``
-            -  ``n1-highmem-16``
-            -  ``n1-highmem-32``
-            -  ``n1-highmem-64``
-            -  ``n1-highmem-96``
-            -  ``n1-highcpu-16``
-            -  ``n1-highcpu-32``
-            -  ``n1-highcpu-64``
-            -  ``n1-highcpu-96``
+            - ``n1-standard-4``
+            - ``n1-standard-8``
+            - ``n1-standard-16``
+            - ``n1-standard-32``
+            - ``n1-standard-64``
+            - ``n1-standard-96``
+            - ``n1-highmem-2``
+            - ``n1-highmem-4``
+            - ``n1-highmem-8``
+            - ``n1-highmem-16``
+            - ``n1-highmem-32``
+            - ``n1-highmem-64``
+            - ``n1-highmem-96``
+            - ``n1-highcpu-16``
+            - ``n1-highcpu-32``
+            - ``n1-highcpu-64``
+            - ``n1-highcpu-96``
 
             Alternatively, you can use the following legacy machine
             types:
 
-            -  ``standard``
-            -  ``large_model``
-            -  ``complex_model_s``
-            -  ``complex_model_m``
-            -  ``complex_model_l``
-            -  ``standard_gpu``
-            -  ``complex_model_m_gpu``
-            -  ``complex_model_l_gpu``
-            -  ``standard_p100``
-            -  ``complex_model_m_p100``
-            -  ``standard_v100``
-            -  ``large_model_v100``
-            -  ``complex_model_m_v100``
-            -  ``complex_model_l_v100``
+            - ``standard``
+            - ``large_model``
+            - ``complex_model_s``
+            - ``complex_model_m``
+            - ``complex_model_l``
+            - ``standard_gpu``
+            - ``complex_model_m_gpu``
+            - ``complex_model_l_gpu``
+            - ``standard_p100``
+            - ``complex_model_m_p100``
+            - ``standard_v100``
+            - ``large_model_v100``
+            - ``complex_model_m_v100``
+            - ``complex_model_l_v100``
 
             Finally, if you want to use a TPU for training, specify
             ``cloud_tpu`` in this field. Learn more about the `special
@@ -1318,9 +1318,9 @@ class ExecutionTemplate(proto.Message):
                 set values to configure your processing cluster according to
                 these guidelines:
 
-                -  You *must* set ``ExecutionTemplate.masterType`` to
-                   specify the type of machine to use for your master node.
-                   This is the only required setting.
+                - You *must* set ``ExecutionTemplate.masterType`` to specify
+                  the type of machine to use for your master node. This is
+                  the only required setting.
         """
         SCALE_TIER_UNSPECIFIED = 0
         BASIC = 1
@@ -1535,7 +1535,7 @@ class Execution(proto.Message):
             ``projects/{project_id}/locations/{location}/executions/{execution_id}``
         display_name (str):
             Output only. Name used for UI purposes. Name can only
-            contain alphanumeric characters and underscores '_'.
+            contain alphanumeric characters and underscores '\_'.
         description (str):
             A brief description of this execution.
         create_time (google.protobuf.timestamp_pb2.Timestamp):
@@ -1736,10 +1736,10 @@ class Instance(proto.Message):
             `scopes <https://cloud.google.com/compute/docs/access/service-accounts#accesscopesiam>`__
             are defined:
 
-            -  https://www.googleapis.com/auth/cloud-platform
-            -  https://www.googleapis.com/auth/userinfo.email If not
-               using default scopes, you need at least:
-               https://www.googleapis.com/auth/compute
+            - https://www.googleapis.com/auth/cloud-platform
+            - https://www.googleapis.com/auth/userinfo.email If not
+              using default scopes, you need at least:
+              https://www.googleapis.com/auth/compute
         machine_type (str):
             Required. The `Compute Engine machine
             type <https://cloud.google.com/compute/docs/machine-types>`__
@@ -2024,8 +2024,8 @@ class Instance(proto.Message):
                 For performance characteristics of SCSI over NVMe, see Local
                 SSD performance. Valid values:
 
-                -  ``NVME``
-                -  ``SCSI``
+                - ``NVME``
+                - ``SCSI``
             kind (str):
                 Type of the resource. Always
                 compute#attachedDisk for attached disks.
@@ -2039,8 +2039,8 @@ class Instance(proto.Message):
                 or ``READ_ONLY``. If not specified, the default is to attach
                 the disk in ``READ_WRITE`` mode. Valid values:
 
-                -  ``READ_ONLY``
-                -  ``READ_WRITE``
+                - ``READ_ONLY``
+                - ``READ_WRITE``
             source (str):
                 Indicates a valid partial or full URL to an
                 existing Persistent Disk resource.
@@ -2048,8 +2048,8 @@ class Instance(proto.Message):
                 Indicates the type of the disk, either ``SCRATCH`` or
                 ``PERSISTENT``. Valid values:
 
-                -  ``PERSISTENT``
-                -  ``SCRATCH``
+                - ``PERSISTENT``
+                - ``SCRATCH``
         """
 
         class GuestOsFeature(proto.Message):
@@ -2061,12 +2061,12 @@ class Instance(proto.Message):
                     system features to see a list of available options. Valid
                     values:
 
-                    -  ``FEATURE_TYPE_UNSPECIFIED``
-                    -  ``MULTI_IP_SUBNET``
-                    -  ``SECURE_BOOT``
-                    -  ``UEFI_COMPATIBLE``
-                    -  ``VIRTIO_SCSI_MULTIQUEUE``
-                    -  ``WINDOWS``
+                    - ``FEATURE_TYPE_UNSPECIFIED``
+                    - ``MULTI_IP_SUBNET``
+                    - ``SECURE_BOOT``
+                    - ``UEFI_COMPATIBLE``
+                    - ``VIRTIO_SCSI_MULTIQUEUE``
+                    - ``WINDOWS``
             """
 
             type_: str = proto.Field(
