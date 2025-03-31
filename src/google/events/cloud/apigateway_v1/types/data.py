@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -172,11 +172,11 @@ class ApiConfig(proto.Message):
             If multiple files are specified, the files are merged with
             the following rules:
 
-            -  All singular scalar fields are merged using "last one
-               wins" semantics in the order of the files uploaded.
-            -  Repeated fields are concatenated.
-            -  Singular embedded messages are merged using these rules
-               for nested fields.
+            - All singular scalar fields are merged using "last one
+              wins" semantics in the order of the files uploaded.
+            - Repeated fields are concatenated.
+            - Singular embedded messages are merged using these rules
+              for nested fields.
     """
     class State(proto.Enum):
         r"""All the possible API Config states.
