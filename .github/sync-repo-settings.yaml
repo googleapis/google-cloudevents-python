@@ -8,6 +8,3 @@ branchProtectionRules:
   requiredApprovingReviewCount: 1
   requiresCodeOwnerReviews: true
   requiresStrictStatusChecks: true
-permissionRules:
-  - team: cloudevents-admins
-    permission: admin
