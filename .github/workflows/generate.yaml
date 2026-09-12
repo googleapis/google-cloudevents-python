@@ -35,20 +35,20 @@ jobs:
 
     steps:
       - name: Python Library > Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: ${{ env.LIBRARY_CHECKOUT_PATH }}
 
       - name: Test Data > Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: googleapis/google-cloudevents
           path: ${{ env.DATA_SOURCE_CHECKOUT_PATH }}
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.13'
+          python-version: '3.14'
           cache: 'pip'
 
       - name: Install Generator Dependencies
@@ -113,7 +113,7 @@ jobs:
 
       - name: Notify for failure
         if: ${{ failure() && github.event_name == 'schedule' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.create({
