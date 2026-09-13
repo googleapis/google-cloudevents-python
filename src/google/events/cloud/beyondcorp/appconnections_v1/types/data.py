@@ -35,8 +35,11 @@ class AppConnection(proto.Message):
     r"""A BeyondCorp AppConnection resource represents a BeyondCorp
     protected AppConnection to a remote application. It creates all
     the necessary GCP components needed for creating a BeyondCorp
-    protected AppConnection. Multiple connectors can be authorised
+    protected AppConnection. Multiple connectors can be authorized
     for a single AppConnection.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         name (str):
@@ -67,12 +70,20 @@ class AppConnection(proto.Message):
         connectors (MutableSequence[str]):
             Optional. List of
             [google.cloud.beyondcorp.v1main.Connector.name] that are
-            authorised to be associated with this AppConnection.
+            authorized to be associated with this AppConnection.
         state (google.events.cloud.beyondcorp.appconnections_v1.types.AppConnection.State):
             Output only. The current state of the
             AppConnection.
         gateway (google.events.cloud.beyondcorp.appconnections_v1.types.AppConnection.Gateway):
             Optional. Gateway used by the AppConnection.
+        satisfies_pzs (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzs``.
+        satisfies_pzi (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzi``.
     """
     class Type(proto.Enum):
         r"""Enum containing list of all possible network connectivity
@@ -243,6 +254,16 @@ class AppConnection(proto.Message):
         proto.MESSAGE,
         number=11,
         message=Gateway,
+    )
+    satisfies_pzs: bool = proto.Field(
+        proto.BOOL,
+        number=12,
+        optional=True,
+    )
+    satisfies_pzi: bool = proto.Field(
+        proto.BOOL,
+        number=13,
+        optional=True,
     )
 
 

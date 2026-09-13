@@ -14,11 +14,9 @@
 # limitations under the License.
 #
 from .data import (
-    ClientConnectorService,
-    ClientConnectorServiceEventData,
+    TaskEventData,
 )
 
 __all__ = (
-    'ClientConnectorService',
-    'ClientConnectorServiceEventData',
+    'TaskEventData',
 )

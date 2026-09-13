@@ -25,8 +25,19 @@ from google.events.cloud.eventarc_v1.types.data import ChannelConnectionEventDat
 from google.events.cloud.eventarc_v1.types.data import ChannelEventData
 from google.events.cloud.eventarc_v1.types.data import CloudRun
 from google.events.cloud.eventarc_v1.types.data import Destination
+from google.events.cloud.eventarc_v1.types.data import Enrollment
+from google.events.cloud.eventarc_v1.types.data import EnrollmentEventData
 from google.events.cloud.eventarc_v1.types.data import EventFilter
 from google.events.cloud.eventarc_v1.types.data import GKE
+from google.events.cloud.eventarc_v1.types.data import GoogleApiSource
+from google.events.cloud.eventarc_v1.types.data import GoogleApiSourceEventData
+from google.events.cloud.eventarc_v1.types.data import HttpEndpoint
+from google.events.cloud.eventarc_v1.types.data import LoggingConfig
+from google.events.cloud.eventarc_v1.types.data import MessageBus
+from google.events.cloud.eventarc_v1.types.data import MessageBusEventData
+from google.events.cloud.eventarc_v1.types.data import NetworkConfig
+from google.events.cloud.eventarc_v1.types.data import Pipeline
+from google.events.cloud.eventarc_v1.types.data import PipelineEventData
 from google.events.cloud.eventarc_v1.types.data import Pubsub
 from google.events.cloud.eventarc_v1.types.data import StateCondition
 from google.events.cloud.eventarc_v1.types.data import Transport
@@ -39,8 +50,19 @@ __all__ = ('Channel',
     'ChannelEventData',
     'CloudRun',
     'Destination',
+    'Enrollment',
+    'EnrollmentEventData',
     'EventFilter',
     'GKE',
+    'GoogleApiSource',
+    'GoogleApiSourceEventData',
+    'HttpEndpoint',
+    'LoggingConfig',
+    'MessageBus',
+    'MessageBusEventData',
+    'NetworkConfig',
+    'Pipeline',
+    'PipelineEventData',
     'Pubsub',
     'StateCondition',
     'Transport',
