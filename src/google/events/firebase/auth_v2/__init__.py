@@ -13,12 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from .data import (
-    ClientGateway,
-    ClientGatewayEventData,
-)
+from google.events.firebase.auth_v2 import gapic_version as package_version
+
+__version__ = package_version.__version__
+
+
+
+from .types.data import AuthEventData
+from .types.data import User
+from .types.data import UserInfo
+from .types.data import UserMetadata
 
 __all__ = (
-    'ClientGateway',
-    'ClientGatewayEventData',
+'AuthEventData',
+'User',
+'UserInfo',
+'UserMetadata',
 )

@@ -13,16 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from google.events.cloud.beyondcorp.clientgateways_v1 import gapic_version as package_version
-
-__version__ = package_version.__version__
-
-
-
-from .types.data import ClientGateway
-from .types.data import ClientGatewayEventData
-
-__all__ = (
-'ClientGateway',
-'ClientGatewayEventData',
-)
+__version__ = "0.0.0"  # {x-release-please-version}
