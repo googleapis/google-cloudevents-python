@@ -13,12 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from .data import (
-    ClientGateway,
-    ClientGatewayEventData,
-)
+from google.events.cloud.dataproc_v1 import gapic_version as package_version
+
+__version__ = package_version.__version__
+
+
+
+from .types.data import Attachment
+from .types.data import AttachmentEventPayload
+from .types.data import KubernetesJob
+from .types.data import KubernetesJobEventPayload
+from .types.data import VirtualCluster
+from .types.data import VirtualClusterEventPayload
 
 __all__ = (
-    'ClientGateway',
-    'ClientGatewayEventData',
+'Attachment',
+'AttachmentEventPayload',
+'KubernetesJob',
+'KubernetesJobEventPayload',
+'VirtualCluster',
+'VirtualClusterEventPayload',
 )

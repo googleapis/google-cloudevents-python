@@ -25,8 +25,19 @@ from .types.data import ChannelConnectionEventData
 from .types.data import ChannelEventData
 from .types.data import CloudRun
 from .types.data import Destination
+from .types.data import Enrollment
+from .types.data import EnrollmentEventData
 from .types.data import EventFilter
 from .types.data import GKE
+from .types.data import GoogleApiSource
+from .types.data import GoogleApiSourceEventData
+from .types.data import HttpEndpoint
+from .types.data import LoggingConfig
+from .types.data import MessageBus
+from .types.data import MessageBusEventData
+from .types.data import NetworkConfig
+from .types.data import Pipeline
+from .types.data import PipelineEventData
 from .types.data import Pubsub
 from .types.data import StateCondition
 from .types.data import Transport
@@ -40,8 +51,19 @@ __all__ = (
 'ChannelEventData',
 'CloudRun',
 'Destination',
+'Enrollment',
+'EnrollmentEventData',
 'EventFilter',
 'GKE',
+'GoogleApiSource',
+'GoogleApiSourceEventData',
+'HttpEndpoint',
+'LoggingConfig',
+'MessageBus',
+'MessageBusEventData',
+'NetworkConfig',
+'Pipeline',
+'PipelineEventData',
 'Pubsub',
 'StateCondition',
 'Transport',

@@ -38,6 +38,9 @@ class AppGateway(proto.Message):
     protected AppGateway. Multiple connectors can be authorised for
     a single AppGateway.
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         name (str):
             Required. Unique resource name of the
@@ -73,6 +76,14 @@ class AppGateway(proto.Message):
         host_type (google.events.cloud.beyondcorp.appgateways_v1.types.AppGateway.HostType):
             Required. The type of hosting used by the
             AppGateway.
+        satisfies_pzs (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzs``.
+        satisfies_pzi (bool):
+            Output only. Reserved for future use.
+
+            This field is a member of `oneof`_ ``_satisfies_pzi``.
     """
     class Type(proto.Enum):
         r"""Enum containing list of all possible network connectivity
@@ -199,6 +210,16 @@ class AppGateway(proto.Message):
         proto.ENUM,
         number=11,
         enum=HostType,
+    )
+    satisfies_pzs: bool = proto.Field(
+        proto.BOOL,
+        number=12,
+        optional=True,
+    )
+    satisfies_pzi: bool = proto.Field(
+        proto.BOOL,
+        number=13,
+        optional=True,
     )
 
 
